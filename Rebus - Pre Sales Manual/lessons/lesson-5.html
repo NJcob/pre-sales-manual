@@ -1,0 +1,2592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 5 - Customer Journey Mapping | Pre-Sales Excellence Training</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+    <script src="../style/tailwind.config.js"></script>
+    <link rel="stylesheet" href="../style/style.css">
+    <link rel="icon" type="image/x-icon" href="../image/favicon.ico">
+    <style>
+        body {
+            font-family: 'CustomFont', 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: 
+                linear-gradient(90deg, rgba(20, 40, 80, 0.06) 1px, transparent 1px),
+                linear-gradient(rgba(20, 40, 80, 0.06) 1px, transparent 1px);
+            background-size: 40px 40px;
+            background-color: #fafafa;
+            line-height: 1.6;
+        }
+        
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #6C4193 0%, #0096C7 100%);
+            transform-origin: left;
+            z-index: 1000;
+        }
+
+        .section-card {
+            background: white;
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border: 1px solid rgba(229, 231, 235, 0.8);
+        }
+
+        .hover-lift {
+            transition: all 0.3s ease;
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.1);
+            border-color: #6C4193;
+        }
+
+        .step-card {
+            background: linear-gradient(135deg, #fff 0%, #f8fafc 100%);
+            border: 2px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .step-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #6C4193 0%, #0096C7 100%);
+        }
+
+        .step-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px -8px rgba(0, 0, 0, 0.15);
+            border-color: #6C4193;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 16px;
+            margin: 1.5rem 0;
+        }
+
+        .checklist-item {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: between;
+        }
+
+        .checklist-item:hover {
+            border-color: #6C4193;
+            box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.1);
+        }
+
+        .checklist-checkbox {
+            width: 24px;
+            height: 24px;
+            border: 2px solid #d1d5db;
+            border-radius: 6px;
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .checklist-checkbox:hover {
+            border-color: #6C4193;
+            background-color: #f3f4f6;
+        }
+
+        .checklist-checkbox.checked {
+            background-color: #10B981;
+            border-color: #10B981;
+            color: white;
+        }
+
+        .toc {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(229, 231, 235, 0.6);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            position: sticky;
+            top: 120px;
+            z-index: 40;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            max-height: calc(100vh - 150px);
+            overflow-y: auto;
+        }
+        
+        .toc::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .toc::-webkit-scrollbar-track {
+            background: rgba(243, 244, 246, 0.5);
+            border-radius: 3px;
+        }
+        
+        .toc::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #6C4193 0%, #0096C7 100%);
+            border-radius: 3px;
+        }
+        
+        .toc::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #5a3579 0%, #007ba3 100%);
+        }
+        
+        .toc-content {
+            max-height: none;
+        }
+
+        .toc-item {
+            display: block;
+            padding: 0.75rem 1.25rem;
+            color: #4a5568;
+            text-decoration: none;
+            border-radius: 12px;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .toc-item:hover {
+            background: linear-gradient(145deg, #f7fafc, #e2e8f0);
+            color: #6C4193;
+            transform: translateX(5px);
+        }
+
+        .toc-item.active {
+            background: linear-gradient(135deg, #6C4193 0%, #0096C7 100%);
+            color: white;
+            box-shadow: 0 4px 14px 0 rgba(108, 65, 147, 0.3);
+        }
+
+        .framework-step {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-left: 4px solid #0096C7;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .framework-step:hover {
+            transform: translateX(8px);
+            box-shadow: 0 8px 25px -8px rgba(0, 150, 199, 0.3);
+        }
+
+        .stage-level {
+            background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%);
+            border: 2px solid #6C4193;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .stage-level:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 25px -8px rgba(108, 65, 147, 0.4);
+        }
+
+        .journey-section {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border: 2px solid #0096C7;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .progress-badge {
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .persona-card {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 2px solid #f59e0b;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .persona-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 25px -8px rgba(245, 158, 11, 0.4);
+        }
+
+        .touchpoint-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .touchpoint-item {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .touchpoint-item:hover {
+            background: white;
+            border-color: #6C4193;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scroll-progress"></div>
+
+    <!-- Navigation Header -->
+    <nav class="bg-white/95 backdrop-filter backdrop-blur-lg shadow-lg sticky top-0 z-50 border-b border-gray-200/60" id="nav-header">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="../index.html" class="flex items-center space-x-3 text-navy hover:text-purple transition-colors group">
+                    <svg class="w-6 h-6 group-hover:transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                    </svg>
+                    <span class="font-bold text-lg">Back to Home</span>
+                </a>
+                
+                <div class="flex items-center space-x-6">
+                    <span class="text-navy font-semibold">Lesson 5 of 8</span>
+                    <div class="w-40 h-3 bg-gray-200 rounded-full overflow-hidden">
+                        <div class="h-full bg-gradient-to-r from-purple via-blue to-emerald rounded-full transition-all duration-500" style="width: 62.5%" id="lesson-progress"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="min-h-screen py-12">
+        <div class="max-w-6xl mx-auto px-8">
+            
+            <!-- Main Title -->
+            <div class="text-center mb-12" id="main-title">
+                <h1 class="text-6xl font-bold mb-6">
+                    <span class="text-navy">Customer Journey</span><br>
+                    <span class="text-navy">Mapping &</span><br>
+                    <span class="text-navy">Engagement Strategy</span>
+                </h1>
+                <p class="text-xl text-gray-600 opacity-90">Pre-Sales Excellence Certification Framework</p>
+                <p class="text-lg text-gray-500 mt-2">Sales Enablement Training | Version 0.1 | Last Updated: July 22, 2025</p>
+                <div class="w-24 h-1 bg-gradient-to-r from-purple to-blue mx-auto mt-6 rounded-full"></div>
+            </div>
+
+            <!-- Progress Indicator -->
+            <div class="bg-white bg-opacity-95 rounded-2xl p-6 mb-12 shadow-lg max-w-md mx-auto border border-gray-100" id="progress-indicator">
+                <div class="text-navy font-semibold mb-3 text-center">
+                    Lesson Progress: <span id="progress-text" class="text-purple">0%</span>
+                </div>
+                <div class="w-full h-3 bg-gray-200 rounded-full overflow-hidden">
+                    <div class="h-full bg-gradient-to-r from-purple to-blue rounded-full transition-all duration-700 ease-out" style="width: 0%" id="progress-bar"></div>
+                </div>
+            </div>
+
+            <div class="flex gap-8">
+                <!-- Table of Contents -->
+                <div class="w-1/3" id="toc-container">
+                    <div class="toc">
+                        <h3 class="font-bold text-navy mb-6 text-xl">Navigation Menu</h3>
+                        <div class="toc-content">
+                            <nav class="space-y-1">
+                                <a href="#overview" class="toc-item flex items-center">
+                                    <svg class="w-4 h-4 mr-3 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                    Overview
+                                </a>
+                                <a href="#awareness" class="toc-item flex items-center">
+                                    <svg class="w-4 h-4 mr-3 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                                    Awareness Stage
+                                </a>
+                                <a href="#consideration" class="toc-item flex items-center">
+                                    <svg class="w-4 h-4 mr-3 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                    Consideration Stage
+                                </a>
+                                <a href="#selection" class="toc-item flex items-center">
+                                    <svg class="w-4 h-4 mr-3 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                    Selection / Procurement
+                                </a>
+                                <a href="#onboarding" class="toc-item flex items-center">
+                                    <svg class="w-4 h-4 mr-3 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                                    Onboarding / Implementation
+                                </a>
+                                <a href="#early-value" class="toc-item flex items-center">
+                                    <svg class="w-4 h-4 mr-3 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                                    Early Value
+                                </a>
+                                <a href="#adoption" class="toc-item flex items-center">
+                                    <svg class="w-4 h-4 mr-3 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                                    Adoption & Expansion
+                                </a>
+                                <a href="#renewal" class="toc-item flex items-center">
+                                    <svg class="w-4 h-4 mr-3 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+                                    Renewal & Advocacy
+                                </a>
+                                <a href="#phase-gate" class="toc-item flex items-center">
+                                    <svg class="w-4 h-4 mr-3 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                    Phase Gate Framework
+                                </a>
+                                <a href="#kpis" class="toc-item flex items-center">
+                                    <svg class="w-4 h-4 mr-3 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                                    KPIs & Metrics
+                                </a>
+                                <a href="#personas" class="toc-item flex items-center">
+                                    <svg class="w-4 h-4 mr-3 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                                    Customer Personas
+                                </a>
+                                <a href="#sample-assets" class="toc-item flex items-center">
+                                    <svg class="w-4 h-4 mr-3 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                                    Sample Assets
+                                </a>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Content -->
+                <div class="w-2/3 space-y-16" id="content-section">
+                    
+                    <!-- Overview -->
+                    <section class="section-card hover-lift" id="overview">
+                        <div class="text-center mb-8">
+                            <div class="w-16 h-16 bg-gradient-to-br from-purple to-blue rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                </svg>
+                            </div>
+                            <h2 class="text-3xl font-bold text-navy mb-4">Customer Journey Framework Overview</h2>
+                        </div>
+                        
+                        <div class="prose max-w-none">
+                            <div class="highlight-box">
+                                <h3 class="text-white text-xl font-bold mb-4">Complete Customer Lifecycle Management</h3>
+                                <p class="text-gray-100">
+                                    This comprehensive customer journey framework maps the entire lifecycle from initial awareness through renewal and advocacy, defining personas, touchpoints, activities, and success metrics for each stage.
+                                </p>
+                            </div>
+
+                            <div class="grid md:grid-cols-2 gap-6 mt-8">
+                                <div class="feature-card">
+                                    <h4>🎯 Seven Journey Stages</h4>
+                                    <p>Complete mapping from Awareness through Renewal & Advocacy, covering every touchpoint and interaction in the customer lifecycle.</p>
+                                </div>
+                                <div class="feature-card">
+                                    <h4>👥 Persona-Based Approach</h4>
+                                    <p>Detailed persona definitions for each stage, from Customer Owner to IT Admin, ensuring targeted engagement strategies.</p>
+                                </div>
+                                <div class="feature-card">
+                                    <h4>📊 Metrics & Measurement</h4>
+                                    <p>Leading indicators and success metrics for each stage to track progression and optimize conversion rates.</p>
+                                </div>
+                                <div class="feature-card">
+                                    <h4>🛠️ Tools & Systems Integration</h4>
+                                    <p>Comprehensive mapping of systems, tools, and platforms required to support each journey stage effectively.</p>
+                                </div>
+                            </div>
+
+                            <div class="mt-8 p-6 bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl border border-blue-200">
+                                <h3 class="text-blue-800 font-bold mb-4">Journey Mapping Objectives</h3>
+                                <ul class="space-y-2 text-blue-700">
+                                    <li>✅ Map complete customer experience across all touchpoints</li>
+                                    <li>✅ Define persona-specific goals and pain points for each stage</li>
+                                    <li>✅ Identify key activities, content, and engagement strategies</li>
+                                    <li>✅ Establish metrics to measure success and identify friction points</li>
+                                    <li>✅ Create systematic approach to customer lifecycle management</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Awareness Stage -->
+                    <section class="section-card hover-lift" id="awareness">
+                        <div class="text-center mb-8">
+                            <div class="w-16 h-16 bg-gradient-to-br from-warning to-orange-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+                                </svg>
+                            </div>
+                            <h2 class="text-3xl font-bold text-navy mb-4">Awareness Stage</h2>
+                        </div>
+                        
+                        <div class="prose max-w-none">
+                            <div class="journey-section">
+                                <h3 class="text-blue-800 font-bold mb-6">Stage Overview</h3>
+                                <p class="text-blue-700 mb-6">
+                                    Initial discovery phase where prospects first learn about how Closeoutsoft reduces rework, accelerates closeout, and improves field-office collaboration.
+                                </p>
+                                
+                                <!-- Personas -->
+                                <div class="mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Target Personas</h4>
+                                    <div class="space-y-3">
+                                        <div class="persona-card">
+                                            <h5 class="text-yellow-800 font-bold mb-2">Customer Owner/Principal</h5>
+                                            <p class="text-yellow-700 text-sm">Primary decision-maker focused on business impact and strategic value</p>
+                                        </div>
+                                        <div class="persona-card">
+                                            <h5 class="text-yellow-800 font-bold mb-2">Ops Director</h5>
+                                            <p class="text-yellow-700 text-sm">Operations leadership focused on process efficiency and team productivity</p>
+                                        </div>
+                                        <div class="persona-card">
+                                            <h5 class="text-yellow-800 font-bold mb-2">PM (Project Manager)</h5>
+                                            <p class="text-yellow-700 text-sm">Project management focused on timeline, coordination, and deliverables</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Customer Goals -->
+                                <div class="framework-step mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Customer Goals</h4>
+                                    <p class="text-blue-700">Understand how Closeoutsoft reduces rework, accelerates closeout, and improves field-office collaboration</p>
+                                </div>
+
+                                <!-- Key BD Activities -->
+                                <div class="framework-step mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Key BD Activities</h4>
+                                    <p class="text-blue-700">Identify pain (RFIs, submittals, punch, handover), quantify impact, shortlist category</p>
+                                </div>
+
+                                <!-- Touchpoints & Channels -->
+                                <div class="mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Touchpoints & Channels</h4>
+                                    <div class="touchpoint-grid">
+                                        <div class="touchpoint-item">
+                                            <div class="font-medium text-gray-800">SEO/Website</div>
+                                            <div class="text-gray-600 text-sm">Organic discovery and initial research</div>
+                                        </div>
+                                        <div class="touchpoint-item">
+                                            <div class="font-medium text-gray-800">LinkedIn posts/ads</div>
+                                            <div class="text-gray-600 text-sm">Social media engagement and targeting</div>
+                                        </div>
+                                        <div class="touchpoint-item">
+                                            <div class="font-medium text-gray-800">Industry webinars</div>
+                                            <div class="text-gray-600 text-sm">Educational content and thought leadership</div>
+                                        </div>
+                                        <div class="touchpoint-item">
+                                            <div class="font-medium text-gray-800">Trade shows</div>
+                                            <div class="text-gray-600 text-sm">In-person networking and demonstrations</div>
+                                        </div>
+                                        <div class="touchpoint-item">
+                                            <div class="font-medium text-gray-800">Partner referrals</div>
+                                            <div class="text-gray-600 text-sm">Third-party introductions and recommendations</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Content/Assets -->
+                                <div class="framework-step mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Content/Assets (Owned)</h4>
+                                    <ul class="text-blue-700 list-disc list-inside">
+                                        <li>Pain calculators</li>
+                                        <li>2-min explainer video</li>
+                                        <li>Construction ROI one-pager</li>
+                                        <li>Blog thought leadership</li>
+                                    </ul>
+                                </div>
+
+                                <!-- Leading Metrics -->
+                                <div class="framework-step mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Leading Metrics</h4>
+                                    <div class="grid md:grid-cols-2 gap-3">
+                                        <div class="bg-white p-3 rounded-lg">
+                                            <div class="font-medium text-blue-800">Site traffic</div>
+                                            <div class="text-blue-600 text-xs">Organic and paid website visitors</div>
+                                        </div>
+                                        <div class="bg-white p-3 rounded-lg">
+                                            <div class="font-medium text-blue-800">CTR on ads</div>
+                                            <div class="text-blue-600 text-xs">Click-through rates on advertising campaigns</div>
+                                        </div>
+                                        <div class="bg-white p-3 rounded-lg">
+                                            <div class="font-medium text-blue-800">Content downloads</div>
+                                            <div class="text-blue-600 text-xs">Asset engagement and lead capture</div>
+                                        </div>
+                                        <div class="bg-white p-3 rounded-lg">
+                                            <div class="font-medium text-blue-800">Webinar signups</div>
+                                            <div class="text-blue-600 text-xs">Event registration and attendance</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Common Frictions -->
+                                <div class="framework-step mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Common Frictions</h4>
+                                    <p class="text-blue-700">Too many vendors; unclear ROI for mid-sized contractors</p>
+                                </div>
+
+                                <!-- Mitigations / Plays -->
+                                <div class="framework-step mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Mitigations / Plays</h4>
+                                    <p class="text-blue-700">Comparison guides, ROI calculator tailored to project size, segment-specific landing pages</p>
+                                </div>
+
+                                <!-- Internal Owners -->
+                                <div class="framework-step mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Internal Owners</h4>
+                                    <p class="text-blue-700">Marketing (Demand Gen), Product Marketing</p>
+                                </div>
+
+                                <!-- Systems / Tools -->
+                                <div class="framework-step">
+                                    <h4 class="text-blue-800 font-bold mb-3">Systems / Tools</h4>
+                                    <p class="text-blue-700">CMS, Marketing Automation, LinkedIn, Webinar platform</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Consideration Stage -->
+                    <section class="section-card hover-lift" id="consideration">
+                        <div class="text-center mb-8">
+                            <div class="w-16 h-16 bg-gradient-to-br from-success to-blue rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                            <h2 class="text-3xl font-bold text-navy mb-4">Consideration Stage</h2>
+                        </div>
+                        
+                        <div class="prose max-w-none">
+                            <div class="journey-section">
+                                <h3 class="text-blue-800 font-bold mb-6">Stage Overview</h3>
+                                <p class="text-blue-700 mb-6">
+                                    Evaluation phase where prospects validate fit for features, security, integrations, and total cost of ownership.
+                                </p>
+                                
+                                <!-- Personas -->
+                                <div class="mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Target Personas</h4>
+                                    <div class="space-y-3">
+                                        <div class="persona-card">
+                                            <h5 class="text-yellow-800 font-bold mb-2">Ops Director</h5>
+                                            <p class="text-yellow-700 text-sm">Operations leadership evaluating process integration and team adoption</p>
+                                        </div>
+                                        <div class="persona-card">
+                                            <h5 class="text-yellow-800 font-bold mb-2">PM (Project Manager)</h5>
+                                            <p class="text-yellow-700 text-sm">Project management focused on functionality and workflow fit</p>
+                                        </div>
+                                        <div class="persona-card">
+                                            <h5 class="text-yellow-800 font-bold mb-2">IT Admin</h5>
+                                            <p class="text-yellow-700 text-sm">Technical evaluation of security, compliance, and integration requirements</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Customer Goals -->
+                                <div class="framework-step mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Customer Goals</h4>
+                                    <p class="text-blue-700">Validate fit: features for RFIs, Submittals, Punch, Closeout docs; mobile & offline; integrations</p>
+                                </div>
+
+                                <!-- Key BD Activities -->
+                                <div class="framework-step mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Key BD Activities</h4>
+                                    <p class="text-blue-700">Map needs to features, check security/compliance, integration feasibility, TCO</p>
+                                </div>
+
+                                <!-- Touchpoints & Channels -->
+                                <div class="mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Touchpoints & Channels</h4>
+                                    <div class="touchpoint-grid">
+                                        <div class="touchpoint-item">
+                                            <div class="font-medium text-gray-800">Website feature pages</div>
+                                            <div class="text-gray-600 text-sm">Detailed product information and capabilities</div>
+                                        </div>
+                                        <div class="touchpoint-item">
+                                            <div class="font-medium text-gray-800">Live chat</div>
+                                            <div class="text-gray-600 text-sm">Real-time support and question resolution</div>
+                                        </div>
+                                        <div class="touchpoint-item">
+                                            <div class="font-medium text-gray-800">Email nurture</div>
+                                            <div class="text-gray-600 text-sm">Automated follow-up and education campaigns</div>
+                                        </div>
+                                        <div class="touchpoint-item">
+                                            <div class="font-medium text-gray-800">Solution briefs</div>
+                                            <div class="text-gray-600 text-sm">Detailed technical documentation</div>
+                                        </div>
+                                        <div class="touchpoint-item">
+                                            <div class="font-medium text-gray-800">Sandbox videos</div>
+                                            <div class="text-gray-600 text-sm">Interactive product demonstrations</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Content/Assets -->
+                                <div class="framework-step mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Content/Assets (Owned)</h4>
+                                    <ul class="text-blue-700 list-disc list-inside">
+                                        <li>Feature matrices</li>
+                                        <li>Security/IT packet</li>
+                                        <li>Integration one-pagers (QB, MS Project, SharePoint)</li>
+                                    </ul>
+                                </div>
+
+                                <!-- Leading Metrics -->
+                                <div class="framework-step mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Leading Metrics</h4>
+                                    <div class="grid md:grid-cols-3 gap-3">
+                                        <div class="bg-white p-3 rounded-lg">
+                                            <div class="font-medium text-blue-800">Demo requests</div>
+                                            <div class="text-blue-600 text-xs">Qualification and interest level</div>
+                                        </div>
+                                        <div class="bg-white p-3 rounded-lg">
+                                            <div class="font-medium text-blue-800">Asset engagement depth</div>
+                                            <div class="text-blue-600 text-xs">Content consumption and time spent</div>
+                                        </div>
+                                        <div class="bg-white p-3 rounded-lg">
+                                            <div class="font-medium text-blue-800">Technical Q&A volume</div>
+                                            <div class="text-blue-600 text-xs">Level of technical inquiry and engagement</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Common Frictions -->
+                                <div class="framework-step mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Common Frictions</h4>
+                                    <p class="text-blue-700">Integration anxiety; learning curve for field crews</p>
+                                </div>
+
+                                <!-- Mitigations / Plays -->
+                                <div class="framework-step mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Mitigations / Plays</h4>
+                                    <p class="text-blue-700">Interactive demo with sample job, integration reference architectures, field-first UX demos</p>
+                                </div>
+
+                                <!-- Internal Owners -->
+                                <div class="framework-step mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Internal Owners</h4>
+                                    <p class="text-blue-700">Sales (Presales), Product Marketing, Security/IT</p>
+                                </div>
+
+                                <!-- Systems / Tools -->
+                                <div class="framework-step">
+                                    <h4 class="text-blue-800 font-bold mb-3">Systems / Tools</h4>
+                                    <p class="text-blue-700">CRM, Knowledge Base, PIM, Demo environment</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Selection / Procurement -->
+                    <section class="section-card hover-lift" id="selection">
+                        <div class="text-center mb-8">
+                            <div class="w-16 h-16 bg-gradient-to-br from-blue to-purple rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                </svg>
+                            </div>
+                            <h2 class="text-3xl font-bold text-navy mb-4">Selection / Procurement</h2>
+                        </div>
+                        
+                        <div class="prose max-w-none">
+                            <div class="journey-section">
+                                <h3 class="text-blue-800 font-bold mb-6">Stage Overview</h3>
+                                <p class="text-blue-700 mb-6">
+                                    Final decision phase where prospects de-risk purchase, confirm ROI, finalize scope, price, and terms.
+                                </p>
+                                
+                                <!-- Personas -->
+                                <div class="mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Target Personas</h4>
+                                    <div class="space-y-3">
+                                        <div class="persona-card">
+                                            <h5 class="text-yellow-800 font-bold mb-2">Customer Owner/CFO</h5>
+                                            <p class="text-yellow-700 text-sm">Financial decision-maker focused on ROI and business case validation</p>
+                                        </div>
+                                        <div class="persona-card">
+                                            <h5 class="text-yellow-800 font-bold mb-2">Ops Director</h5>
+                                            <p class="text-yellow-700 text-sm">Operations leadership confirming implementation feasibility</p>
+                                        </div>
+                                        <div class="persona-card">
+                                            <h5 class="text-yellow-800 font-bold mb-2">Procurement</h5>
+                                            <p class="text-yellow-700 text-sm">Procurement team managing vendor selection and contract negotiation</p>
+                                        </div>
+                                        <div class="persona-card">
+                                            <h5 class="text-yellow-800 font-bold mb-2">Legal</h5>
+                                            <p class="text-yellow-700 text-sm">Legal team reviewing terms, conditions, and compliance requirements</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Customer Goals -->
+                                <div class="framework-step mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Customer Goals</h4>
+                                    <p class="text-blue-700">De-risk purchase, confirm ROI, finalize scope, price, and terms</p>
+                                </div>
+
+                                <!-- Key BD Activities -->
+                                <div class="framework-step mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Key BD Activities</h4>
+                                    <p class="text-blue-700">Pilot or guided demo with project data, reference calls, finalize SOW, legal & InfoSec</p>
+                                </div>
+
+                                <!-- Touchpoints & Channels -->
+                                <div class="mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Touchpoints & Channels</h4>
+                                    <div class="touchpoint-grid">
+                                        <div class="touchpoint-item">
+                                            <div class="font-medium text-gray-800">Sales calls</div>
+                                            <div class="text-gray-600 text-sm">Direct sales engagement and negotiation</div>
+                                        </div>
+                                        <div class="touchpoint-item">
+                                            <div class="font-medium text-gray-800">Tailored ROI deck</div>
+                                            <div class="text-gray-600 text-sm">Customized business case presentation</div>
+                                        </div>
+                                        <div class="touchpoint-item">
+                                            <div class="font-medium text-gray-800">Proposal & order form</div>
+                                            <div class="text-gray-600 text-sm">Formal proposal and contract documentation</div>
+                                        </div>
+                                        <div class="touchpoint-item">
+                                            <div class="font-medium text-gray-800">Security questionnaire</div>
+                                            <div class="text-gray-600 text-sm">Security and compliance validation</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Content/Assets -->
+                                <div class="framework-step mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Content/Assets (Owned)</h4>
+                                    <ul class="text-blue-700 list-disc list-inside">
+                                        <li>Pilot success criteria doc</li>
+                                        <li>ROI model</li>
+                                        <li>Implementation plan</li>
+                                        <li>Redlines tracker</li>
+                                    </ul>
+                                </div>
+
+                                <!-- Leading Metrics -->
+                                <div class="framework-step mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Leading Metrics</h4>
+                                    <div class="grid md:grid-cols-2 gap-3">
+                                        <div class="bg-white p-3 rounded-lg">
+                                            <div class="font-medium text-blue-800">Win rate</div>
+                                            <div class="text-blue-600 text-xs">Proposal success rate</div>
+                                        </div>
+                                        <div class="bg-white p-3 rounded-lg">
+                                            <div class="font-medium text-blue-800">Cycle time</div>
+                                            <div class="text-blue-600 text-xs">Sales cycle duration</div>
+                                        </div>
+                                        <div class="bg-white p-3 rounded-lg">
+                                            <div class="font-medium text-blue-800">Champion strength</div>
+                                            <div class="text-blue-600 text-xs">Internal advocate influence</div>
+                                        </div>
+                                        <div class="bg-white p-3 rounded-lg">
+                                            <div class="font-medium text-blue-800">Exec alignment</div>
+                                            <div class="text-blue-600 text-xs">Executive stakeholder buy-in</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Common Frictions -->
+                                <div class="framework-step mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Common Frictions</h4>
+                                    <p class="text-blue-700">Budget/approval delays; terms confusion</p>
+                                </div>
+
+                                <!-- Mitigations / Plays -->
+                                <div class="framework-step mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Mitigations / Plays</h4>
+                                    <p class="text-blue-700">Mutual success plan, flexible packaging (per project vs org), procurement playbook, clear redline timelines</p>
+                                </div>
+
+                                <!-- Internal Owners -->
+                                <div class="framework-step mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Internal Owners</h4>
+                                    <p class="text-blue-700">Sales, Legal, Finance, Security</p>
+                                </div>
+
+                                <!-- Systems / Tools -->
+                                <div class="framework-step">
+                                    <h4 class="text-blue-800 font-bold mb-3">Systems / Tools</h4>
+                                    <p class="text-blue-700">eSignature, CPQ, Redlines tracker, Security portal</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Onboarding / Implementation -->
+                    <section class="section-card hover-lift" id="onboarding">
+                        <div class="text-center mb-8">
+                            <div class="w-16 h-16 bg-gradient-to-br from-purple to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                                </svg>
+                            </div>
+                            <h2 class="text-3xl font-bold text-navy mb-4">Onboarding / Implementation (Weeks 0–4)</h2>
+                        </div>
+                        
+                        <div class="prose max-w-none">
+                            <div class="journey-section">
+                                <h3 class="text-blue-800 font-bold mb-6">Stage Overview</h3>
+                                <p class="text-blue-700 mb-6">
+                                    Initial setup and activation phase where customers go live quickly with system provisioning, training, and first project setup.
+                                </p>
+                                
+                                <!-- Personas -->
+                                <div class="mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Target Personas</h4>
+                                    <div class="space-y-3">
+                                        <div class="persona-card">
+                                            <h5 class="text-yellow-800 font-bold mb-2">Project Admin</h5>
+                                            <p class="text-yellow-700 text-sm">Administrative role managing system setup and user configuration</p>
+                                        </div>
+                                        <div class="persona-card">
+                                            <h5 class="text-yellow-800 font-bold mb-2">PM (Project Manager)</h5>
+                                            <p class="text-yellow-700 text-sm">Project management focused on implementation and team adoption</p>
+                                        </div>
+                                        <div class="persona-card">
+                                            <h5 class="text-yellow-800 font-bold mb-2">Site Superintendent</h5>
+                                            <p class="text-yellow-700 text-sm">Field leadership managing on-site team training and usage</p>
+                                        </div>
+                                        <div class="persona-card">
+                                            <h5 class="text-yellow-800 font-bold mb-2">IT Admin</h5>
+                                            <p class="text-yellow-700 text-sm">Technical role managing integrations and system connections</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Customer Goals -->
+                                <div class="framework-step mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Customer Goals</h4>
+                                    <p class="text-blue-700">Go live quickly; import templates; connect integrations; train core users</p>
+                                </div>
+
+                                <!-- Key BD Activities -->
+                                <div class="framework-step mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Key BD Activities</h4>
+                                    <p class="text-blue-700">Provision tenant, roles & permissions, import master data, setup projects, connect SharePoint/OneDrive & accounting</p>
+                                </div>
+
+                                <!-- Touchpoints & Channels -->
+                                <div class="mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Touchpoints & Channels</h4>
+                                    <div class="touchpoint-grid">
+                                        <div class="touchpoint-item">
+                                            <div class="font-medium text-gray-800">Kickoff call</div>
+                                            <div class="text-gray-600 text-sm">Initial project launch and planning session</div>
+                                        </div>
+                                        <div class="touchpoint-item">
+                                            <div class="font-medium text-gray-800">Success plan</div>
+                                            <div class="text-gray-600 text-sm">Structured implementation roadmap</div>
+                                        </div>
+                                        <div class="touchpoint-item">
+                                            <div class="font-medium text-gray-800">Admin workshop</div>
+                                            <div class="text-gray-600 text-sm">Administrative training and configuration</div>
+                                        </div>
+                                        <div class="touchpoint-item">
+                                            <div class="font-medium text-gray-800">Role-based training</div>
+                                            <div class="text-gray-600 text-sm">Persona-specific system training</div>
+                                        </div>
+                                        <div class="touchpoint-item">
+                                            <div class="font-medium text-gray-800">Office hours</div>
+                                            <div class="text-gray-600 text-sm">Regular support and Q&A sessions</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Content/Assets -->
+                                <div class="framework-step mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Content/Assets (Owned)</h4>
+                                    <ul class="text-blue-700 list-disc list-inside">
+                                        <li>Onboarding checklist</li>
+                                        <li>Data import templates</li>
+                                        <li>30/60/90-day plan</li>
+                                        <li>Training videos</li>
+                                    </ul>
+                                </div>
+
+                                <!-- Leading Metrics -->
+                                <div class="framework-step mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Leading Metrics</h4>
+                                    <div class="grid md:grid-cols-2 gap-3">
+                                        <div class="bg-white p-3 rounded-lg">
+                                            <div class="font-medium text-blue-800">Time-to-first-project</div>
+                                            <div class="text-blue-600 text-xs">Speed of initial project setup</div>
+                                        </div>
+                                        <div class="bg-white p-3 rounded-lg">
+                                            <div class="font-medium text-blue-800">% roles configured</div>
+                                            <div class="text-blue-600 text-xs">User setup completion rate</div>
+                                        </div>
+                                        <div class="bg-white p-3 rounded-lg">
+                                            <div class="font-medium text-blue-800">Integration connected</div>
+                                            <div class="text-blue-600 text-xs">System integration success rate</div>
+                                        </div>
+                                        <div class="bg-white p-3 rounded-lg">
+                                            <div class="font-medium text-blue-800">Training completion</div>
+                                            <div class="text-blue-600 text-xs">User training participation rate</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Common Frictions -->
+                                <div class="framework-step mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Common Frictions</h4>
+                                    <p class="text-blue-700">Data migration stalls; permission confusion; mobile setup issues</p>
+                                </div>
+
+                                <!-- Mitigations / Plays -->
+                                <div class="framework-step mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Mitigations / Plays</h4>
+                                    <p class="text-blue-700">Named CSM & Onboarding PM, data concierge, permissions presets, QR-based mobile onboarding</p>
+                                </div>
+
+                                <!-- Internal Owners -->
+                                <div class="framework-step mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Internal Owners</h4>
+                                    <p class="text-blue-700">CSM, Onboarding, Solutions/IT, Customer Admin</p>
+                                </div>
+
+                                <!-- Systems / Tools -->
+                                <div class="framework-step">
+                                    <h4 class="text-blue-800 font-bold mb-3">Systems / Tools</h4>
+                                    <p class="text-blue-700">Admin console, SSO/Entra ID, Data import tool, Integration hub</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Early Value -->
+                    <section class="section-card hover-lift" id="early-value">
+                        <div class="text-center mb-8">
+                            <div class="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                                </svg>
+                            </div>
+                            <h2 class="text-3xl font-bold text-navy mb-4">Early Value (Days 15–45)</h2>
+                        </div>
+                        
+                        <div class="prose max-w-none">
+                            <div class="journey-section">
+                                <h3 class="text-blue-800 font-bold mb-6">Stage Overview</h3>
+                                <p class="text-blue-700 mb-6">
+                                    Value realization phase where customers see tangible wins through faster workflows and improved processes.
+                                </p>
+                                
+                                <!-- Personas -->
+                                <div class="mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Target Personas</h4>
+                                    <div class="space-y-3">
+                                        <div class="persona-card">
+                                            <h5 class="text-yellow-800 font-bold mb-2">PM (Project Manager)</h5>
+                                            <p class="text-yellow-700 text-sm">Project management focused on workflow efficiency and results</p>
+                                        </div>
+                                        <div class="persona-card">
+                                            <h5 class="text-yellow-800 font-bold mb-2">Site Supers</h5>
+                                            <p class="text-yellow-700 text-sm">Site supervisors managing daily operations and team productivity</p>
+                                        </div>
+                                        <div class="persona-card">
+                                            <h5 class="text-yellow-800 font-bold mb-2">Subcontractor Leads</h5>
+                                            <p class="text-yellow-700 text-sm">Subcontractor leadership managing workflow and deliverables</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Customer Goals -->
+                                <div class="framework-step mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Customer Goals</h4>
+                                    <p class="text-blue-700">See tangible wins: faster RFIs/submittals, fewer punch items, clear closeout plan</p>
+                                </div>
+
+                                <!-- Key BD Activities -->
+                                <div class="framework-step mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Key BD Activities</h4>
+                                    <p class="text-blue-700">Run first live workflows (RFIs, Submittals), create punch list, generate closeout packages</p>
+                                </div>
+
+                                <!-- Touchpoints & Channels -->
+                                <div class="mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Touchpoints & Channels</h4>
+                                    <div class="touchpoint-grid">
+                                        <div class="touchpoint-item">
+                                            <div class="font-medium text-gray-800">In-app guides</div>
+                                            <div class="text-gray-600 text-sm">Contextual help and workflow guidance</div>
+                                        </div>
+                                        <div class="touchpoint-item">
+                                            <div class="font-medium text-gray-800">Office hours</div>
+                                            <div class="text-gray-600 text-sm">Regular support and optimization sessions</div>
+                                        </div>
+                                        <div class="touchpoint-item">
+                                            <div class="font-medium text-gray-800">CSM check-in</div>
+                                            <div class="text-gray-600 text-sm">Proactive customer success management</div>
+                                        </div>
+                                        <div class="touchpoint-item">
+                                            <div class="font-medium text-gray-800">Targeted tips & nudges</div>
+                                            <div class="text-gray-600 text-sm">Behavioral prompts and feature discovery</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Content/Assets -->
+                                <div class="framework-step mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Content/Assets (Owned)</h4>
+                                    <ul class="text-blue-700 list-disc list-inside">
+                                        <li>Quick-start playbooks</li>
+                                        <li>Best-practice templates</li>
+                                        <li>Sample dashboards</li>
+                                    </ul>
+                                </div>
+
+                                <!-- Leading Metrics -->
+                                <div class="framework-step mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Leading Metrics</h4>
+                                    <div class="grid md:grid-cols-2 gap-3">
+                                        <div class="bg-white p-3 rounded-lg">
+                                            <div class="font-medium text-blue-800">Time-to-first-RFI</div>
+                                            <div class="text-blue-600 text-xs">Speed of first workflow execution</div>
+                                        </div>
+                                        <div class="bg-white p-3 rounded-lg">
+                                            <div class="font-medium text-blue-800">Time-to-first-submittal</div>
+                                            <div class="text-blue-600 text-xs">Submittal process activation speed</div>
+                                        </div>
+                                        <div class="bg-white p-3 rounded-lg">
+                                            <div class="font-medium text-blue-800">First punch list created</div>
+                                            <div class="text-blue-600 text-xs">Punch list feature adoption</div>
+                                        </div>
+                                        <div class="bg-white p-3 rounded-lg">
+                                            <div class="font-medium text-blue-800">WAU/MAU</div>
+                                            <div class="text-blue-600 text-xs">Weekly and monthly active users</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Common Frictions -->
+                                <div class="framework-step mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Common Frictions</h4>
+                                    <p class="text-blue-700">Teams revert to old habits (email/WhatsApp); inconsistent template use</p>
+                                </div>
+
+                                <!-- Mitigations / Plays -->
+                                <div class="framework-step mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Mitigations / Plays</h4>
+                                    <p class="text-blue-700">Change management toolkit, default templates locked, mobile push prompts, supervisor scorecards</p>
+                                </div>
+
+                                <!-- Internal Owners -->
+                                <div class="framework-step mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Internal Owners</h4>
+                                    <p class="text-blue-700">Customer Success, Field Champions</p>
+                                </div>
+
+                                <!-- Systems / Tools -->
+                                <div class="framework-step">
+                                    <h4 class="text-blue-800 font-bold mb-3">Systems / Tools</h4>
+                                    <p class="text-blue-700">In-app guides, Mobile app, Notifications, Analytics</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Adoption & Expansion -->
+                    <section class="section-card hover-lift" id="adoption">
+                        <div class="text-center mb-8">
+                            <div class="w-16 h-16 bg-gradient-to-br from-blue to-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                                </svg>
+                            </div>
+                            <h2 class="text-3xl font-bold text-navy mb-4">Adoption & Expansion (90+ days)</h2>
+                        </div>
+                        
+                        <div class="prose max-w-none">
+                            <div class="journey-section">
+                                <h3 class="text-blue-800 font-bold mb-6">Stage Overview</h3>
+                                <p class="text-blue-700 mb-6">
+                                    Scaling phase where customers standardize processes, expand usage across projects, and realize full ROI potential.
+                                </p>
+                                
+                                <!-- Personas -->
+                                <div class="mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Target Personas</h4>
+                                    <div class="space-y-3">
+                                        <div class="persona-card">
+                                            <h5 class="text-yellow-800 font-bold mb-2">Ops Director</h5>
+                                            <p class="text-yellow-700 text-sm">Operations leadership driving standardization and expansion</p>
+                                        </div>
+                                        <div class="persona-card">
+                                            <h5 class="text-yellow-800 font-bold mb-2">PMO</h5>
+                                            <p class="text-yellow-700 text-sm">Project Management Office overseeing process standardization</p>
+                                        </div>
+                                        <div class="persona-card">
+                                            <h5 class="text-yellow-800 font-bold mb-2">Quality Manager</h5>
+                                            <p class="text-yellow-700 text-sm">Quality management focused on process compliance and improvement</p>
+                                        </div>
+                                        <div class="persona-card">
+                                            <h5 class="text-yellow-800 font-bold mb-2">CFO</h5>
+                                            <p class="text-yellow-700 text-sm">Financial leadership measuring ROI and business impact</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Customer Goals -->
+                                <div class="framework-step mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Customer Goals</h4>
+                                    <p class="text-blue-700">Standardize processes; unify reporting; expand to more projects; realize ROI</p>
+                                </div>
+
+                                <!-- Key BD Activities -->
+                                <div class="framework-step mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Key BD Activities</h4>
+                                    <p class="text-blue-700">Roll out company templates, automate closeout packages, integrate schedules & cost, train new projects</p>
+                                </div>
+
+                                <!-- Touchpoints & Channels -->
+                                <div class="mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Touchpoints & Channels</h4>
+                                    <div class="touchpoint-grid">
+                                        <div class="touchpoint-item">
+                                            <div class="font-medium text-gray-800">QBRs</div>
+                                            <div class="text-gray-600 text-sm">Quarterly business reviews and strategic planning</div>
+                                        </div>
+                                        <div class="touchpoint-item">
+                                            <div class="font-medium text-gray-800">Health checks</div>
+                                            <div class="text-gray-600 text-sm">System health monitoring and optimization</div>
+                                        </div>
+                                        <div class="touchpoint-item">
+                                            <div class="font-medium text-gray-800">Success stories</div>
+                                            <div class="text-gray-600 text-sm">ROI demonstration and best practice sharing</div>
+                                        </div>
+                                        <div class="touchpoint-item">
+                                            <div class="font-medium text-gray-800">Executive dashboards</div>
+                                            <div class="text-gray-600 text-sm">High-level reporting and metrics visualization</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Content/Assets -->
+                                <div class="framework-step mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Content/Assets (Owned)</h4>
+                                    <ul class="text-blue-700 list-disc list-inside">
+                                        <li>Template governance kit</li>
+                                        <li>ROI dashboard</li>
+                                        <li>Certification/badging for users</li>
+                                    </ul>
+                                </div>
+
+                                <!-- Leading Metrics -->
+                                <div class="framework-step mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Leading Metrics</h4>
+                                    <div class="grid md:grid-cols-3 gap-3">
+                                        <div class="bg-white p-3 rounded-lg">
+                                            <div class="font-medium text-blue-800">Project coverage %</div>
+                                            <div class="text-blue-600 text-xs">Percentage of projects using the system</div>
+                                        </div>
+                                        <div class="bg-white p-3 rounded-lg">
+                                            <div class="font-medium text-blue-800">Feature adoption depth</div>
+                                            <div class="text-blue-600 text-xs">Advanced feature utilization rate</div>
+                                        </div>
+                                        <div class="bg-white p-3 rounded-lg">
+                                            <div class="font-medium text-blue-800">Time-to-closeout</div>
+                                            <div class="text-blue-600 text-xs">Project closeout efficiency improvement</div>
+                                        </div>
+                                        <div class="bg-white p-3 rounded-lg">
+                                            <div class="font-medium text-blue-800">Rework rate</div>
+                                            <div class="text-blue-600 text-xs">Reduction in project rework and corrections</div>
+                                        </div>
+                                        <div class="bg-white p-3 rounded-lg">
+                                            <div class="font-medium text-blue-800">Expansion ARR</div>
+                                            <div class="text-blue-600 text-xs">Additional revenue from account growth</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Common Frictions -->
+                                <div class="framework-step mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Common Frictions</h4>
+                                    <p class="text-blue-700">Underutilized advanced features; lack of exec visibility</p>
+                                </div>
+
+                                <!-- Mitigations / Plays -->
+                                <div class="framework-step mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Mitigations / Plays</h4>
+                                    <p class="text-blue-700">Executive dashboards, role-based enablement, advanced workshops, lighthouse program</p>
+                                </div>
+
+                                <!-- Internal Owners -->
+                                <div class="framework-step mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Internal Owners</h4>
+                                    <p class="text-blue-700">CSM, PMO Enablement, Product</p>
+                                </div>
+
+                                <!-- Systems / Tools -->
+                                <div class="framework-step">
+                                    <h4 class="text-blue-800 font-bold mb-3">Systems / Tools</h4>
+                                    <p class="text-blue-700">BI/Analytics, Data warehouse export, Scheduling connectors, Accounting connector</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Renewal & Advocacy -->
+                    <section class="section-card hover-lift" id="renewal">
+                        <div class="text-center mb-8">
+                            <div class="w-16 h-16 bg-gradient-to-br from-success to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
+                                </svg>
+                            </div>
+                            <h2 class="text-3xl font-bold text-navy mb-4">Renewal & Advocacy</h2>
+                        </div>
+                        
+                        <div class="prose max-w-none">
+                            <div class="journey-section">
+                                <h3 class="text-blue-800 font-bold mb-6">Stage Overview</h3>
+                                <p class="text-blue-700 mb-6">
+                                    Loyalty and growth phase where customers confirm value, plan future roadmap, and become advocates for the solution.
+                                </p>
+                                
+                                <!-- Personas -->
+                                <div class="mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Target Personas</h4>
+                                    <div class="space-y-3">
+                                        <div class="persona-card">
+                                            <h5 class="text-yellow-800 font-bold mb-2">Owner/CFO</h5>
+                                            <p class="text-yellow-700 text-sm">Executive leadership focused on strategic value and future planning</p>
+                                        </div>
+                                        <div class="persona-card">
+                                            <h5 class="text-yellow-800 font-bold mb-2">Ops Director</h5>
+                                            <p class="text-yellow-700 text-sm">Operations leadership confirming operational value and expansion</p>
+                                        </div>
+                                        <div class="persona-card">
+                                            <h5 class="text-yellow-800 font-bold mb-2">Champions</h5>
+                                            <p class="text-yellow-700 text-sm">Internal advocates promoting success and driving expansion</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Customer Goals -->
+                                <div class="framework-step mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Customer Goals</h4>
+                                    <p class="text-blue-700">Confirm value; plan next-year roadmap; get recognized for success</p>
+                                </div>
+
+                                <!-- Key BD Activities -->
+                                <div class="framework-step mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Key BD Activities</h4>
+                                    <p class="text-blue-700">Renew contract, expand scope, participate in case study, referrals</p>
+                                </div>
+
+                                <!-- Touchpoints & Channels -->
+                                <div class="mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Touchpoints & Channels</h4>
+                                    <div class="touchpoint-grid">
+                                        <div class="touchpoint-item">
+                                            <div class="font-medium text-gray-800">Renewal call</div>
+                                            <div class="text-gray-600 text-sm">Contract renewal discussion and negotiation</div>
+                                        </div>
+                                        <div class="touchpoint-item">
+                                            <div class="font-medium text-gray-800">EBR/QBR</div>
+                                            <div class="text-gray-600 text-sm">Executive and quarterly business reviews</div>
+                                        </div>
+                                        <div class="touchpoint-item">
+                                            <div class="font-medium text-gray-800">NPS/CSAT surveys</div>
+                                            <div class="text-gray-600 text-sm">Customer satisfaction and loyalty measurement</div>
+                                        </div>
+                                        <div class="touchpoint-item">
+                                            <div class="font-medium text-gray-800">Customer community</div>
+                                            <div class="text-gray-600 text-sm">Peer networking and best practice sharing</div>
+                                        </div>
+                                        <div class="touchpoint-item">
+                                            <div class="font-medium text-gray-800">Referral portal</div>
+                                            <div class="text-gray-600 text-sm">Structured referral and recommendation system</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Content/Assets -->
+                                <div class="framework-step mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Content/Assets (Owned)</h4>
+                                    <ul class="text-blue-700 list-disc list-inside">
+                                        <li>ROI summary pack</li>
+                                        <li>Case study template</li>
+                                        <li>Reference program guide</li>
+                                        <li>Beta invitations</li>
+                                    </ul>
+                                </div>
+
+                                <!-- Leading Metrics -->
+                                <div class="framework-step mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Leading Metrics</h4>
+                                    <div class="grid md:grid-cols-2 gap-3">
+                                        <div class="bg-white p-3 rounded-lg">
+                                            <div class="font-medium text-blue-800">Net revenue retention</div>
+                                            <div class="text-blue-600 text-xs">Revenue growth from existing customers</div>
+                                        </div>
+                                        <div class="bg-white p-3 rounded-lg">
+                                            <div class="font-medium text-blue-800">NPS/CSAT</div>
+                                            <div class="text-blue-600 text-xs">Customer satisfaction and loyalty scores</div>
+                                        </div>
+                                        <div class="bg-white p-3 rounded-lg">
+                                            <div class="font-medium text-blue-800">Referenceable customers</div>
+                                            <div class="text-blue-600 text-xs">Customers willing to provide references</div>
+                                        </div>
+                                        <div class="bg-white p-3 rounded-lg">
+                                            <div class="font-medium text-blue-800">Referrals</div>
+                                            <div class="text-blue-600 text-xs">Customer-generated referrals and leads</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Common Frictions -->
+                                <div class="framework-step mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Common Frictions</h4>
+                                    <p class="text-blue-700">Value not clearly quantified; champion turnover</p>
+                                </div>
+
+                                <!-- Mitigations / Plays -->
+                                <div class="framework-step mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Mitigations / Plays</h4>
+                                    <p class="text-blue-700">Executive value reviews, outcomes-based ROI letters, multi-threaded relationships, training credits</p>
+                                </div>
+
+                                <!-- Internal Owners -->
+                                <div class="framework-step mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">Internal Owners</h4>
+                                    <p class="text-blue-700">CSM, AM, Marketing</p>
+                                </div>
+
+                                <!-- Systems / Tools -->
+                                <div class="framework-step">
+                                    <h4 class="text-blue-800 font-bold mb-3">Systems / Tools</h4>
+                                    <p class="text-blue-700">CS platform, Survey tool, Community, Referral software</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- Phase Gate Framework -->
+                    <section class="section-card hover-lift" id="phase-gate">
+                        <div class="text-center mb-8">
+                            <div class="w-16 h-16 bg-gradient-to-br from-navy to-purple rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                </svg>
+                            </div>
+                            <h2 class="text-3xl font-bold text-navy mb-4">Phase Gate Framework</h2>
+                        </div>
+                        
+                        <div class="prose max-w-none">
+                            <div class="journey-section">
+                                <h3 class="text-blue-800 font-bold mb-6">Stage Gates & Success Criteria</h3>
+                                <p class="text-blue-700 mb-6">
+                                    Clear entry and exit criteria for each customer journey stage, defining progression gates and ownership accountability.
+                                </p>
+                                
+                                <div class="overflow-x-auto">
+                                    <table class="w-full border-collapse bg-white rounded-2xl overflow-hidden shadow-lg">
+                                        <thead>
+                                            <tr class="bg-gradient-to-r from-navy to-purple text-white">
+                                                <th class="p-4 text-left font-bold">Stage</th>
+                                                <th class="p-4 text-left font-bold">Entry Criteria</th>
+                                                <th class="p-4 text-left font-bold">Exit Criteria (Definition of Success)</th>
+                                                <th class="p-4 text-left font-bold">Owner(s)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="border-b border-gray-100 hover:bg-blue-50 transition-colors">
+                                                <td class="p-4 font-semibold text-navy">Awareness</td>
+                                                <td class="p-4 text-gray-700">Prospect engages with content (ad click, webinar signup)</td>
+                                                <td class="p-4 text-gray-700">MQL created with ICP fit (company size, role, segment)</td>
+                                                <td class="p-4 text-gray-700">Marketing</td>
+                                            </tr>
+                                            <tr class="border-b border-gray-100 hover:bg-blue-50 transition-colors">
+                                                <td class="p-4 font-semibold text-navy">Consideration</td>
+                                                <td class="p-4 text-gray-700">Discovery call completed; initial pain & use cases captured</td>
+                                                <td class="p-4 text-gray-700">Solution fit confirmed; technical feasibility validated; demo scheduled</td>
+                                                <td class="p-4 text-gray-700">Sales/Presales</td>
+                                            </tr>
+                                            <tr class="border-b border-gray-100 hover:bg-blue-50 transition-colors">
+                                                <td class="p-4 font-semibold text-navy">Selection / Procurement</td>
+                                                <td class="p-4 text-gray-700">Mutual success plan agreed; pilot criteria defined</td>
+                                                <td class="p-4 text-gray-700">Commercials signed OR pilot success met with exec approval</td>
+                                                <td class="p-4 text-gray-700">Sales/Finance/Legal</td>
+                                            </tr>
+                                            <tr class="border-b border-gray-100 hover:bg-blue-50 transition-colors">
+                                                <td class="p-4 font-semibold text-navy">Onboarding</td>
+                                                <td class="p-4 text-gray-700">Order booked; customer kickoff; admin identified</td>
+                                                <td class="p-4 text-gray-700">First project live; roles provisioned; integrations connected</td>
+                                                <td class="p-4 text-gray-700">CS/Onboarding</td>
+                                            </tr>
+                                            <tr class="border-b border-gray-100 hover:bg-blue-50 transition-colors">
+                                                <td class="p-4 font-semibold text-navy">Early Value</td>
+                                                <td class="p-4 text-gray-700">First project configured; core roles trained</td>
+                                                <td class="p-4 text-gray-700">First RFI & Submittal processed; first punch list created; value story captured</td>
+                                                <td class="p-4 text-gray-700">CSM/Customer Champion</td>
+                                            </tr>
+                                            <tr class="border-b border-gray-100 hover:bg-blue-50 transition-colors">
+                                                <td class="p-4 font-semibold text-navy">Adoption & Expansion</td>
+                                                <td class="p-4 text-gray-700">2+ active projects; dashboards in use</td>
+                                                <td class="p-4 text-gray-700">Standard templates adopted; expansion plan executed</td>
+                                                <td class="p-4 text-gray-700">CSM/Account Mgmt</td>
+                                            </tr>
+                                            <tr class="hover:bg-blue-50 transition-colors">
+                                                <td class="p-4 font-semibold text-navy">Renewal & Advocacy</td>
+                                                <td class="p-4 text-gray-700">Renewal 120-day review scheduled</td>
+                                                <td class="p-4 text-gray-700">Contract renewed; case study/referral agreed</td>
+                                                <td class="p-4 text-gray-700">CSM/AM/Marketing</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- KPIs & Metrics -->
+                    <section class="section-card hover-lift" id="kpis">
+                        <div class="text-center mb-8">
+                            <div class="w-16 h-16 bg-gradient-to-br from-success to-blue rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                                </svg>
+                            </div>
+                            <h2 class="text-3xl font-bold text-navy mb-4">KPIs & Metrics</h2>
+                        </div>
+                        
+                        <div class="prose max-w-none">
+                            <div class="journey-section">
+                                <h3 class="text-blue-800 font-bold mb-6">Customer Journey Performance Metrics</h3>
+                                <p class="text-blue-700 mb-6">
+                                    Comprehensive measurement framework tracking customer progression, success, and value realization across all journey stages.
+                                </p>
+                                
+                                <div class="overflow-x-auto">
+                                    <table class="w-full border-collapse bg-white rounded-2xl overflow-hidden shadow-lg">
+                                        <thead>
+                                            <tr class="bg-gradient-to-r from-navy to-purple text-white">
+                                                <th class="p-4 text-left font-bold">Category</th>
+                                                <th class="p-4 text-left font-bold">Metric</th>
+                                                <th class="p-4 text-left font-bold">Definition</th>
+                                                <th class="p-4 text-left font-bold">Target / Benchmark</th>
+                                                <th class="p-4 text-left font-bold">Stage(s)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="border-b border-gray-100 hover:bg-blue-50 transition-colors">
+                                                <td class="p-4 font-semibold text-navy">Acquisition</td>
+                                                <td class="p-4 text-gray-700">MQL→SQL rate</td>
+                                                <td class="p-4 text-gray-700">% of MQLs accepted by Sales</td>
+                                                <td class="p-4 text-gray-700">30–45%</td>
+                                                <td class="p-4 text-gray-700">Awareness→Consideration</td>
+                                            </tr>
+                                            <tr class="border-b border-gray-100 hover:bg-blue-50 transition-colors">
+                                                <td class="p-4 font-semibold text-navy">Sales</td>
+                                                <td class="p-4 text-gray-700">Win rate</td>
+                                                <td class="p-4 text-gray-700">% of qualified deals won</td>
+                                                <td class="p-4 text-gray-700">25–35% (mid-market construction)</td>
+                                                <td class="p-4 text-gray-700">Consideration→Selection</td>
+                                            </tr>
+                                            <tr class="border-b border-gray-100 hover:bg-blue-50 transition-colors">
+                                                <td class="p-4 font-semibold text-navy">Implementation</td>
+                                                <td class="p-4 text-gray-700">Time-to-first-project</td>
+                                                <td class="p-4 text-gray-700">Days from contract to first project live</td>
+                                                <td class="p-4 text-gray-700">≤30 days</td>
+                                                <td class="p-4 text-gray-700">Onboarding</td>
+                                            </tr>
+                                            <tr class="border-b border-gray-100 hover:bg-blue-50 transition-colors">
+                                                <td class="p-4 font-semibold text-navy">Adoption</td>
+                                                <td class="p-4 text-gray-700">Time-to-first-RFI</td>
+                                                <td class="p-4 text-gray-700">Days until first RFI sent via Closeoutsoft</td>
+                                                <td class="p-4 text-gray-700">≤14 days</td>
+                                                <td class="p-4 text-gray-700">Early Value</td>
+                                            </tr>
+                                            <tr class="border-b border-gray-100 hover:bg-blue-50 transition-colors">
+                                                <td class="p-4 font-semibold text-navy">Adoption</td>
+                                                <td class="p-4 text-gray-700">Weekly Active Field Users</td>
+                                                <td class="p-4 text-gray-700">Unique site users active weekly</td>
+                                                <td class="p-4 text-gray-700">>= 60% of licensed field users</td>
+                                                <td class="p-4 text-gray-700">Early Value/Adoption</td>
+                                            </tr>
+                                            <tr class="border-b border-gray-100 hover:bg-blue-50 transition-colors">
+                                                <td class="p-4 font-semibold text-navy">Value</td>
+                                                <td class="p-4 text-gray-700">Time-to-closeout</td>
+                                                <td class="p-4 text-gray-700">Avg days from substantial completion to handover</td>
+                                                <td class="p-4 text-gray-700">-20% vs baseline</td>
+                                                <td class="p-4 text-gray-700">Adoption</td>
+                                            </tr>
+                                            <tr class="border-b border-gray-100 hover:bg-blue-50 transition-colors">
+                                                <td class="p-4 font-semibold text-navy">Quality</td>
+                                                <td class="p-4 text-gray-700">Rework rate</td>
+                                                <td class="p-4 text-gray-700">% of punch items reopened</td>
+                                                <td class="p-4 text-gray-700"><5%</td>
+                                                <td class="p-4 text-gray-700">Adoption</td>
+                                            </tr>
+                                            <tr class="border-b border-gray-100 hover:bg-blue-50 transition-colors">
+                                                <td class="p-4 font-semibold text-navy">Engagement</td>
+                                                <td class="p-4 text-gray-700">Executive dashboard usage</td>
+                                                <td class="p-4 text-gray-700">Weekly exec views of ROI dashboard</td>
+                                                <td class="p-4 text-gray-700">>=1/week</td>
+                                                <td class="p-4 text-gray-700">Adoption</td>
+                                            </tr>
+                                            <tr class="border-b border-gray-100 hover:bg-blue-50 transition-colors">
+                                                <td class="p-4 font-semibold text-navy">Satisfaction</td>
+                                                <td class="p-4 text-gray-700">NPS</td>
+                                                <td class="p-4 text-gray-700">Net Promoter Score</td>
+                                                <td class="p-4 text-gray-700">>=40</td>
+                                                <td class="p-4 text-gray-700">Renewal</td>
+                                            </tr>
+                                            <tr class="hover:bg-blue-50 transition-colors">
+                                                <td class="p-4 font-semibold text-navy">Revenue</td>
+                                                <td class="p-4 text-gray-700">NRR</td>
+                                                <td class="p-4 text-gray-700">Net Revenue Retention</td>
+                                                <td class="p-4 text-gray-700">>=115%</td>
+                                                <td class="p-4 text-gray-700">Renewal & Expansion</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Customer Personas -->
+                    <section class="section-card hover-lift" id="personas">
+                        <div class="text-center mb-8">
+                            <div class="w-16 h-16 bg-gradient-to-br from-warning to-orange-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                                </svg>
+                            </div>
+                            <h2 class="text-3xl font-bold text-navy mb-4">Customer Personas</h2>
+                        </div>
+                        
+                        <div class="prose max-w-none">
+                            <div class="journey-section">
+                                <h3 class="text-blue-800 font-bold mb-6">Key Stakeholder Profiles</h3>
+                                <p class="text-blue-700 mb-6">
+                                    Detailed persona analysis defining primary concerns, capability requirements, and success measures for each key stakeholder.
+                                </p>
+                                
+                                <div class="overflow-x-auto">
+                                    <table class="w-full border-collapse bg-white rounded-2xl overflow-hidden shadow-lg">
+                                        <thead>
+                                            <tr class="bg-gradient-to-r from-navy to-purple text-white">
+                                                <th class="p-4 text-left font-bold">Persona</th>
+                                                <th class="p-4 text-left font-bold">Top Concerns</th>
+                                                <th class="p-4 text-left font-bold">Must-Have Capabilities</th>
+                                                <th class="p-4 text-left font-bold">Primary Success Measure</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="border-b border-gray-100 hover:bg-blue-50 transition-colors">
+                                                <td class="p-4 font-semibold text-navy">Owner/CFO</td>
+                                                <td class="p-4 text-gray-700">ROI, total cost, risk</td>
+                                                <td class="p-4 text-gray-700">Executive ROI dashboards, forecasting, license flexibility</td>
+                                                <td class="p-4 text-gray-700">Payback period, NRR</td>
+                                            </tr>
+                                            <tr class="border-b border-gray-100 hover:bg-blue-50 transition-colors">
+                                                <td class="p-4 font-semibold text-navy">Ops Director/PMO</td>
+                                                <td class="p-4 text-gray-700">Standardization, adoption, reporting</td>
+                                                <td class="p-4 text-gray-700">Templates/governance, analytics, integrations (MS Project, SharePoint, accounting)</td>
+                                                <td class="p-4 text-gray-700">Project coverage %, cycle-time reductions</td>
+                                            </tr>
+                                            <tr class="border-b border-gray-100 hover:bg-blue-50 transition-colors">
+                                                <td class="p-4 font-semibold text-navy">GC Project Manager</td>
+                                                <td class="p-4 text-gray-700">Speed, fewer emails, sub compliance</td>
+                                                <td class="p-4 text-gray-700">RFIs, Submittals, Change tracking, Closeout packages</td>
+                                                <td class="p-4 text-gray-700">On-time responses, fewer defects</td>
+                                            </tr>
+                                            <tr class="border-b border-gray-100 hover:bg-blue-50 transition-colors">
+                                                <td class="p-4 font-semibold text-navy">Site Superintendent/Foreman</td>
+                                                <td class="p-4 text-gray-700">Mobile ease, offline, photos</td>
+                                                <td class="p-4 text-gray-700">Punch lists, checklists, daily logs, mobile offline</td>
+                                                <td class="p-4 text-gray-700">Daily log compliance, punch closure time</td>
+                                            </tr>
+                                            <tr class="hover:bg-blue-50 transition-colors">
+                                                <td class="p-4 font-semibold text-navy">IT Admin/Security</td>
+                                                <td class="p-4 text-gray-700">SSO, data security, auditability</td>
+                                                <td class="p-4 text-gray-700">SSO (Entra ID), role-based permissions, data export</td>
+                                                <td class="p-4 text-gray-700">Passed security review, zero critical incidents</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- Sample Assets -->
+                    <section class="section-card hover-lift" id="sample-assets">
+                        <div class="text-center mb-8">
+                            <div class="w-16 h-16 bg-gradient-to-br from-purple to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                                </svg>
+                            </div>
+                            <h2 class="text-3xl font-bold text-navy mb-4">Sample Assets</h2>
+                        </div>
+                        
+                        <div class="prose max-w-none">
+                            <div class="journey-section">
+                                <h3 class="text-blue-800 font-bold mb-6">Stage-Aligned Content Assets</h3>
+                                <p class="text-blue-700 mb-6">
+                                    Strategic content library mapped to customer journey stages, designed to accelerate progression and address specific stakeholder needs.
+                                </p>
+                                
+                                <div class="overflow-x-auto">
+                                    <table class="w-full border-collapse bg-white rounded-2xl overflow-hidden shadow-lg">
+                                        <thead>
+                                            <tr class="bg-gradient-to-r from-navy to-purple text-white">
+                                                <th class="p-4 text-left font-bold">Stage</th>
+                                                <th class="p-4 text-left font-bold">Asset Name</th>
+                                                <th class="p-4 text-left font-bold">Purpose</th>
+                                                <th class="p-4 text-left font-bold">Owner</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="border-b border-gray-100 hover:bg-blue-50 transition-colors">
+                                                <td class="p-4 font-semibold text-navy">Awareness</td>
+                                                <td class="p-4 text-gray-700">Construction ROI Calculator (Excel)</td>
+                                                <td class="p-4 text-gray-700">Quantify savings from faster closeout & fewer reworks</td>
+                                                <td class="p-4 text-gray-700">Product Marketing</td>
+                                            </tr>
+                                            <tr class="border-b border-gray-100 hover:bg-blue-50 transition-colors">
+                                                <td class="p-4 font-semibold text-navy">Consideration</td>
+                                                <td class="p-4 text-gray-700">Security & Compliance Pack (PDF)</td>
+                                                <td class="p-4 text-gray-700">Speed InfoSec reviews with standard answers</td>
+                                                <td class="p-4 text-gray-700">Security/IT</td>
+                                            </tr>
+                                            <tr class="border-b border-gray-100 hover:bg-blue-50 transition-colors">
+                                                <td class="p-4 font-semibold text-navy">Selection</td>
+                                                <td class="p-4 text-gray-700">Mutual Success Plan (Doc)</td>
+                                                <td class="p-4 text-gray-700">Define pilot, roles, risks, timeline</td>
+                                                <td class="p-4 text-gray-700">Sales/CS</td>
+                                            </tr>
+                                            <tr class="border-b border-gray-100 hover:bg-blue-50 transition-colors">
+                                                <td class="p-4 font-semibold text-navy">Onboarding</td>
+                                                <td class="p-4 text-gray-700">Data Import Templates (XLSX)</td>
+                                                <td class="p-4 text-gray-700">Accelerate setup for projects & contacts</td>
+                                                <td class="p-4 text-gray-700">Onboarding</td>
+                                            </tr>
+                                            <tr class="border-b border-gray-100 hover:bg-blue-50 transition-colors">
+                                                <td class="p-4 font-semibold text-navy">Early Value</td>
+                                                <td class="p-4 text-gray-700">RFI/Submittal Best Practices (Guide)</td>
+                                                <td class="p-4 text-gray-700">Ensure first wins within 2 weeks</td>
+                                                <td class="p-4 text-gray-700">CS</td>
+                                            </tr>
+                                            <tr class="border-b border-gray-100 hover:bg-blue-50 transition-colors">
+                                                <td class="p-4 font-semibold text-navy">Adoption</td>
+                                                <td class="p-4 text-gray-700">Executive ROI Dashboard (Power BI)</td>
+                                                <td class="p-4 text-gray-700">Keep leadership engaged with outcomes</td>
+                                                <td class="p-4 text-gray-700">CS/Product</td>
+                                            </tr>
+                                            <tr class="hover:bg-blue-50 transition-colors">
+                                                <td class="p-4 font-semibold text-navy">Renewal</td>
+                                                <td class="p-4 text-gray-700">Annual Value Review (Deck)</td>
+                                                <td class="p-4 text-gray-700">Summarize outcomes, roadmap, and next-year plan</td>
+                                                <td class="p-4 text-gray-700">CS/AM</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <!-- Complete Lesson Button -->
+            <div class="text-center mt-16" id="complete-section">
+                <div class="section-card hover-lift">
+                    <h3 class="text-2xl font-bold text-navy mb-6">Ready to Test Your Customer Journey Mapping Knowledge?</h3>
+                    <p class="text-gray-600 mb-8">Validate your understanding of customer journey stages, personas, touchpoints, and optimization strategies.</p>
+                    
+                    <button onclick="startQuiz()" class="bg-gradient-to-r from-purple to-blue text-white px-8 py-4 rounded-2xl font-bold text-lg hover:shadow-lg transform hover:scale-105 transition-all duration-300 flex items-center justify-center mx-auto">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                        Start Quiz
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quiz Section (Hidden initially) -->
+            <div class="mt-16 section-card" id="quiz-section" style="display: none;">
+                <div class="text-center mb-8">
+                    <div class="w-16 h-16 bg-gradient-to-br from-navy to-purple rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                    </div>
+                    <h2 class="text-3xl font-bold text-navy mb-4">Customer Journey Mapping Assessment</h2>
+                    <p class="text-gray-600">Test your understanding of journey stages, persona alignment, and customer engagement strategies.</p>
+                </div>
+
+                <div class="mb-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-navy font-semibold">Question <span id="current-question">1</span> of <span id="total-questions">10</span></span>
+                        <div class="w-32 h-2 bg-gray-200 rounded-full overflow-hidden">
+                            <div class="h-full bg-purple rounded-full transition-all duration-300" id="quiz-progress" style="width: 10%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="quiz-container">
+                    <h3 id="question-text" class="text-xl font-bold text-navy mb-6"></h3>
+                    <div id="answers-container" class="space-y-3">
+                        <!-- Quiz options will be inserted here -->
+                    </div>
+                </div>
+
+                <div class="flex justify-between mt-8">
+                    <button id="prev-btn" onclick="previousQuestion()" class="px-6 py-3 bg-gray-200 text-gray-600 rounded-xl font-semibold hover:bg-gray-300 transition-colors flex items-center" disabled>
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                        </svg>
+                        Previous
+                    </button>
+                    <button id="next-btn" onclick="nextQuestion()" class="px-6 py-3 bg-gradient-to-r from-purple to-blue text-white rounded-xl font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-300 flex items-center" disabled>
+                        Next
+                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Quiz Results -->
+                <div id="quiz-results" class="mt-8 text-center" style="display: none;">
+                    <div id="results-content">
+                        <!-- Results will be inserted here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Customer journey focused quiz questions
+        const quizQuestions = [
+            {
+                question: "How many stages are defined in the complete customer journey framework?",
+                options: [
+                    "5 stages",
+                    "6 stages",
+                    "7 stages",
+                    "8 stages"
+                ],
+                correct: 2
+            },
+            {
+                question: "Which personas are involved in the Awareness stage?",
+                options: [
+                    "Customer Owner/Principal, Ops Director, PM",
+                    "Ops Director, PM, IT Admin",
+                    "Customer Owner/CFO, Ops Director, Procurement",
+                    "Project Admin, PM, Site Superintendent"
+                ],
+                correct: 0
+            },
+            {
+                question: "What is the primary customer goal in the Selection/Procurement stage?",
+                options: [
+                    "Understand product capabilities",
+                    "Validate technical fit and integrations",
+                    "De-risk purchase, confirm ROI, finalize terms",
+                    "Go live quickly and train users"
+                ],
+                correct: 2
+            },
+            {
+                question: "Which touchpoint is NOT part of the Awareness stage channels?",
+                options: [
+                    "SEO/Website",
+                    "Industry webinars",
+                    "Live chat",
+                    "Trade shows"
+                ],
+                correct: 2
+            },
+            {
+                question: "The Onboarding/Implementation stage timeframe is defined as:",
+                options: [
+                    "Weeks 0-2",
+                    "Weeks 0-4", 
+                    "Days 15-30",
+                    "Days 30-60"
+                ],
+                correct: 1
+            },
+            {
+                question: "What is a leading metric for the Early Value stage (Days 15-45)?",
+                options: [
+                    "Site traffic",
+                    "Demo requests",
+                    "Time-to-first-RFI",
+                    "Net revenue retention"
+                ],
+                correct: 2
+            },
+            {
+                question: "Which common friction is identified in the Consideration stage?",
+                options: [
+                    "Too many vendors",
+                    "Integration anxiety",
+                    "Budget approval delays",
+                    "Champion turnover"
+                ],
+                correct: 1
+            },
+            {
+                question: "The CFO persona is most prominently involved in which stages?",
+                options: [
+                    "Awareness and Consideration",
+                    "Consideration and Selection/Procurement",
+                    "Selection/Procurement and Renewal & Advocacy",
+                    "Adoption & Expansion and Renewal & Advocacy"
+                ],
+                correct: 3
+            },
+            {
+                question: "Which system/tool is used across the most journey stages?",
+                options: [
+                    "CRM",
+                    "Marketing Automation",
+                    "Demo environment",
+                    "Analytics"
+                ],
+                correct: 0
+            },
+            {
+                question: "What mitigation is suggested for 'Value not clearly quantified' friction?",
+                options: [
+                    "Interactive demos with sample jobs",
+                    "Flexible packaging options",
+                    "Executive value reviews",
+                    "Change management toolkit"
+                ],
+                correct: 2
+            }
+        ];
+
+        let currentQuizQuestion = 0;
+        let userAnswers = [];
+        let lessonProgress = 0;
+        let checklistCompleted = 0;
+
+        // Initialize page with enhanced animations
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeAnimations();
+            setupScrollProgress();
+            setupTableOfContents();
+            updateLessonProgress(0);
+            updateChecklistProgress();
+        });
+
+        function initializeAnimations() {
+            // Set initial states for enhanced animations
+            gsap.set("#nav-header", { y: -100, opacity: 0 });
+            gsap.set("#main-title", { y: -60, opacity: 0, scale: 0.9 });
+            gsap.set("#progress-indicator", { y: 40, opacity: 0, scale: 0.8 });
+            gsap.set("#toc-container", { x: -80, opacity: 0 });
+            gsap.set("#content-section > section", { y: 100, opacity: 0 });
+            gsap.set("#complete-section", { y: 60, opacity: 0, scale: 0.9 });
+
+            // Enhanced animation timeline
+            const tl = gsap.timeline();
+
+            tl.to("#nav-header", {
+                duration: 1,
+                y: 0,
+                opacity: 1,
+                ease: "back.out(1.7)"
+            })
+            .to("#main-title", {
+                duration: 1.2,
+                y: 0,
+                opacity: 1,
+                scale: 1,
+                ease: "back.out(1.4)"
+            }, "-=0.6")
+            .to("#progress-indicator", {
+                duration: 0.8,
+                y: 0,
+                opacity: 1,
+                scale: 1,
+                ease: "back.out(1.7)"
+            }, "-=0.4")
+            .to("#toc-container", {
+                duration: 1,
+                x: 0,
+                opacity: 1,
+                ease: "power3.out"
+            }, "-=0.8")
+            .to("#content-section > section", {
+                duration: 1,
+                y: 0,
+                opacity: 1,
+                stagger: 0.15,
+                ease: "power3.out",
+                onComplete: () => {
+                    updateLessonProgress(75);
+                }
+            }, "-=1")
+            .to("#complete-section", {
+                duration: 0.8,
+                y: 0,
+                opacity: 1,
+                scale: 1,
+                ease: "back.out(1.7)"
+            }, "-=0.3");
+        }
+
+        function setupScrollProgress() {
+            window.addEventListener('scroll', () => {
+                const scrollProgress = document.getElementById('scroll-progress');
+                const scrollTop = window.pageYOffset;
+                const docHeight = document.body.offsetHeight - window.innerHeight;
+                const scrollPercent = scrollTop / docHeight;
+                
+                gsap.to(scrollProgress, {
+                    duration: 0.2,
+                    scaleX: scrollPercent,
+                    ease: "power3.out"
+                });
+            });
+        }
+
+         // Enhanced Table of Contents functionality
+        function setupTableOfContents() {
+            const tocLinks = document.querySelectorAll('.toc-item');
+            const sections = document.querySelectorAll('section[id]');
+
+            tocLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('href').substring(1);
+                    const targetSection = document.getElementById(targetId);
+                    if (targetSection) {
+                        // Calculate offset position
+                        const offsetTop = targetSection.offsetTop - 120;
+                        
+                        // Try GSAP scrollTo first, with fallback to native smooth scroll
+                        if (typeof gsap !== 'undefined' && gsap.plugins.ScrollToPlugin) {
+                            gsap.to(window, {
+                                duration: 1,
+                                scrollTo: { y: offsetTop },
+                                ease: "power2.inOut"
+                            });
+                        } else {
+                            // Fallback to native smooth scroll
+                            window.scrollTo({
+                                top: offsetTop,
+                                behavior: 'smooth'
+                            });
+                        }
+                        
+                        // Update active state immediately
+                        tocLinks.forEach(l => l.classList.remove('active'));
+                        link.classList.add('active');
+                    }
+                });
+            });
+
+            // Enhanced intersection observer for active state
+            const observerOptions = {
+                rootMargin: '-120px 0px -50% 0px',
+                threshold: [0, 0.25, 0.5, 0.75, 1]
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                let activeEntry = null;
+                let maxIntersectionRatio = 0;
+                
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && entry.intersectionRatio > maxIntersectionRatio) {
+                        maxIntersectionRatio = entry.intersectionRatio;
+                        activeEntry = entry;
+                    }
+                });
+                
+                if (activeEntry) {
+                    const activeId = activeEntry.target.id;
+                    tocLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${activeId}`) {
+                            link.classList.add('active');
+                            
+                            // Scroll the TOC to keep active item visible
+                            const tocContainer = document.querySelector('.toc');
+                            const linkRect = link.getBoundingClientRect();
+                            const tocRect = tocContainer.getBoundingClientRect();
+                            
+                            if (linkRect.bottom > tocRect.bottom || linkRect.top < tocRect.top) {
+                                link.scrollIntoView({ 
+                                    behavior: 'smooth', 
+                                    block: 'center' 
+                                });
+                            }
+                            
+                            // Add pulse animation to active item
+                            if (typeof gsap !== 'undefined') {
+                                gsap.to(link, {
+                                    scale: 1.05,
+                                    duration: 0.3,
+                                    ease: "power2.out",
+                                    yoyo: true,
+                                    repeat: 1
+                                });
+                            }
+                        }
+                    });
+                }
+            }, observerOptions);
+
+            sections.forEach(section => observer.observe(section));
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            setupTableOfContents();
+
+            // Add initial animation
+            gsap.set("#toc-container", { x: -80, opacity: 0 });
+            gsap.to("#toc-container", {
+                duration: 1,
+                x: 0,
+                opacity: 1,
+                ease: "power3.out"
+            });
+
+            // Animate TOC items
+            gsap.fromTo(".toc-item", 
+                { y: 20, opacity: 0 },
+                { 
+                    y: 0, 
+                    opacity: 1, 
+                    duration: 0.6, 
+                    stagger: 0.05, 
+                    ease: "power2.out",
+                    delay: 0.3
+                }
+            );
+        });
+
+            // Enhanced intersection observer for active state
+            const observerOptions = {
+                rootMargin: '-15% 0px -75% 0px',
+                threshold: [0, 0.25, 0.5, 0.75, 1]
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const activeId = entry.target.id;
+                        tocLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === `#${activeId}`) {
+                                link.classList.add('active');
+                                // Add pulse animation to active item
+                                gsap.to(link, {
+                                    scale: 1.05,
+                                    duration: 0.3,
+                                    ease: "power2.out",
+                                    yoyo: true,
+                                    repeat: 1
+                                });
+                            }
+                        });
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => observer.observe(section));
+
+        function updateLessonProgress(percentage) {
+            let finalPercentage;
+
+            if (percentage === null || percentage === undefined) {
+                // No score yet
+                finalPercentage = 0;
+            } else if (percentage >= 80) {
+                // Passed the quiz
+                finalPercentage = 100;
+            } else {
+                // Score below passing
+                finalPercentage = percentage;
+            }
+
+            lessonProgress = finalPercentage;
+            document.getElementById('progress-text').textContent = `${finalPercentage}%`;
+
+            // Animate main progress bar
+            gsap.to("#progress-bar", {
+                duration: 1.5,
+                width: `${finalPercentage}%`,
+                ease: "power2.out"
+            });
+
+            // Animate secondary lesson progress if element exists
+            const lessonProgressEl = document.getElementById('lesson-progress');
+            if (lessonProgressEl) {
+                gsap.to("#lesson-progress", {
+                    duration: 1.5,
+                    width: `${finalPercentage === 100 ? 100 : Math.min(finalPercentage / 4, 100)}%`,
+                    ease: "power2.out"
+                });
+            }
+        }
+
+        function startQuiz() {
+            currentQuizQuestion = 0;
+            userAnswers = [];
+            
+            document.getElementById('quiz-section').style.display = 'block';
+            
+            gsap.fromTo("#quiz-section", 
+                { y: 100, opacity: 0, scale: 0.95 },
+                { 
+                    duration: 1, 
+                    y: 0, 
+                    opacity: 1, 
+                    scale: 1, 
+                    ease: "back.out(1.7)",
+                    onComplete: () => {
+                        document.getElementById('quiz-section').scrollIntoView({ 
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                }
+            );
+            
+            loadQuizQuestion();
+        }
+
+        function loadQuizQuestion() {
+            const question = quizQuestions[currentQuizQuestion];
+            const totalQuestions = quizQuestions.length;
+            
+            document.getElementById('current-question').textContent = currentQuizQuestion + 1;
+            document.getElementById('total-questions').textContent = totalQuestions;
+            document.getElementById('question-text').textContent = question.question;
+            
+            const quizProgressPercent = ((currentQuizQuestion + 1) / totalQuestions) * 100;
+            gsap.to("#quiz-progress", {
+                duration: 0.8,
+                width: `${quizProgressPercent}%`,
+                ease: "power2.out"
+            });
+            
+            const answersContainer = document.getElementById('answers-container');
+            answersContainer.innerHTML = '';
+
+            question.options.forEach((option, index) => {
+                const answerDiv = document.createElement('div');
+                answerDiv.className = 'answer-option p-6 border-2 border-gray-200 rounded-2xl cursor-pointer hover:border-purple hover:bg-gradient-to-r hover:from-purple/5 hover:to-blue/5 transition-all duration-300 transform hover:scale-102 hover:shadow-lg';
+                answerDiv.innerHTML = `
+                    <div class="flex items-center">
+                        <div class="w-8 h-8 border-2 border-gray-300 rounded-full mr-4 flex items-center justify-center font-bold text-gray-500 transition-all duration-300">
+                            ${String.fromCharCode(65 + index)}
+                        </div>
+                        <span class="text-lg font-medium text-gray-700">${option}</span>
+                    </div>
+                `;
+                answerDiv.onclick = () => selectAnswer(index, answerDiv);
+                answersContainer.appendChild(answerDiv);
+            });
+            
+            document.getElementById('prev-btn').disabled = currentQuizQuestion === 0;
+            document.getElementById('next-btn').disabled = true;
+            document.getElementById('next-btn').innerHTML = 
+                currentQuizQuestion === totalQuestions - 1 ? 
+                'Complete Assessment<svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>' : 
+                'Next<svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>';
+            
+            if (userAnswers[currentQuizQuestion] !== undefined) {
+                const selectedIndex = userAnswers[currentQuizQuestion];
+                const answerOptions = document.querySelectorAll('.answer-option');
+                if (answerOptions[selectedIndex]) {
+                    selectAnswer(selectedIndex, answerOptions[selectedIndex]);
+                }
+            }
+            
+            gsap.fromTo(".answer-option", 
+                { y: 30, opacity: 0 },
+                { 
+                    y: 0, 
+                    opacity: 1, 
+                    duration: 0.6, 
+                    stagger: 0.1, 
+                    ease: "back.out(1.7)" 
+                }
+            );
+        }
+
+        function selectAnswer(answerIndex, answerElement) {
+            document.querySelectorAll('.answer-option').forEach(opt => {
+                opt.classList.remove('border-purple-500', 'bg-purple-50', 'ring-2', 'ring-purple-200');
+                opt.classList.add('border-gray-200');
+            });
+            
+            // Mark selected answer
+            answerElement.classList.remove('border-gray-200');
+            answerElement.classList.add('border-purple-500', 'bg-purple-50', 'ring-2', 'ring-purple-200');
+            
+            userAnswers[currentQuizQuestion] = answerIndex;
+            document.getElementById('next-btn').disabled = false;
+            
+            gsap.to(answerElement, {
+                duration: 0.3,
+                scale: 1.02,
+                ease: "power2.out",
+                yoyo: true,
+                repeat: 1
+            });
+        }
+
+        function nextQuestion() {
+            if (currentQuizQuestion < quizQuestions.length - 1) {
+                gsap.to("#quiz-container", {
+                    duration: 0.3,
+                    opacity: 0,
+                    x: -50,
+                    ease: "power2.in",
+                    onComplete: () => {
+                        currentQuizQuestion++;
+                        loadQuizQuestion();
+                        gsap.fromTo("#quiz-container", 
+                            { opacity: 0, x: 50 },
+                            { duration: 0.4, opacity: 1, x: 0, ease: "power2.out" }
+                        );
+                    }
+                });
+            } else {
+                finishQuiz();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuizQuestion > 0) {
+                gsap.to("#quiz-container", {
+                    duration: 0.3,
+                    opacity: 0,
+                    x: 50,
+                    ease: "power2.in",
+                    onComplete: () => {
+                        currentQuizQuestion--;
+                        loadQuizQuestion();
+                        gsap.fromTo("#quiz-container", 
+                            { opacity: 0, x: -50 },
+                            { duration: 0.4, opacity: 1, x: 0, ease: "power2.out" }
+                        );
+                    }
+                });
+            }
+        }
+
+        function finishQuiz() {
+            let correctAnswers = 0;
+            quizQuestions.forEach((question, index) => {
+                if (userAnswers[index] === question.correct) {
+                    correctAnswers++;
+                }
+            });
+            
+            const score = (correctAnswers / quizQuestions.length) * 100;
+            const passed = score >= 80;
+            
+            showQuizResults(score, correctAnswers, passed);
+            
+            if (passed) {
+                updateLessonProgress(100);
+            }
+        }
+
+        function showQuizResults(score, correctAnswers, passed) {
+            // Remove old modal if exists
+            const oldModal = document.getElementById("quiz-results-modal");
+            if (oldModal) oldModal.remove();
+
+            // Create modal overlay
+            const modal = document.createElement("div");
+            modal.id = "quiz-results-modal";
+            modal.style.position = "fixed";
+            modal.style.top = "0";
+            modal.style.left = "0";
+            modal.style.width = "100%";
+            modal.style.height = "100%";
+            modal.style.backgroundColor = "rgba(0,0,0,0.6)";
+            modal.style.display = "flex";
+            modal.style.alignItems = "center";
+            modal.style.justifyContent = "center";
+            modal.style.zIndex = "9999";
+            modal.style.overflowY = "auto";
+            modal.style.padding = "1rem";
+
+            // Modal content wrapper
+            const modalContent = document.createElement("div");
+            modalContent.style.maxWidth = "700px";
+            modalContent.style.width = "100%";
+            modalContent.style.position = "relative";
+            modalContent.id = "quiz-results-content";
+
+            // Close button
+            const closeBtn = document.createElement("button");
+            closeBtn.innerHTML = "&times;";
+            closeBtn.style.position = "absolute";
+            closeBtn.style.top = "1rem";
+            closeBtn.style.right = "1rem";
+            closeBtn.style.fontSize = "2rem";
+            closeBtn.style.color = "#666";
+            closeBtn.style.background = "transparent";
+            closeBtn.style.border = "none";
+            closeBtn.style.cursor = "pointer";
+            closeBtn.onclick = () => {
+                gsap.to(modal, {
+                    duration: 0.5,
+                    opacity: 0,
+                    scale: 0.9,
+                    ease: "power2.in",
+                    onComplete: () => modal.remove()
+                });
+            };
+
+            // Insert passed/failed content into modal
+            if (passed) {
+                modalContent.innerHTML = `
+                    <div style="background: linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%); border: 2px solid #a7f3d0; border-radius: 24px; padding: 2.5rem;">
+                        <div style="width: 96px; height: 96px; background: linear-gradient(135deg, #10b981 0%, #059669 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem auto; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);">
+                            <svg style="width: 48px; height: 48px; color: white;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                        </div>
+                        <h3 style="font-size: 2.25rem; font-weight: bold; color: #065f46; margin-bottom: 1.5rem; text-align: center;">🎉 Customer Journey Mastery!</h3>
+                        <div style="font-size: 1.875rem; font-weight: bold; background: linear-gradient(135deg, #6C4193 0%, #0096C7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 1rem; text-align: center;">
+                            ${score.toFixed(1)}% Score
+                        </div>
+                        <p style="font-size: 1.25rem; color: #047857; margin-bottom: 2rem; text-align: center;">
+                            You correctly answered ${correctAnswers} out of ${quizQuestions.length} questions
+                        </p>
+                        <div style="background: rgba(255, 255, 255, 0.7); padding: 1.5rem; border-radius: 16px; margin-bottom: 2rem; border: 1px solid #a7f3d0; text-align: center;">
+                            <p style="font-size: 1.125rem; color: #059669;">
+                                Outstanding! You've Passed!
+                            </p>
+                        </div>
+                        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                            <button id="reviewAssessmentBtn" class="px-8 py-4 bg-white text-emerald-700 border-2 border-emerald-300 rounded-2xl font-semibold hover:bg-emerald-50 transition-colors inline-flex items-center group">
+                                Review Assessment
+                            </button>
+                            <a href="lesson-6.html" class="inline-flex items-center px-8 py-4 bg-white border-2 border-emerald-300 text-black rounded-2xl font-semibold hover:shadow-2xl transform hover:scale-105 transition-all duration-300 group">
+                                Continue Training Journey
+                            </a>
+                        </div>
+                    </div>
+                `;
+            } else {
+                modalContent.innerHTML = `
+                    <div style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border: 2px solid #f59e0b; border-radius: 24px; padding: 2.5rem;">
+                        <div style="width: 96px; height: 96px; background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem auto; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);">
+                            <svg style="width: 48px; height: 48px; color: white;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                            </svg>
+                        </div>
+                        <h3 style="font-size: 2.25rem; font-weight: bold; color: #92400e; margin-bottom: 1.5rem; text-align: center;">Keep Learning! 📚</h3>
+                        <div style="font-size: 1.875rem; font-weight: bold; color: #d97706; margin-bottom: 1rem; text-align: center;">
+                            ${score.toFixed(1)}% Score
+                        </div>
+                        <p style="font-size: 1.25rem; color: #b45309; margin-bottom: 2rem; text-align: center;">
+                            You answered ${correctAnswers} out of ${quizQuestions.length} questions correctly
+                        </p>
+                        <div style="background: rgba(255, 255, 255, 0.7); padding: 1.5rem; border-radius: 16px; margin-bottom: 2rem; border: 1px solid #f59e0b; text-align: center;">
+                            <p style="font-size: 1.125rem; color: #d97706;">
+                                You need 80% or higher to pass.
+                            </p>
+                        </div>
+                        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                            <button id="retakeBtn" class="px-8 py-4 bg-gradient-to-r from-purple to-blue text-white rounded-2xl font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-300">
+                                Retake Assessment
+                            </button>
+                            <button id="reviewLessonBtn" class="px-8 py-4 bg-white text-orange-700 border-2 border-orange-300 rounded-2xl font-semibold hover:bg-orange-50 transition-colors">
+                                Review Lesson Content
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            modalContent.appendChild(closeBtn);
+            modal.appendChild(modalContent);
+            document.body.appendChild(modal);
+
+            // Animate modal
+            gsap.fromTo(modalContent, 
+                { y: 50, opacity: 0, scale: 0.9 },
+                { duration: 0.8, y: 0, opacity: 1, scale: 1, ease: "back.out(1.7)" }
+            );
+
+            // Smooth close + action for buttons
+            const reviewAssessmentBtn = document.getElementById("reviewAssessmentBtn");
+            if (reviewAssessmentBtn) {
+                reviewAssessmentBtn.addEventListener("click", () => {
+                    gsap.to(modal, {
+                        duration: 0.5,
+                        opacity: 0,
+                        scale: 0.9,
+                        ease: "power2.in",
+                        onComplete: () => {
+                            modal.remove();
+                            retakeQuiz();
+                        }
+                    });
+                });
+            }
+
+            const retakeBtn = document.getElementById("retakeBtn");
+            if (retakeBtn) {
+                retakeBtn.addEventListener("click", () => {
+                    gsap.to(modal, {
+                        duration: 0.5,
+                        opacity: 0,
+                        scale: 0.9,
+                        ease: "power2.in",
+                        onComplete: () => {
+                            modal.remove();
+                            retakeQuiz();
+                        }
+                    });
+                });
+            }
+
+            const reviewLessonBtn = document.getElementById("reviewLessonBtn");
+            if (reviewLessonBtn) {
+                reviewLessonBtn.addEventListener("click", () => {
+                    gsap.to(modal, {
+                        duration: 0.5,
+                        opacity: 0,
+                        scale: 0.9,
+                        ease: "power2.in",
+                        onComplete: () => {
+                            modal.remove();
+                            reviewLesson();
+                        }
+                    });
+                });
+            }
+            
+            document.getElementById('quiz-results').style.display = 'block';
+            
+            gsap.fromTo("#quiz-results", 
+                { y: 50, opacity: 0, scale: 0.9 },
+                { 
+                    duration: 1, 
+                    y: 0, 
+                    opacity: 1, 
+                    scale: 1, 
+                    ease: "back.out(1.7)" 
+                }
+            );
+        }
+
+        function createFloatingElement(emoji, x, y) {
+            const element = document.createElement('div');
+            element.textContent = emoji;
+            element.style.position = 'fixed';
+            element.style.left = x + 'px';
+            element.style.top = y + 'px';
+            element.style.fontSize = '2rem';
+            element.style.pointerEvents = 'none';
+            element.style.zIndex = '9999';
+            document.body.appendChild(element);
+
+            gsap.to(element, {
+                y: -200,
+                rotation: 360,
+                opacity: 0,
+                duration: 2,
+                ease: "power2.out",
+                onComplete: () => element.remove()
+            });
+        }
+
+        function retakeQuiz() {
+            currentQuizQuestion = 0;
+            userAnswers = [];
+            document.getElementById('quiz-results').style.display = 'none';
+            
+            gsap.to("#quiz-container", {
+                duration: 0.4,
+                opacity: 1,
+                scale: 1,
+                ease: "power2.out"
+            });
+            
+            loadQuizQuestion();
+        }
+
+        function reviewLesson() {
+            gsap.to(window, {
+                duration: 1.5,
+                scrollTo: { y: "#overview", offsetY: 100 },
+                ease: "power2.inOut"
+            });
+        }
+        finishQuiz(scorePercentage, 5);
+    </script>
+</body>
+<script src="../script/quiz-logic.js"></script>
+<script src="../script/page-preview-logic.js"></script>
+</html>

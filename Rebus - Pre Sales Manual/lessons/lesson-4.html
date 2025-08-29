@@ -1,0 +1,2649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 4 - Assessment & Field Readiness | Pre-Sales Excellence Training</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+    <script src="../style/tailwind.config.js"></script>
+    <link rel="stylesheet" href="../style/style.css">
+    <link rel="icon" type="image/x-icon" href="../image/favicon.ico">
+    <style>
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #6C4193 0%, #0096C7 100%);
+            transform-origin: left;
+            z-index: 1000;
+        }
+
+        .section-card {
+            background: white;
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border: 1px solid rgba(229, 231, 235, 0.8);
+        }
+
+        .hover-lift {
+            transition: all 0.3s ease;
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.1);
+            border-color: #6C4193;
+        }
+
+        .step-card {
+            background: linear-gradient(135deg, #fff 0%, #f8fafc 100%);
+            border: 2px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .step-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #6C4193 0%, #0096C7 100%);
+        }
+
+        .step-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px -8px rgba(0, 0, 0, 0.15);
+            border-color: #6C4193;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 16px;
+            margin: 1.5rem 0;
+        }
+
+        .checklist-item {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: between;
+        }
+
+        .checklist-item:hover {
+            border-color: #6C4193;
+            box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.1);
+        }
+
+        .checklist-checkbox {
+            width: 24px;
+            height: 24px;
+            border: 2px solid #d1d5db;
+            border-radius: 6px;
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .checklist-checkbox:hover {
+            border-color: #6C4193;
+            background-color: #f3f4f6;
+        }
+
+        .checklist-checkbox.checked {
+            background-color: #10B981;
+            border-color: #10B981;
+            color: white;
+        }
+
+        .toc {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(229, 231, 235, 0.6);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            position: sticky;
+            top: 120px;
+            z-index: 40;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            max-height: calc(100vh - 150px);
+            overflow-y: auto;
+        }
+
+        .toc-item {
+            display: block;
+            padding: 0.75rem 1.25rem;
+            color: #4a5568;
+            text-decoration: none;
+            border-radius: 12px;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .toc::-webkit-scrollbar-track {
+            background: rgba(243, 244, 246, 0.5);
+            border-radius: 3px;
+        }
+        
+        .toc::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #6C4193 0%, #0096C7 100%);
+            border-radius: 3px;
+        }
+        
+        .toc::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #5a3579 0%, #007ba3 100%);
+        }
+
+        .toc-item:hover {
+            background: linear-gradient(145deg, #f7fafc, #e2e8f0);
+            color: #6C4193;
+            transform: translateX(5px);
+        }
+
+        .toc-item.active {
+            background: linear-gradient(135deg, #6C4193 0%, #0096C7 100%);
+            color: white;
+            box-shadow: 0 4px 14px 0 rgba(108, 65, 147, 0.3);
+        }
+
+        .framework-step {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-left: 4px solid #0096C7;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .framework-step:hover {
+            transform: translateX(8px);
+            box-shadow: 0 8px 25px -8px rgba(0, 150, 199, 0.3);
+        }
+
+        .readiness-level {
+            background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%);
+            border: 2px solid #6C4193;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .readiness-level:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 25px -8px rgba(108, 65, 147, 0.4);
+        }
+
+        .assessment-section {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border: 2px solid #0096C7;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .progress-badge {
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .role-card {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 2px solid #f59e0b;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .role-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 25px -8px rgba(245, 158, 11, 0.4);
+        }
+
+        .competency-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .competency-item {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .competency-item:hover {
+            background: white;
+            border-color: #6C4193;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scroll-progress"></div>
+
+    <!-- Navigation Header -->
+    <nav class="bg-white/95 backdrop-filter backdrop-blur-lg shadow-lg sticky top-0 z-50 border-b border-gray-200/60" id="nav-header">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="../index.html" class="flex items-center space-x-3 text-navy hover:text-purple transition-colors group">
+                    <svg class="w-6 h-6 group-hover:transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                    </svg>
+                    <span class="font-bold text-lg">Back to Home</span>
+                </a>
+                
+                <div class="flex items-center space-x-6">
+                    <span class="text-navy font-semibold">Lesson 4 of 8</span>
+                    <div class="w-40 h-3 bg-gray-200 rounded-full overflow-hidden">
+                        <div class="h-full bg-gradient-to-r from-purple via-blue to-emerald rounded-full transition-all duration-500" style="width: 50%" id="lesson-progress"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="min-h-screen py-12">
+        <div class="max-w-6xl mx-auto px-8">
+            
+            <!-- Main Title -->
+            <div class="text-center mb-12" id="main-title">
+                <h1 class="text-6xl font-bold mb-6">
+                    <span class="text-navy">Assessment &</span><br>
+                    <span class="text-navy">Field Readiness</span><br>
+                    <span class="text-navy">Process</span>
+                </h1>
+                <p class="text-xl text-gray-600 opacity-90">Pre-Sales Excellence Certification Framework</p>
+                <p class="text-lg text-gray-500 mt-2">Sales Enablement Training | Version 0.1 | Last Updated: July 22, 2025</p>
+                <div class="w-24 h-1 bg-gradient-to-r from-purple to-blue mx-auto mt-6 rounded-full"></div>
+            </div>
+
+            <!-- Progress Indicator -->
+            <div class="bg-white bg-opacity-95 rounded-2xl p-6 mb-12 shadow-lg max-w-md mx-auto border border-gray-100" id="progress-indicator">
+                <div class="text-navy font-semibold mb-3 text-center">
+                    Lesson Progress: <span id="progress-text" class="text-purple">0%</span>
+                </div>
+                <div class="w-full h-3 bg-gray-200 rounded-full overflow-hidden">
+                    <div class="h-full bg-gradient-to-r from-purple to-blue rounded-full transition-all duration-700 ease-out" style="width: 0%" id="progress-bar"></div>
+                </div>
+            </div>
+
+            <div class="flex gap-8">
+                <!-- Table of Contents -->
+                <div class="w-1/3" id="toc-container">
+                    <div class="toc">
+                        <h3 class="font-bold text-navy mb-6 text-xl">Navigation Menu</h3>
+                        <div class="toc-content">
+                            <nav class="space-y-1">
+                                <a href="#overview" class="toc-item flex items-center">
+                                    <svg class="w-4 h-4 mr-3 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                    Overview
+                                </a>
+                                <a href="#planning" class="toc-item flex items-center">
+                                    <svg class="w-4 h-4 mr-3 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+                                    Planning & Role Definition
+                                </a>
+                                <a href="#training-verification" class="toc-item flex items-center">
+                                    <svg class="w-4 h-4 mr-3 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                    Training Verification
+                                </a>
+                                <a href="#assessment" class="toc-item flex items-center">
+                                    <svg class="w-4 h-4 mr-3 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                    Skills Assessment
+                                </a>
+                                <a href="#simulation" class="toc-item flex items-center">
+                                    <svg class="w-4 h-4 mr-3 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                                    End-User Simulation
+                                </a>
+                                <a href="#documentation" class="toc-item flex items-center">
+                                    <svg class="w-4 h-4 mr-3 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                                    Documentation & Process
+                                </a>
+                                <a href="#certification" class="toc-item flex items-center">
+                                    <svg class="w-4 h-4 mr-3 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+                                    Field Readiness Certification
+                                </a>
+                                <a href="#monitoring" class="toc-item flex items-center">
+                                    <svg class="w-4 h-4 mr-3 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                                    Continuous Monitoring
+                                </a>
+                                <a href="#checklist" class="toc-item flex items-center">
+                                    <svg class="w-4 h-4 mr-3 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                    Readiness Checklist
+                                </a>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Content -->
+                <div class="w-2/3 space-y-16" id="content-section">
+                    
+                    <!-- Overview -->
+                    <section class="section-card hover-lift" id="overview">
+                        <div class="text-center mb-8">
+                            <div class="w-16 h-16 bg-gradient-to-br from-purple to-blue rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                </svg>
+                            </div>
+                            <h2 class="text-3xl font-bold text-navy mb-4">Field Readiness Framework Overview</h2>
+                        </div>
+                        
+                        <div class="prose max-w-none">
+                            <div class="highlight-box">
+                                <h3 class="text-white text-xl font-bold mb-4">Systematic Certification Process</h3>
+                                <p class="text-gray-100">
+                                    This comprehensive assessment framework ensures pre-sales professionals are fully prepared for customer-facing roles through structured evaluation, skill validation, and continuous improvement monitoring.
+                                </p>
+                            </div>
+
+                            <div class="grid md:grid-cols-2 gap-6 mt-8">
+                                <div class="feature-card">
+                                    <h4>📋 Structured Assessment</h4>
+                                    <p>Multi-stage evaluation process covering knowledge, skills, and practical application across all pre-sales competencies.</p>
+                                </div>
+                                <div class="feature-card">
+                                    <h4>🎯 Role-Based Certification</h4>
+                                    <p>Tailored readiness levels for different pre-sales roles, from product familiarity to independent field readiness.</p>
+                                </div>
+                                <div class="feature-card">
+                                    <h4>🔄 Continuous Improvement</h4>
+                                    <p>Ongoing monitoring and feedback loops to maintain excellence and adapt to market changes.</p>
+                                </div>
+                                <div class="feature-card">
+                                    <h4>✅ Quality Assurance</h4>
+                                    <p>Standardized checklist and metrics to ensure consistent readiness standards across the organization.</p>
+                                </div>
+                            </div>
+
+                            <div class="mt-8 p-6 bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl border border-blue-200">
+                                <h3 class="text-blue-800 font-bold mb-4">Assessment Objectives</h3>
+                                <ul class="space-y-2 text-blue-700">
+                                    <li>✅ Validate comprehensive pre-sales competency development</li>
+                                    <li>✅ Ensure consistent field readiness standards across roles</li>
+                                    <li>✅ Provide structured feedback and improvement pathways</li>
+                                    <li>✅ Maintain certification through continuous monitoring</li>
+                                    <li>✅ Support career development and role advancement</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Planning & Role Definition -->
+                    <section class="section-card hover-lift" id="planning">
+                        <div class="text-center mb-8">
+                            <div class="w-16 h-16 bg-gradient-to-br from-warning to-orange-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                                </svg>
+                            </div>
+                            <h2 class="text-3xl font-bold text-navy mb-4">Planning & Role Definition</h2>
+                        </div>
+                        
+                        <div class="prose max-w-none">
+                            <div class="assessment-section">
+                                <h3 class="text-blue-800 font-bold mb-6">Pre-Sales Role Framework</h3>
+                                <p class="text-blue-700 mb-6">
+                                    Establish clear role definitions and competency requirements for different levels of pre-sales professionals, ensuring targeted assessment and development pathways.
+                                </p>
+                                
+                                <!-- Pre-Sales Roles -->
+                                <div class="space-y-4">
+                                    <div class="role-card">
+                                        <h4 class="text-yellow-800 font-bold mb-3 flex items-center">
+                                            <span class="w-8 h-8 bg-yellow-600 text-white rounded-full flex items-center justify-center mr-3 text-sm">1</span>
+                                            Solution Consultant
+                                        </h4>
+                                        <div class="competency-grid">
+                                            <div class="competency-item">
+                                                <div class="font-medium text-yellow-800">Primary Focus</div>
+                                                <div class="text-yellow-700 text-sm">Strategic solution design and customer value articulation</div>
+                                            </div>
+                                            <div class="competency-item">
+                                                <div class="font-medium text-yellow-800">Key Skills</div>
+                                                <div class="text-yellow-700 text-sm">Business analysis, ROI modeling, executive presentation</div>
+                                            </div>
+                                            <div class="competency-item">
+                                                <div class="font-medium text-yellow-800">Experience Level</div>
+                                                <div class="text-yellow-700 text-sm">Senior role requiring 3+ years pre-sales experience</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="role-card">
+                                        <h4 class="text-yellow-800 font-bold mb-3 flex items-center">
+                                            <span class="w-8 h-8 bg-yellow-600 text-white rounded-full flex items-center justify-center mr-3 text-sm">2</span>
+                                            Demo Specialist
+                                        </h4>
+                                        <div class="competency-grid">
+                                            <div class="competency-item">
+                                                <div class="font-medium text-yellow-800">Primary Focus</div>
+                                                <div class="text-yellow-700 text-sm">Product demonstration excellence and technical presentation</div>
+                                            </div>
+                                            <div class="competency-item">
+                                                <div class="font-medium text-yellow-800">Key Skills</div>
+                                                <div class="text-yellow-700 text-sm">Demo delivery, product mastery, audience engagement</div>
+                                            </div>
+                                            <div class="competency-item">
+                                                <div class="font-medium text-yellow-800">Experience Level</div>
+                                                <div class="text-yellow-700 text-sm">Mid-level role requiring 1-3 years experience</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="role-card">
+                                        <h4 class="text-yellow-800 font-bold mb-3 flex items-center">
+                                            <span class="w-8 h-8 bg-yellow-600 text-white rounded-full flex items-center justify-center mr-3 text-sm">3</span>
+                                            Technical Pre-Sales
+                                        </h4>
+                                        <div class="competency-grid">
+                                            <div class="competency-item">
+                                                <div class="font-medium text-yellow-800">Primary Focus</div>
+                                                <div class="text-yellow-700 text-sm">Technical solutioning, integration planning, proof of concept</div>
+                                            </div>
+                                            <div class="competency-item">
+                                                <div class="font-medium text-yellow-800">Key Skills</div>
+                                                <div class="text-yellow-700 text-sm">Technical architecture, integration expertise, troubleshooting</div>
+                                            </div>
+                                            <div class="competency-item">
+                                                <div class="font-medium text-yellow-800">Experience Level</div>
+                                                <div class="text-yellow-700 text-sm">Specialized role requiring technical background</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Core Competencies -->
+                            <div class="mb-8">
+                                <h3 class="text-navy font-bold mb-6 text-2xl">Core Competency Framework</h3>
+                                <div class="feature-grid">
+                                    <div class="step-card">
+                                        <h4 class="text-purple-800 font-bold mb-3">💡 Product Knowledge</h4>
+                                        <ul class="text-purple-700 space-y-2 text-sm">
+                                            <li>• Deep understanding of product features and capabilities</li>
+                                            <li>• Competitive positioning and differentiation</li>
+                                            <li>• Integration scenarios and technical requirements</li>
+                                            <li>• Roadmap awareness and future developments</li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="step-card">
+                                        <h4 class="text-blue-800 font-bold mb-3">🎬 Demo Delivery</h4>
+                                        <ul class="text-blue-700 space-y-2 text-sm">
+                                            <li>• Compelling storytelling and narrative flow</li>
+                                            <li>• Audience adaptation and customization</li>
+                                            <li>• Technical proficiency with demo platforms</li>
+                                            <li>• Handling questions and interruptions gracefully</li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="step-card">
+                                        <h4 class="text-green-800 font-bold mb-3">💰 Value Articulation</h4>
+                                        <ul class="text-green-700 space-y-2 text-sm">
+                                            <li>• ROI calculation and business case development</li>
+                                            <li>• Pain point identification and solution mapping</li>
+                                            <li>• Quantifiable benefit communication</li>
+                                            <li>• Industry-specific value proposition development</li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="step-card">
+                                        <h4 class="text-orange-800 font-bold mb-3">🤝 Customer Engagement</h4>
+                                        <ul class="text-orange-700 space-y-2 text-sm">
+                                            <li>• Active listening and discovery questioning</li>
+                                            <li>• Stakeholder mapping and relationship building</li>
+                                            <li>• Objection handling and concern resolution</li>
+                                            <li>• Meeting facilitation and follow-up excellence</li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="step-card">
+                                        <h4 class="text-red-800 font-bold mb-3">⚙️ Technical Solutioning</h4>
+                                        <ul class="text-red-700 space-y-2 text-sm">
+                                            <li>• Architecture design and integration planning</li>
+                                            <li>• Requirements gathering and documentation</li>
+                                            <li>• Proof of concept development and execution</li>
+                                            <li>• Technical risk assessment and mitigation</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h4 class="text-white font-bold">Role Definition Success Factors</h4>
+                                <ul class="text-gray-100 mt-4 space-y-2">
+                                    <li>• Clear competency requirements aligned to business objectives</li>
+                                    <li>• Measurable skill definitions with assessment criteria</li>
+                                    <li>• Career progression pathways between roles</li>
+                                    <li>• Regular role review and competency updates</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Training Completion Verification -->
+                    <section class="section-card hover-lift" id="training-verification">
+                        <div class="text-center mb-8">
+                            <div class="w-16 h-16 bg-gradient-to-br from-success to-blue rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                            <h2 class="text-3xl font-bold text-navy mb-4">Training Completion Verification</h2>
+                        </div>
+                        
+                        <div class="prose max-w-none">
+                            <div class="assessment-section">
+                                <h3 class="text-blue-800 font-bold mb-6">Structured Training Validation</h3>
+                                <p class="text-blue-700 mb-6">
+                                    Systematic verification process to ensure all foundational training requirements have been completed successfully before proceeding to practical assessments.
+                                </p>
+                            </div>
+
+                            <!-- Training Verification Steps -->
+                            <div class="mb-8">
+                                <h3 class="text-navy font-bold mb-6 text-2xl">Verification Process</h3>
+                                
+                                <div class="step-card mb-6">
+                                    <h4 class="text-purple-800 font-bold mb-3">1. Onboarding Module Completion</h4>
+                                    <div class="space-y-3">
+                                        <div class="framework-step">
+                                            <h5 class="font-semibold text-blue-800 mb-2">Core Modules Verification</h5>
+                                            <ul class="text-blue-700 text-sm space-y-1">
+                                                <li>• Company overview and culture orientation</li>
+                                                <li>• Product fundamentals and architecture</li>
+                                                <li>• Sales process and methodology training</li>
+                                                <li>• Customer success stories and case studies</li>
+                                            </ul>
+                                        </div>
+                                        <div class="framework-step">
+                                            <h5 class="font-semibold text-blue-800 mb-2">Completion Criteria</h5>
+                                            <ul class="text-blue-700 text-sm space-y-1">
+                                                <li>• 100% module completion rate required</li>
+                                                <li>• Minimum 80% score on knowledge assessments</li>
+                                                <li>• Active participation in interactive elements</li>
+                                                <li>• Completion certificates issued and verified</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="step-card mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">2. Role-Based Learning Path</h4>
+                                    <div class="space-y-3">
+                                        <div class="framework-step">
+                                            <h5 class="font-semibold text-blue-800 mb-2">Specialized Training Tracks</h5>
+                                            <ul class="text-blue-700 text-sm space-y-1">
+                                                <li>• Solution consultant advanced methodology training</li>
+                                                <li>• Demo specialist presentation and platform mastery</li>
+                                                <li>• Technical pre-sales integration and architecture</li>
+                                                <li>• Industry-specific knowledge and use cases</li>
+                                            </ul>
+                                        </div>
+                                        <div class="framework-step">
+                                            <h5 class="font-semibold text-blue-800 mb-2">Learning Path Validation</h5>
+                                            <ul class="text-blue-700 text-sm space-y-1">
+                                                <li>• Learning management system tracking and reporting</li>
+                                                <li>• Mentor sign-off on practical exercises</li>
+                                                <li>• Peer review and feedback collection</li>
+                                                <li>• Manager approval for path completion</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="step-card mb-6">
+                                    <h4 class="text-green-800 font-bold mb-3">3. Hands-On Experience Documentation</h4>
+                                    <div class="space-y-3">
+                                        <div class="framework-step">
+                                            <h5 class="font-semibold text-blue-800 mb-2">Demo Environment Proficiency</h5>
+                                            <ul class="text-blue-700 text-sm space-y-1">
+                                                <li>• Platform navigation and feature access</li>
+                                                <li>• Data setup and scenario configuration</li>
+                                                <li>• Troubleshooting common issues</li>
+                                                <li>• Demo script execution and customization</li>
+                                            </ul>
+                                        </div>
+                                        <div class="framework-step">
+                                            <h5 class="font-semibold text-blue-800 mb-2">Tools and Systems Mastery</h5>
+                                            <ul class="text-blue-700 text-sm space-y-1">
+                                                <li>• CRM system navigation and data entry</li>
+                                                <li>• Proposal and presentation template usage</li>
+                                                <li>• Sales enablement tool proficiency</li>
+                                                <li>• Communication and collaboration platform skills</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Training Metrics -->
+                            <div class="mb-8">
+                                <h3 class="text-navy font-bold mb-6 text-2xl">Training Completion Metrics</h3>
+                                <div class="grid md:grid-cols-3 gap-6">
+                                    <div class="feature-card text-center">
+                                        <div class="text-3xl font-bold text-purple-600 mb-2">100%</div>
+                                        <div class="text-purple-800 font-medium">Module Completion Rate</div>
+                                        <div class="text-purple-600 text-sm mt-1">All assigned training modules must be completed</div>
+                                    </div>
+                                    <div class="feature-card text-center">
+                                        <div class="text-3xl font-bold text-blue-600 mb-2">80%</div>
+                                        <div class="text-blue-800 font-medium">Assessment Score Minimum</div>
+                                        <div class="text-blue-600 text-sm mt-1">Knowledge assessments require 80% or higher</div>
+                                    </div>
+                                    <div class="feature-card text-center">
+                                        <div class="text-3xl font-bold text-green-600 mb-2">3</div>
+                                        <div class="text-green-800 font-medium">Practice Demo Sessions</div>
+                                        <div class="text-green-600 text-sm mt-1">Minimum hands-on demo practice required</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h4 class="text-white font-bold">Verification Best Practices</h4>
+                                <ul class="text-gray-100 mt-4 space-y-2">
+                                    <li>• Automated tracking with LMS integration for accuracy</li>
+                                    <li>• Regular manager reviews and progress check-ins</li>
+                                    <li>• Clear escalation process for training completion issues</li>
+                                    <li>• Documentation of completion certificates and evidence</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Knowledge & Skills Assessment -->
+                    <section class="section-card hover-lift" id="assessment">
+                        <div class="text-center mb-8">
+                            <div class="w-16 h-16 bg-gradient-to-br from-blue to-purple rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                </svg>
+                            </div>
+                            <h2 class="text-3xl font-bold text-navy mb-4">Knowledge & Skills Assessment</h2>
+                        </div>
+                        
+                        <div class="prose max-w-none">
+                            <div class="assessment-section">
+                                <h3 class="text-blue-800 font-bold mb-6">Comprehensive Competency Evaluation</h3>
+                                <p class="text-blue-700 mb-6">
+                                    Multi-modal assessment approach combining written knowledge validation, practical skill demonstration, and real-world application scenarios to ensure comprehensive readiness.
+                                </p>
+                            </div>
+
+                            <!-- Assessment Methods -->
+                            <div class="mb-8">
+                                <h3 class="text-navy font-bold mb-6 text-2xl">Assessment Methodology</h3>
+                                
+                                <div class="step-card mb-6">
+                                    <h4 class="text-purple-800 font-bold mb-3">📝 Written Knowledge Assessment</h4>
+                                    <div class="grid md:grid-cols-2 gap-4">
+                                        <div>
+                                            <h5 class="font-semibold text-purple-700 mb-2">Assessment Formats:</h5>
+                                            <ul class="text-purple-600 text-sm space-y-1">
+                                                <li>• Multiple choice knowledge verification</li>
+                                                <li>• Scenario-based problem solving</li>
+                                                <li>• Technical configuration questions</li>
+                                                <li>• Competitive positioning exercises</li>
+                                            </ul>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-purple-700 mb-2">Evaluation Criteria:</h5>
+                                            <ul class="text-purple-600 text-sm space-y-1">
+                                                <li>• Product knowledge accuracy (85% minimum)</li>
+                                                <li>• Solution methodology understanding</li>
+                                                <li>• Industry knowledge application</li>
+                                                <li>• Process and procedure familiarity</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="step-card mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">🎬 Demo Delivery Evaluation</h4>
+                                    <div class="space-y-3">
+                                        <div class="framework-step">
+                                            <h5 class="font-semibold text-blue-800 mb-2">Mock Demo Session Requirements</h5>
+                                            <ul class="text-blue-700 text-sm space-y-1">
+                                                <li>• 45-minute structured demo presentation</li>
+                                                <li>• Industry-specific scenario execution</li>
+                                                <li>• Q&A handling and objection responses</li>
+                                                <li>• Technical troubleshooting demonstration</li>
+                                            </ul>
+                                        </div>
+                                        <div class="framework-step">
+                                            <h5 class="font-semibold text-blue-800 mb-2">Evaluation Dimensions</h5>
+                                            <div class="grid md:grid-cols-3 gap-3">
+                                                <div class="bg-white p-3 rounded-lg">
+                                                    <div class="font-medium text-blue-800">Delivery Excellence</div>
+                                                    <div class="text-blue-600 text-xs">Presentation skills, audience engagement, narrative flow</div>
+                                                </div>
+                                                <div class="bg-white p-3 rounded-lg">
+                                                    <div class="font-medium text-blue-800">Technical Proficiency</div>
+                                                    <div class="text-blue-600 text-xs">Platform mastery, feature navigation, troubleshooting</div>
+                                                </div>
+                                                <div class="bg-white p-3 rounded-lg">
+                                                    <div class="font-medium text-blue-800">Customer Focus</div>
+                                                    <div class="text-blue-600 text-xs">Value articulation, needs alignment, solution positioning</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="step-card mb-6">
+                                    <h4 class="text-green-800 font-bold mb-3">🔧 Solutioning Exercise Review</h4>
+                                    <div class="space-y-3">
+                                        <div class="framework-step">
+                                            <h5 class="font-semibold text-blue-800 mb-2">Solution Design Challenge</h5>
+                                            <ul class="text-blue-700 text-sm space-y-1">
+                                                <li>• Customer requirements analysis and documentation</li>
+                                                <li>• Technical architecture recommendation</li>
+                                                <li>• Integration planning and risk assessment</li>
+                                                <li>• Implementation timeline and resource planning</li>
+                                            </ul>
+                                        </div>
+                                        <div class="framework-step">
+                                            <h5 class="font-semibold text-blue-800 mb-2">Objection Handling Scenarios</h5>
+                                            <ul class="text-blue-700 text-sm space-y-1">
+                                                <li>• Common objection response strategies</li>
+                                                <li>• Competitive pressure handling</li>
+                                                <li>• Technical concern resolution</li>
+                                                <li>• Pricing and value justification</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Scoring Framework -->
+                            <div class="mb-8">
+                                <h3 class="text-navy font-bold mb-6 text-2xl">Assessment Scoring Framework</h3>
+                                <div class="assessment-section">
+                                    <h4 class="text-blue-800 font-bold mb-4">Competency Scoring Matrix</h4>
+                                    <div class="grid md:grid-cols-4 gap-4">
+                                        <div class="bg-white p-4 rounded-lg text-center">
+                                            <div class="text-2xl font-bold text-red-600 mb-2">1</div>
+                                            <div class="font-bold text-red-800">Developing</div>
+                                            <div class="text-red-600 text-sm">< 70% proficiency</div>
+                                            <div class="text-red-500 text-xs mt-1">Requires additional training</div>
+                                        </div>
+                                        <div class="bg-white p-4 rounded-lg text-center">
+                                            <div class="text-2xl font-bold text-yellow-600 mb-2">2</div>
+                                            <div class="font-bold text-yellow-800">Competent</div>
+                                            <div class="text-yellow-600 text-sm">70-84% proficiency</div>
+                                            <div class="text-yellow-500 text-xs mt-1">Meets basic requirements</div>
+                                        </div>
+                                        <div class="bg-white p-4 rounded-lg text-center">
+                                            <div class="text-2xl font-bold text-blue-600 mb-2">3</div>
+                                            <div class="font-bold text-blue-800">Proficient</div>
+                                            <div class="text-blue-600 text-sm">85-94% proficiency</div>
+                                            <div class="text-blue-500 text-xs mt-1">Exceeds expectations</div>
+                                        </div>
+                                        <div class="bg-white p-4 rounded-lg text-center">
+                                            <div class="text-2xl font-bold text-green-600 mb-2">4</div>
+                                            <div class="font-bold text-green-800">Expert</div>
+                                            <div class="text-green-600 text-sm">95%+ proficiency</div>
+                                            <div class="text-green-500 text-xs mt-1">Demonstrates mastery</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h4 class="text-white font-bold">Assessment Success Criteria</h4>
+                                <ul class="text-gray-100 mt-4 space-y-2">
+                                    <li>• Minimum Level 2 (Competent) across all core competencies</li>
+                                    <li>• Level 3 (Proficient) in primary role-specific skills</li>
+                                    <li>• Successful completion of demo delivery evaluation</li>
+                                    <li>• Positive feedback from assessment panel review</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- End-User Simulation & Feedback -->
+                    <section class="section-card hover-lift" id="simulation">
+                        <div class="text-center mb-8">
+                            <div class="w-16 h-16 bg-gradient-to-br from-purple to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                                </svg>
+                            </div>
+                            <h2 class="text-3xl font-bold text-navy mb-4">End-User Simulation & Feedback</h2>
+                        </div>
+                        
+                        <div class="prose max-w-none">
+                            <div class="assessment-section">
+                                <h3 class="text-blue-800 font-bold mb-6">Real-World Customer Interaction Simulation</h3>
+                                <p class="text-blue-700 mb-6">
+                                    Structured customer meeting simulations with internal stakeholders acting as prospects to evaluate communication effectiveness, adaptability, and customer engagement skills in realistic scenarios.
+                                </p>
+                            </div>
+
+                            <!-- Simulation Framework -->
+                            <div class="mb-8">
+                                <h3 class="text-navy font-bold mb-6 text-2xl">Simulation Framework</h3>
+                                
+                                <div class="step-card mb-6">
+                                    <h4 class="text-purple-800 font-bold mb-3">🎭 Customer Persona Development</h4>
+                                    <div class="space-y-3">
+                                        <div class="framework-step">
+                                            <h5 class="font-semibold text-blue-800 mb-2">Stakeholder Role Definition</h5>
+                                            <div class="grid md:grid-cols-3 gap-3">
+                                                <div class="bg-white p-3 rounded-lg">
+                                                    <div class="font-medium text-purple-800">Decision Maker</div>
+                                                    <div class="text-purple-600 text-xs">Budget authority, final approval, strategic focus</div>
+                                                </div>
+                                                <div class="bg-white p-3 rounded-lg">
+                                                    <div class="font-medium text-purple-800">Technical Evaluator</div>
+                                                    <div class="text-purple-600 text-xs">Integration concerns, technical requirements</div>
+                                                </div>
+                                                <div class="bg-white p-3 rounded-lg">
+                                                    <div class="font-medium text-purple-800">End User Representative</div>
+                                                    <div class="text-purple-600 text-xs">Usability focus, workflow impact</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="framework-step">
+                                            <h5 class="font-semibold text-blue-800 mb-2">Industry Scenario Customization</h5>
+                                            <ul class="text-blue-700 text-sm space-y-1">
+                                                <li>• Construction project closeout challenges</li>
+                                                <li>• Facilities management compliance requirements</li>
+                                                <li>• Infrastructure project handover scenarios</li>
+                                                <li>• Multi-stakeholder coordination complexities</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="step-card mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">📋 Simulation Structure</h4>
+                                    <div class="space-y-3">
+                                        <div class="framework-step">
+                                            <h5 class="font-semibold text-blue-800 mb-2">Meeting Phases</h5>
+                                            <div class="grid md:grid-cols-4 gap-3">
+                                                <div class="bg-white p-3 rounded-lg text-center">
+                                                    <div class="font-bold text-blue-800 text-lg">15 min</div>
+                                                    <div class="text-blue-600 text-sm">Discovery & Needs Assessment</div>
+                                                </div>
+                                                <div class="bg-white p-3 rounded-lg text-center">
+                                                    <div class="font-bold text-blue-800 text-lg">25 min</div>
+                                                    <div class="text-blue-600 text-sm">Solution Presentation</div>
+                                                </div>
+                                                <div class="bg-white p-3 rounded-lg text-center">
+                                                    <div class="font-bold text-blue-800 text-lg">15 min</div>
+                                                    <div class="text-blue-600 text-sm">Q&A & Objection Handling</div>
+                                                </div>
+                                                <div class="bg-white p-3 rounded-lg text-center">
+                                                    <div class="font-bold text-blue-800 text-lg">5 min</div>
+                                                    <div class="text-blue-600 text-sm">Next Steps Discussion</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="framework-step">
+                                            <h5 class="font-semibold text-blue-800 mb-2">Simulation Complexity Levels</h5>
+                                            <ul class="text-blue-700 text-sm space-y-1">
+                                                <li>• <strong>Level 1:</strong> Single stakeholder, straightforward requirements</li>
+                                                <li>• <strong>Level 2:</strong> Multiple stakeholders, competing priorities</li>
+                                                <li>• <strong>Level 3:</strong> Complex organization, budget constraints, competitive pressure</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="step-card mb-6">
+                                    <h4 class="text-green-800 font-bold mb-3">📊 Feedback Collection Framework</h4>
+                                    <div class="space-y-3">
+                                        <div class="framework-step">
+                                            <h5 class="font-semibold text-blue-800 mb-2">Multi-Source Feedback</h5>
+                                            <div class="grid md:grid-cols-2 gap-4">
+                                                <div>
+                                                    <div class="font-medium text-green-700 mb-2">Mock Client Feedback:</div>
+                                                    <ul class="text-green-600 text-sm space-y-1">
+                                                        <li>• Communication effectiveness and clarity</li>
+                                                        <li>• Solution relevance and value articulation</li>
+                                                        <li>• Professional presence and confidence</li>
+                                                        <li>• Response quality to questions and concerns</li>
+                                                    </ul>
+                                                </div>
+                                                <div>
+                                                    <div class="font-medium text-green-700 mb-2">Peer & Manager Feedback:</div>
+                                                    <ul class="text-green-600 text-sm space-y-1">
+                                                        <li>• Technical accuracy and product knowledge</li>
+                                                        <li>• Sales methodology adherence</li>
+                                                        <li>• Improvement opportunities and strengths</li>
+                                                        <li>• Readiness assessment and recommendations</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="framework-step">
+                                            <h5 class="font-semibold text-blue-800 mb-2">Assessment Dimensions</h5>
+                                            <div class="grid md:grid-cols-3 gap-3">
+                                                <div class="bg-white p-3 rounded-lg">
+                                                    <div class="font-bold text-green-800">Communication</div>
+                                                    <div class="text-green-600 text-xs">Clarity, engagement, active listening</div>
+                                                </div>
+                                                <div class="bg-white p-3 rounded-lg">
+                                                    <div class="font-bold text-green-800">Confidence</div>
+                                                    <div class="text-green-600 text-xs">Presence, composure, authority</div>
+                                                </div>
+                                                <div class="bg-white p-3 rounded-lg">
+                                                    <div class="font-bold text-green-800">Adaptability</div>
+                                                    <div class="text-green-600 text-xs">Flexibility, responsiveness, improvisation</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Feedback Integration -->
+                            <div class="mb-8">
+                                <h3 class="text-navy font-bold mb-6 text-2xl">Feedback Integration & Development Planning</h3>
+                                <div class="feature-grid">
+                                    <div class="feature-card">
+                                        <h4>📈 Strengths Identification</h4>
+                                        <p>Document demonstrated strengths and successful techniques for replication and sharing with other team members.</p>
+                                    </div>
+                                    <div class="feature-card">
+                                        <h4>🎯 Improvement Areas</h4>
+                                        <p>Specific, actionable feedback on areas requiring development with clear examples and improvement strategies.</p>
+                                    </div>
+                                    <div class="feature-card">
+                                        <h4>📚 Coaching Plans</h4>
+                                        <p>Personalized development plans with targeted coaching sessions, practice opportunities, and skill building activities.</p>
+                                    </div>
+                                    <div class="feature-card">
+                                        <h4>🔄 Re-assessment Process</h4>
+                                        <p>Clear criteria and timeline for follow-up simulations to validate improvement and readiness progression.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h4 class="text-white font-bold">Simulation Success Indicators</h4>
+                                <ul class="text-gray-100 mt-4 space-y-2">
+                                    <li>• Consistent positive feedback across all stakeholder types</li>
+                                    <li>• Effective adaptation to unexpected questions or scenarios</li>
+                                    <li>• Clear value articulation aligned to customer priorities</li>
+                                    <li>• Professional confidence and executive presence demonstration</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Documentation & Process Familiarity -->
+                    <section class="section-card hover-lift" id="documentation">
+                        <div class="text-center mb-8">
+                            <div class="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                                </svg>
+                            </div>
+                            <h2 class="text-3xl font-bold text-navy mb-4">Documentation & Process Familiarity</h2>
+                        </div>
+                        
+                        <div class="prose max-w-none">
+                            <div class="assessment-section">
+                                <h3 class="text-blue-800 font-bold mb-6">Operational Excellence Framework</h3>
+                                <p class="text-blue-700 mb-6">
+                                    Ensuring comprehensive familiarity with documentation standards, process workflows, and sales enablement tools to maintain consistency and professionalism in all customer interactions.
+                                </p>
+                            </div>
+
+                            <!-- Documentation Standards -->
+                            <div class="mb-8">
+                                <h3 class="text-navy font-bold mb-6 text-2xl">Documentation Mastery Requirements</h3>
+                                
+                                <div class="step-card mb-6">
+                                    <h4 class="text-purple-800 font-bold mb-3">📋 Internal Documentation Standards</h4>
+                                    <div class="space-y-3">
+                                        <div class="framework-step">
+                                            <h5 class="font-semibold text-blue-800 mb-2">Customer Interaction Documentation</h5>
+                                            <ul class="text-blue-700 text-sm space-y-1">
+                                                <li>• Meeting notes template usage and completion standards</li>
+                                                <li>• Discovery information capture and organization</li>
+                                                <li>• Follow-up action item tracking and accountability</li>
+                                                <li>• Stakeholder mapping and relationship documentation</li>
+                                            </ul>
+                                        </div>
+                                        <div class="framework-step">
+                                            <h5 class="font-semibold text-blue-800 mb-2">Proposal and Presentation Standards</h5>
+                                            <ul class="text-blue-700 text-sm space-y-1">
+                                                <li>• Brand guidelines adherence and template customization</li>
+                                                <li>• Content accuracy and messaging consistency</li>
+                                                <li>• Legal and compliance review requirements</li>
+                                                <li>• Version control and collaboration protocols</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="step-card mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">⚙️ CRM System Proficiency</h4>
+                                    <div class="grid md:grid-cols-2 gap-4">
+                                        <div>
+                                            <h5 class="font-semibold text-blue-700 mb-2">Core CRM Functions:</h5>
+                                            <ul class="text-blue-600 text-sm space-y-1">
+                                                <li>• Contact and account management</li>
+                                                <li>• Opportunity tracking and stage progression</li>
+                                                <li>• Activity logging and task management</li>
+                                                <li>• Pipeline reporting and forecasting</li>
+                                            </ul>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-blue-700 mb-2">Advanced Capabilities:</h5>
+                                            <ul class="text-blue-600 text-sm space-y-1">
+                                                <li>• Custom field utilization and data quality</li>
+                                                <li>• Integration with email and calendar systems</li>
+                                                <li>• Report generation and dashboard configuration</li>
+                                                <li>• Data import/export and bulk operations</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="step-card mb-6">
+                                    <h4 class="text-green-800 font-bold mb-3">🎬 Demo Scripts and Asset Management</h4>
+                                    <div class="space-y-3">
+                                        <div class="framework-step">
+                                            <h5 class="font-semibold text-blue-800 mb-2">Demo Script Proficiency</h5>
+                                            <div class="grid md:grid-cols-2 gap-4">
+                                                <div>
+                                                    <div class="font-medium text-green-700 mb-2">Standard Scripts:</div>
+                                                    <ul class="text-green-600 text-sm space-y-1">
+                                                        <li>• Industry-specific demo narratives</li>
+                                                        <li>• Feature demonstration sequences</li>
+                                                        <li>• Value proposition messaging</li>
+                                                        <li>• Objection handling responses</li>
+                                                    </ul>
+                                                </div>
+                                                <div>
+                                                    <div class="font-medium text-green-700 mb-2">Customization Abilities:</div>
+                                                    <ul class="text-green-600 text-sm space-y-1">
+                                                        <li>• Customer-specific scenario adaptation</li>
+                                                        <li>• Technical requirement integration</li>
+                                                        <li>• Stakeholder-focused messaging</li>
+                                                        <li>• Competitive differentiation emphasis</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="framework-step">
+                                            <h5 class="font-semibold text-blue-800 mb-2">Asset Library Management</h5>
+                                            <ul class="text-blue-700 text-sm space-y-1">
+                                                <li>• Case study and reference story repository access</li>
+                                                <li>• Sales collateral organization and version control</li>
+                                                <li>• Competitive analysis and battlecard utilization</li>
+                                                <li>• ROI calculator and business case template usage</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Process Workflow Mastery -->
+                            <div class="mb-8">
+                                <h3 class="text-navy font-bold mb-6 text-2xl">Process Workflow Mastery</h3>
+                                <div class="feature-grid">
+                                    <div class="step-card">
+                                        <h4 class="text-purple-800 font-bold mb-3">🔄 Sales Process Navigation</h4>
+                                        <ul class="text-purple-700 space-y-2 text-sm">
+                                            <li>• Stage gate requirements and exit criteria</li>
+                                            <li>• Handoff procedures between sales stages</li>
+                                            <li>• Approval workflows and escalation paths</li>
+                                            <li>• Post-sales transition and customer success collaboration</li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="step-card">
+                                        <h4 class="text-blue-800 font-bold mb-3">📞 Meeting Management</h4>
+                                        <ul class="text-blue-700 space-y-2 text-sm">
+                                            <li>• Pre-meeting preparation checklist and research</li>
+                                            <li>• Agenda setting and stakeholder coordination</li>
+                                            <li>• Meeting facilitation and time management</li>
+                                            <li>• Post-meeting follow-up and action item tracking</li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="step-card">
+                                        <h4 class="text-green-800 font-bold mb-3">🤝 Collaboration Protocols</h4>
+                                        <ul class="text-green-700 space-y-2 text-sm">
+                                            <li>• Cross-functional team coordination</li>
+                                            <li>• Subject matter expert engagement procedures</li>
+                                            <li>• Internal review and approval processes</li>
+                                            <li>• Knowledge sharing and best practice documentation</li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="step-card">
+                                        <h4 class="text-orange-800 font-bold mb-3">📊 Performance Tracking</h4>
+                                        <ul class="text-orange-700 space-y-2 text-sm">
+                                            <li>• KPI measurement and reporting requirements</li>
+                                            <li>• Activity tracking and productivity metrics</li>
+                                            <li>• Pipeline health monitoring and forecasting</li>
+                                            <li>• Continuous improvement feedback integration</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Verification Methods -->
+                            <div class="mb-8">
+                                <h3 class="text-navy font-bold mb-6 text-2xl">Proficiency Verification Methods</h3>
+                                <div class="assessment-section">
+                                    <h4 class="text-blue-800 font-bold mb-4">Competency Validation Approach</h4>
+                                    <div class="grid md:grid-cols-2 gap-6">
+                                        <div class="bg-white p-4 rounded-lg">
+                                            <h5 class="font-bold text-blue-800 mb-2">Practical Demonstrations</h5>
+                                            <ul class="text-blue-700 text-sm space-y-1">
+                                                <li>• Live CRM data entry and management</li>
+                                                <li>• Demo script execution and customization</li>
+                                                <li>• Proposal template utilization</li>
+                                                <li>• Asset library navigation and usage</li>
+                                            </ul>
+                                        </div>
+                                        <div class="bg-white p-4 rounded-lg">
+                                            <h5 class="font-bold text-blue-800 mb-2">Knowledge Verification</h5>
+                                            <ul class="text-blue-700 text-sm space-y-1">
+                                                <li>• Process workflow comprehension testing</li>
+                                                <li>• Documentation standard compliance review</li>
+                                                <li>• System integration understanding</li>
+                                                <li>• Best practice application scenarios</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h4 class="text-white font-bold">Documentation Excellence Standards</h4>
+                                <ul class="text-gray-100 mt-4 space-y-2">
+                                    <li>• 100% compliance with documentation standards and templates</li>
+                                    <li>• Efficient navigation and utilization of all sales enablement tools</li>
+                                    <li>• Consistent process adherence across all customer interactions</li>
+                                    <li>• Proactive asset management and content contribution</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Field Readiness Certification -->
+                    <section class="section-card hover-lift" id="certification">
+                        <div class="text-center mb-8">
+                            <div class="w-16 h-16 bg-gradient-to-br from-success to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
+                                </svg>
+                            </div>
+                            <h2 class="text-3xl font-bold text-navy mb-4">Field Readiness Certification</h2>
+                        </div>
+                        
+                        <div class="prose max-w-none">
+                            <div class="assessment-section">
+                                <h3 class="text-blue-800 font-bold mb-6">Structured Certification Levels</h3>
+                                <p class="text-blue-700 mb-6">
+                                    Progressive certification framework recognizing different levels of field readiness, from basic product familiarity to independent pre-sales leadership capabilities.
+                                </p>
+                            </div>
+
+                            <!-- Certification Levels -->
+                            <div class="mb-8">
+                                <h3 class="text-navy font-bold mb-6 text-2xl">Certification Level Framework</h3>
+                                
+                                <div class="readiness-level mb-6">
+                                    <h4 class="text-purple-800 font-bold mb-3 flex items-center">
+                                        <span class="w-12 h-12 bg-purple text-white rounded-full flex items-center justify-center mr-4 text-lg font-bold">1</span>
+                                        Level 1: Product & Process Familiarity
+                                    </h4>
+                                    <div class="grid md:grid-cols-2 gap-6">
+                                        <div>
+                                            <h5 class="font-semibold text-purple-700 mb-3">Certification Requirements:</h5>
+                                            <ul class="text-purple-600 space-y-2 text-sm">
+                                                <li>✅ Complete all onboarding training modules</li>
+                                                <li>✅ Pass product knowledge assessment (85% minimum)</li>
+                                                <li>✅ Demonstrate basic demo platform navigation</li>
+                                                <li>✅ Complete CRM and documentation training</li>
+                                                <li>✅ Shadow 3+ customer meetings with experienced team member</li>
+                                            </ul>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-purple-700 mb-3">Authorized Activities:</h5>
+                                            <div class="space-y-2">
+                                                <div class="progress-badge">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                                    Support role in customer meetings
+                                                </div>
+                                                <div class="progress-badge">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                                    Basic product demonstrations with supervision
+                                                </div>
+                                                <div class="progress-badge">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                                    Internal training delivery assistance
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="readiness-level mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3 flex items-center">
+                                        <span class="w-12 h-12 bg-blue text-white rounded-full flex items-center justify-center mr-4 text-lg font-bold">2</span>
+                                        Level 2: Demo & Engagement Proficiency
+                                    </h4>
+                                    <div class="grid md:grid-cols-2 gap-6">
+                                        <div>
+                                            <h5 class="font-semibold text-blue-700 mb-3">Certification Requirements:</h5>
+                                            <ul class="text-blue-600 space-y-2 text-sm">
+                                                <li>✅ Successful completion of 3+ mock demo sessions</li>
+                                                <li>✅ Positive feedback from customer simulation exercises</li>
+                                                <li>✅ Demonstrated objection handling proficiency</li>
+                                                <li>✅ Advanced product knowledge assessment (90% minimum)</li>
+                                                <li>✅ Lead discovery calls with supervision and feedback</li>
+                                            </ul>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-blue-700 mb-3">Authorized Activities:</h5>
+                                            <div class="space-y-2">
+                                                <div class="progress-badge">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                                    Lead standard product demonstrations
+                                                </div>
+                                                <div class="progress-badge">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                                    Conduct discovery calls with manager backup
+                                                </div>
+                                                <div class="progress-badge">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                                    Handle standard objections and questions
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="readiness-level mb-6">
+                                    <h4 class="text-green-800 font-bold mb-3 flex items-center">
+                                        <span class="w-12 h-12 bg-green-600 text-white rounded-full flex items-center justify-center mr-4 text-lg font-bold">3</span>
+                                        Level 3: Independent Field Readiness
+                                    </h4>
+                                    <div class="grid md:grid-cols-2 gap-6">
+                                        <div>
+                                            <h5 class="font-semibold text-green-700 mb-3">Certification Requirements:</h5>
+                                            <ul class="text-green-600 space-y-2 text-sm">
+                                                <li>✅ Expert-level competency across all assessment areas</li>
+                                                <li>✅ Successful independent customer meeting management</li>
+                                                <li>✅ Complex solution design and presentation capability</li>
+                                                <li>✅ Peer mentoring and knowledge sharing contribution</li>
+                                                <li>✅ Consistent positive customer feedback and results</li>
+                                            </ul>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-green-700 mb-3">Authorized Activities:</h5>
+                                            <div class="space-y-2">
+                                                <div class="progress-badge">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                                    Independent customer meeting leadership
+                                                </div>
+                                                <div class="progress-badge">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                                    Complex solution design and proposal development
+                                                </div>
+                                                <div class="progress-badge">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                                    Mentor and train junior team members
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Certification Process -->
+                            <div class="mb-8">
+                                <h3 class="text-navy font-bold mb-6 text-2xl">Certification Process & Badge System</h3>
+                                <div class="feature-grid">
+                                    <div class="step-card">
+                                        <h4 class="text-purple-800 font-bold mb-3">📋 Assessment Panel Review</h4>
+                                        <ul class="text-purple-700 space-y-2 text-sm">
+                                            <li>• Multi-stakeholder evaluation committee</li>
+                                            <li>• Standardized scoring rubric application</li>
+                                            <li>• Evidence-based certification decisions</li>
+                                            <li>• Constructive feedback and development planning</li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="step-card">
+                                        <h4 class="text-blue-800 font-bold mb-3">🏆 Digital Badge System</h4>
+                                        <ul class="text-blue-700 space-y-2 text-sm">
+                                            <li>• Blockchain-verified digital certificates</li>
+                                            <li>• LinkedIn and professional profile integration</li>
+                                            <li>• Verifiable skills and competency validation</li>
+                                            <li>• Career development and progression tracking</li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="step-card">
+                                        <h4 class="text-green-800 font-bold mb-3">📅 Certification Maintenance</h4>
+                                        <ul class="text-green-700 space-y-2 text-sm">
+                                            <li>• Annual recertification requirements</li>
+                                            <li>• Continuous education and skill updates</li>
+                                            <li>• Performance metric maintenance standards</li>
+                                            <li>• Peer feedback and customer satisfaction tracking</li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="step-card">
+                                        <h4 class="text-orange-800 font-bold mb-3">🚀 Career Progression</h4>
+                                        <ul class="text-orange-700 space-y-2 text-sm">
+                                            <li>• Clear advancement pathways and requirements</li>
+                                            <li>• Specialized certification tracks</li>
+                                            <li>• Leadership development opportunities</li>
+                                            <li>• Expert and thought leader recognition</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h4 class="text-white font-bold">Certification Benefits</h4>
+                                <ul class="text-gray-100 mt-4 space-y-2">
+                                    <li>• Clear competency validation and professional recognition</li>
+                                    <li>• Structured career development and advancement opportunities</li>
+                                    <li>• Enhanced credibility with customers and stakeholders</li>
+                                    <li>• Access to advanced training and leadership development programs</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Continuous Monitoring & Feedback Loop -->
+                    <section class="section-card hover-lift" id="monitoring">
+                        <div class="text-center mb-8">
+                            <div class="w-16 h-16 bg-gradient-to-br from-blue to-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                                </svg>
+                            </div>
+                            <h2 class="text-3xl font-bold text-navy mb-4">Continuous Monitoring & Feedback Loop</h2>
+                        </div>
+                        
+                        <div class="prose max-w-none">
+                            <div class="assessment-section">
+                                <h3 class="text-blue-800 font-bold mb-6">Ongoing Excellence Maintenance</h3>
+                                <p class="text-blue-700 mb-6">
+                                    Systematic monitoring and feedback collection to maintain certification standards, identify improvement opportunities, and adapt training programs to evolving market demands and product capabilities.
+                                </p>
+                            </div>
+
+                            <!-- Monitoring Framework -->
+                            <div class="mb-8">
+                                <h3 class="text-navy font-bold mb-6 text-2xl">Monitoring Framework</h3>
+                                
+                                <div class="step-card mb-6">
+                                    <h4 class="text-purple-800 font-bold mb-3">📅 Quarterly Check-In Process</h4>
+                                    <div class="space-y-3">
+                                        <div class="framework-step">
+                                            <h5 class="font-semibold text-blue-800 mb-2">Performance Review Sessions</h5>
+                                            <div class="grid md:grid-cols-2 gap-4">
+                                                <div>
+                                                    <div class="font-medium text-purple-700 mb-2">Review Components:</div>
+                                                    <ul class="text-purple-600 text-sm space-y-1">
+                                                        <li>• Individual performance metrics analysis</li>
+                                                        <li>• Customer feedback compilation and review</li>
+                                                        <li>• Skills development progress assessment</li>
+                                                        <li>• Career advancement planning discussion</li>
+                                                    </ul>
+                                                </div>
+                                                <div>
+                                                    <div class="font-medium text-purple-700 mb-2">Outcome Planning:</div>
+                                                    <ul class="text-purple-600 text-sm space-y-1">
+                                                        <li>• Personalized development plan updates</li>
+                                                        <li>• Training need identification and scheduling</li>
+                                                        <li>• Certification level progression evaluation</li>
+                                                        <li>• Performance improvement action items</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="framework-step">
+                                            <h5 class="font-semibold text-blue-800 mb-2">Skills Refresh and Updates</h5>
+                                            <ul class="text-blue-700 text-sm space-y-1">
+                                                <li>• Product update training and knowledge validation</li>
+                                                <li>• Competitive landscape changes and positioning updates</li>
+                                                <li>• New methodology introduction and practice sessions</li>
+                                                <li>• Industry trend awareness and application workshops</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="step-card mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">📊 Performance Metrics Tracking</h4>
+                                    <div class="space-y-3">
+                                        <div class="framework-step">
+                                            <h5 class="font-semibold text-blue-800 mb-2">Key Performance Indicators</h5>
+                                            <div class="grid md:grid-cols-3 gap-3">
+                                                <div class="bg-white p-3 rounded-lg">
+                                                    <div class="font-bold text-blue-800">Demo-to-Win Ratio</div>
+                                                    <div class="text-blue-600 text-xs">Conversion rate from demo to closed opportunity</div>
+                                                    <div class="text-blue-500 text-sm font-medium mt-1">Target: 25%+</div>
+                                                </div>
+                                                <div class="bg-white p-3 rounded-lg">
+                                                    <div class="font-bold text-blue-800">Customer Satisfaction</div>
+                                                    <div class="text-blue-600 text-xs">Post-meeting feedback and NPS scores</div>
+                                                    <div class="text-blue-500 text-sm font-medium mt-1">Target: 4.2/5.0</div>
+                                                </div>
+                                                <div class="bg-white p-3 rounded-lg">
+                                                    <div class="font-bold text-blue-800">Pipeline Velocity</div>
+                                                    <div class="text-blue-600 text-xs">Speed of opportunity progression through stages</div>
+                                                    <div class="text-blue-500 text-sm font-medium mt-1">Target: 15% faster</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="framework-step">
+                                            <h5 class="font-semibold text-blue-800 mb-2">Activity Metrics</h5>
+                                            <div class="grid md:grid-cols-2 gap-4">
+                                                <div>
+                                                    <div class="font-medium text-blue-700 mb-2">Quantitative Measures:</div>
+                                                    <ul class="text-blue-600 text-sm space-y-1">
+                                                        <li>• Number of demos delivered per month</li>
+                                                        <li>• Discovery call completion and quality scores</li>
+                                                        <li>• Proposal win rate and competitive success</li>
+                                                        <li>• Follow-up consistency and timeliness metrics</li>
+                                                    </ul>
+                                                </div>
+                                                <div>
+                                                    <div class="font-medium text-blue-700 mb-2">Qualitative Indicators:</div>
+                                                    <ul class="text-blue-600 text-sm space-y-1">
+                                                        <li>• Stakeholder engagement depth and breadth</li>
+                                                        <li>• Solution fit accuracy and relevance</li>
+                                                        <li>• Objection handling effectiveness</li>
+                                                        <li>• Team collaboration and knowledge sharing</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="step-card mb-6">
+                                    <h4 class="text-green-800 font-bold mb-3">🔄 Training Program Evolution</h4>
+                                    <div class="space-y-3">
+                                        <div class="framework-step">
+                                            <h5 class="font-semibold text-blue-800 mb-2">Market Feedback Integration</h5>
+                                            <ul class="text-blue-700 text-sm space-y-1">
+                                                <li>• Customer request patterns and requirement evolution</li>
+                                                <li>• Competitive response adaptation and differentiation</li>
+                                                <li>• Industry trend integration and relevance updates</li>
+                                                <li>• Product roadmap alignment and future state preparation</li>
+                                            </ul>
+                                        </div>
+                                        <div class="framework-step">
+                                            <h5 class="font-semibold text-blue-800 mb-2">Content Refresh Strategy</h5>
+                                            <ul class="text-blue-700 text-sm space-y-1">
+                                                <li>• Demo scenario updates based on customer feedback</li>
+                                                <li>• Case study refresh and new success story development</li>
+                                                <li>• FAQ updates and objection handling enhancement</li>
+                                                <li>• Training material modernization and engagement improvement</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Feedback Collection Methods -->
+                            <div class="mb-8">
+                                <h3 class="text-navy font-bold mb-6 text-2xl">Multi-Source Feedback Collection</h3>
+                                <div class="feature-grid">
+                                    <div class="feature-card">
+                                        <h4>👥 Customer Feedback</h4>
+                                        <ul class="text-sm space-y-1 mt-2">
+                                            <li>• Post-meeting satisfaction surveys</li>
+                                            <li>• Demo effectiveness and relevance ratings</li>
+                                            <li>• Solution fit and value perception</li>
+                                            <li>• Presenter competence and professionalism</li>
+                                        </ul>
+                                    </div>
+                                    <div class="feature-card">
+                                        <h4>🤝 Peer Collaboration</h4>
+                                        <ul class="text-sm space-y-1 mt-2">
+                                            <li>• Team member observation and feedback</li>
+                                            <li>• Cross-functional project collaboration</li>
+                                            <li>• Knowledge sharing contribution assessment</li>
+                                            <li>• Mentoring effectiveness and impact</li>
+                                        </ul>
+                                    </div>
+                                    <div class="feature-card">
+                                        <h4>👔 Management Assessment</h4>
+                                        <ul class="text-sm space-y-1 mt-2">
+                                            <li>• Pipeline contribution and results analysis</li>
+                                            <li>• Professional development progress tracking</li>
+                                            <li>• Strategic thinking and solution innovation</li>
+                                            <li>• Leadership potential and team impact</li>
+                                        </ul>
+                                    </div>
+                                    <div class="feature-card">
+                                        <h4>📈 Performance Analytics</h4>
+                                        <ul class="text-sm space-y-1 mt-2">
+                                            <li>• CRM data analysis and trend identification</li>
+                                            <li>• Win/loss pattern analysis and insights</li>
+                                            <li>• Activity efficiency and productivity metrics</li>
+                                            <li>• Competitive success rate benchmarking</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h4 class="text-white font-bold">Continuous Improvement Cycle</h4>
+                                <ul class="text-gray-100 mt-4 space-y-2">
+                                    <li>• Regular performance data collection and analysis</li>
+                                    <li>• Proactive training needs identification and response</li>
+                                    <li>• Market-driven content updates and program evolution</li>
+                                    <li>• Individual development planning and career progression support</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Presales Field Readiness Checklist -->
+                    <section class="section-card hover-lift" id="checklist">
+                        <div class="text-center mb-8">
+                            <div class="w-16 h-16 bg-gradient-to-br from-success to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                            </div>
+                            <h2 class="text-3xl font-bold text-navy mb-4">Pre-Sales Field Readiness Checklist</h2>
+                        </div>
+                        
+                        <div class="prose max-w-none">
+                            <div class="assessment-section">
+                                <h3 class="text-blue-800 font-bold mb-6">Comprehensive Readiness Validation</h3>
+                                <p class="text-blue-700 mb-6">
+                                    Interactive checklist to systematically verify completion of all readiness requirements across training, assessment, and practical application dimensions.
+                                </p>
+                                
+                                <div class="bg-white rounded-lg p-4 mb-6">
+                                    <div class="flex items-center justify-between mb-4">
+                                        <h4 class="font-bold text-gray-800">Checklist Progress</h4>
+                                        <div class="flex items-center space-x-4">
+                                            <span class="text-sm text-gray-600">Completed: <span id="completed-count">0</span>/12</span>
+                                            <div class="w-32 h-2 bg-gray-200 rounded-full overflow-hidden">
+                                                <div class="h-full bg-success rounded-full transition-all duration-500" id="checklist-progress" style="width: 0%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Training Completion Section -->
+                            <div class="mb-8">
+                                <h3 class="text-navy font-bold mb-6 text-2xl flex items-center">
+                                    <span class="w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center mr-3 text-sm">1</span>
+                                    Training Completion
+                                </h3>
+                                <div class="space-y-3">
+                                    <div class="checklist-item" onclick="toggleCheckbox(this)">
+                                        <div class="checklist-checkbox">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: none;">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                            </svg>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="font-medium text-gray-800">Onboarding modules completed</div>
+                                            <div class="text-gray-600 text-sm">All core onboarding training modules finished with 100% completion rate</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="checklist-item" onclick="toggleCheckbox(this)">
+                                        <div class="checklist-checkbox">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: none;">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                            </svg>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="font-medium text-gray-800">Role-based training path completed</div>
+                                            <div class="text-gray-600 text-sm">Specialized training track for assigned role completed successfully</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Demo Proficiency Section -->
+                            <div class="mb-8">
+                                <h3 class="text-navy font-bold mb-6 text-2xl flex items-center">
+                                    <span class="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center mr-3 text-sm">2</span>
+                                    Demo Proficiency
+                                </h3>
+                                <div class="space-y-3">
+                                    <div class="checklist-item" onclick="toggleCheckbox(this)">
+                                        <div class="checklist-checkbox">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: none;">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                            </svg>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="font-medium text-gray-800">Delivered mock demo successfully</div>
+                                            <div class="text-gray-600 text-sm">Completed 3+ mock demo sessions with positive evaluation scores</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="checklist-item" onclick="toggleCheckbox(this)">
+                                        <div class="checklist-checkbox">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: none;">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                            </svg>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="font-medium text-gray-800">Received positive peer feedback</div>
+                                            <div class="text-gray-600 text-sm">Peer evaluations show competent demo delivery and engagement skills</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Technical Solutioning Section -->
+                            <div class="mb-8">
+                                <h3 class="text-navy font-bold mb-6 text-2xl flex items-center">
+                                    <span class="w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center mr-3 text-sm">3</span>
+                                    Technical Solutioning
+                                </h3>
+                                <div class="space-y-3">
+                                    <div class="checklist-item" onclick="toggleCheckbox(this)">
+                                        <div class="checklist-checkbox">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: none;">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                            </svg>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="font-medium text-gray-800">Completed solutioning exercise</div>
+                                            <div class="text-gray-600 text-sm">Successfully designed technical solution for realistic customer scenario</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="checklist-item" onclick="toggleCheckbox(this)">
+                                        <div class="checklist-checkbox">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: none;">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                            </svg>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="font-medium text-gray-800">Demonstrated integration knowledge</div>
+                                            <div class="text-gray-600 text-sm">Showed competency in technical integration planning and requirements</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Documentation & Tools Section -->
+                            <div class="mb-8">
+                                <h3 class="text-navy font-bold mb-6 text-2xl flex items-center">
+                                    <span class="w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center mr-3 text-sm">4</span>
+                                    Documentation & Tools
+                                </h3>
+                                <div class="space-y-3">
+                                    <div class="checklist-item" onclick="toggleCheckbox(this)">
+                                        <div class="checklist-checkbox">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: none;">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                            </svg>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="font-medium text-gray-800">Familiar with CRM and proposal templates</div>
+                                            <div class="text-gray-600 text-sm">Demonstrates proficiency with CRM navigation and proposal template usage</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="checklist-item" onclick="toggleCheckbox(this)">
+                                        <div class="checklist-checkbox">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: none;">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                            </svg>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="font-medium text-gray-800">Able to manage demo scripts and assets</div>
+                                            <div class="text-gray-600 text-sm">Can effectively navigate and customize demo scripts and sales assets</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Field Simulation Section -->
+                            <div class="mb-8">
+                                <h3 class="text-navy font-bold mb-6 text-2xl flex items-center">
+                                    <span class="w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center mr-3 text-sm">5</span>
+                                    Field Simulation
+                                </h3>
+                                <div class="space-y-3">
+                                    <div class="checklist-item" onclick="toggleCheckbox(this)">
+                                        <div class="checklist-checkbox">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: none;">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                            </svg>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="font-medium text-gray-800">Participated in mock customer meeting</div>
+                                            <div class="text-gray-600 text-sm">Successfully completed customer simulation with internal stakeholders</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="checklist-item" onclick="toggleCheckbox(this)">
+                                        <div class="checklist-checkbox">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: none;">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                            </svg>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="font-medium text-gray-800">Feedback collected and reviewed</div>
+                                            <div class="text-gray-600 text-sm">Received comprehensive feedback from simulation and developed improvement plan</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Certification Section -->
+                            <div class="mb-8">
+                                <h3 class="text-navy font-bold mb-6 text-2xl flex items-center">
+                                    <span class="w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center mr-3 text-sm">6</span>
+                                    Certification & Continuous Improvement
+                                </h3>
+                                <div class="space-y-3">
+                                    <div class="checklist-item" onclick="toggleCheckbox(this)">
+                                        <div class="checklist-checkbox">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: none;">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                            </svg>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="font-medium text-gray-800">Achieved readiness level certification</div>
+                                            <div class="text-gray-600 text-sm">Received appropriate certification level (1, 2, or 3) based on competency assessment</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="checklist-item" onclick="toggleCheckbox(this)">
+                                        <div class="checklist-checkbox">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: none;">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                            </svg>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="font-medium text-gray-800">Scheduled for quarterly review</div>
+                                            <div class="text-gray-600 text-sm">Calendar scheduled for ongoing performance monitoring and development planning</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h4 class="text-white font-bold">Checklist Completion Benefits</h4>
+                                <ul class="text-gray-100 mt-4 space-y-2">
+                                    <li>• Systematic validation of all readiness requirements</li>
+                                    <li>• Clear progress tracking and milestone achievement</li>
+                                    <li>• Evidence-based certification and recognition</li>
+                                    <li>• Foundation for ongoing professional development</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <!-- Complete Lesson Button -->
+            <div class="text-center mt-16" id="complete-section">
+                <div class="section-card hover-lift">
+                    <h3 class="text-2xl font-bold text-navy mb-6">Ready to Validate Your Field Readiness Knowledge?</h3>
+                    <p class="text-gray-600 mb-8">Test your understanding of the assessment framework, certification levels, and continuous monitoring processes.</p>
+                    
+                    <button onclick="startQuiz()" class="bg-gradient-to-r from-purple to-blue text-white px-8 py-4 rounded-2xl font-bold text-lg hover:shadow-lg transform hover:scale-105 transition-all duration-300 flex items-center justify-center mx-auto">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                        Start Quiz
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quiz Section (Hidden initially) -->
+            <div class="mt-16 section-card" id="quiz-section" style="display: none;">
+                <div class="text-center mb-8">
+                    <div class="w-16 h-16 bg-gradient-to-br from-navy to-purple rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                    </div>
+                    <h2 class="text-3xl font-bold text-navy mb-4">Field Readiness Assessment</h2>
+                    <p class="text-gray-600">Test your understanding of assessment processes, certification levels, and continuous monitoring frameworks.</p>
+                </div>
+
+                <div class="mb-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-navy font-semibold">Question <span id="current-question">1</span> of <span id="total-questions">10</span></span>
+                        <div class="w-32 h-2 bg-gray-200 rounded-full overflow-hidden">
+                            <div class="h-full bg-purple rounded-full transition-all duration-300" id="quiz-progress" style="width: 10%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="quiz-container">
+                    <h3 id="question-text" class="text-xl font-bold text-navy mb-6"></h3>
+                    <div id="answers-container" class="space-y-3">
+                        <!-- Quiz options will be inserted here -->
+                    </div>
+                </div>
+
+                <div class="flex justify-between mt-8">
+                    <button id="prev-btn" onclick="previousQuestion()" class="px-6 py-3 bg-gray-200 text-gray-600 rounded-xl font-semibold hover:bg-gray-300 transition-colors flex items-center" disabled>
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                        </svg>
+                        Previous
+                    </button>
+                    <button id="next-btn" onclick="nextQuestion()" class="px-6 py-3 bg-gradient-to-r from-purple to-blue text-white rounded-xl font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-300 flex items-center" disabled>
+                        Next
+                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Quiz Results -->
+                <div id="quiz-results" class="mt-8 text-center" style="display: none;">
+                    <div id="results-content">
+                        <!-- Results will be inserted here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Field readiness focused quiz questions
+        const quizQuestions = [
+            {
+                question: "How many certification levels are in the Field Readiness framework?",
+                options: [
+                    "2 levels",
+                    "3 levels",
+                    "4 levels",
+                    "5 levels"
+                ],
+                correct: 1
+            },
+            {
+                question: "What is the minimum score required for advanced product knowledge assessment in Level 2 certification?",
+                options: [
+                    "80%",
+                    "85%",
+                    "90%",
+                    "95%"
+                ],
+                correct: 2
+            },
+            {
+                question: "Which role focuses primarily on strategic solution design and customer value articulation?",
+                options: [
+                    "Demo Specialist",
+                    "Technical Pre-Sales",
+                    "Solution Consultant",
+                    "Field Engineer"
+                ],
+                correct: 2
+            },
+            {
+                question: "How often are quarterly check-ins scheduled for continuous monitoring?",
+                options: [
+                    "Monthly",
+                    "Every 3 months",
+                    "Twice per year",
+                    "Annually"
+                ],
+                correct: 1
+            },
+            {
+                question: "What is the target demo-to-win ratio for performance metrics tracking?",
+                options: [
+                    "15%+",
+                    "20%+",
+                    "25%+",
+                    "30%+"
+                ],
+                correct: 2
+            },
+            {
+                question: "Which assessment dimension is NOT part of the simulation feedback framework?",
+                options: [
+                    "Communication",
+                    "Confidence", 
+                    "Adaptability",
+                    "Technical Architecture"
+                ],
+                correct: 3
+            },
+            {
+                question: "Level 1 certification allows which activity?",
+                options: [
+                    "Independent customer meeting leadership",
+                    "Complex solution design",
+                    "Support role in customer meetings",
+                    "Mentor junior team members"
+                ],
+                correct: 2
+            },
+            {
+                question: "What is the minimum customer satisfaction target score?",
+                options: [
+                    "3.8/5.0",
+                    "4.0/5.0",
+                    "4.2/5.0",
+                    "4.5/5.0"
+                ],
+                correct: 2
+            },
+            {
+                question: "Which competency scoring level indicates 'Requires additional training'?",
+                options: [
+                    "Level 1 - Developing",
+                    "Level 2 - Competent",
+                    "Level 3 - Proficient",
+                    "Level 4 - Expert"
+                ],
+                correct: 0
+            },
+            {
+                question: "How many items are in the Pre-Sales Field Readiness Checklist?",
+                options: [
+                    "10 items",
+                    "12 items",
+                    "14 items",
+                    "16 items"
+                ],
+                correct: 1
+            }
+        ];
+
+        let currentQuizQuestion = 0;
+        let userAnswers = [];
+        let lessonProgress = 0;
+        let checklistCompleted = 0;
+
+        // Initialize page with enhanced animations
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeAnimations();
+            setupScrollProgress();
+            setupTableOfContents();
+            updateLessonProgress(0);
+            updateChecklistProgress();
+        });
+
+        function initializeAnimations() {
+            // Set initial states for enhanced animations
+            gsap.set("#nav-header", { y: -100, opacity: 0 });
+            gsap.set("#main-title", { y: -60, opacity: 0, scale: 0.9 });
+            gsap.set("#progress-indicator", { y: 40, opacity: 0, scale: 0.8 });
+            gsap.set("#toc-container", { x: -80, opacity: 0 });
+            gsap.set("#content-section > section", { y: 100, opacity: 0 });
+            gsap.set("#complete-section", { y: 60, opacity: 0, scale: 0.9 });
+
+            // Enhanced animation timeline
+            const tl = gsap.timeline();
+
+            tl.to("#nav-header", {
+                duration: 1,
+                y: 0,
+                opacity: 1,
+                ease: "back.out(1.7)"
+            })
+            .to("#main-title", {
+                duration: 1.2,
+                y: 0,
+                opacity: 1,
+                scale: 1,
+                ease: "back.out(1.4)"
+            }, "-=0.6")
+            .to("#progress-indicator", {
+                duration: 0.8,
+                y: 0,
+                opacity: 1,
+                scale: 1,
+                ease: "back.out(1.7)"
+            }, "-=0.4")
+            .to("#toc-container", {
+                duration: 1,
+                x: 0,
+                opacity: 1,
+                ease: "power3.out"
+            }, "-=0.8")
+            .to("#content-section > section", {
+                duration: 1,
+                y: 0,
+                opacity: 1,
+                stagger: 0.15,
+                ease: "power3.out",
+                onComplete: () => {
+                    updateLessonProgress(75);
+                }
+            }, "-=1")
+            .to("#complete-section", {
+                duration: 0.8,
+                y: 0,
+                opacity: 1,
+                scale: 1,
+                ease: "back.out(1.7)"
+            }, "-=0.3");
+        }
+
+        function setupScrollProgress() {
+            window.addEventListener('scroll', () => {
+                const scrollProgress = document.getElementById('scroll-progress');
+                const scrollTop = window.pageYOffset;
+                const docHeight = document.body.offsetHeight - window.innerHeight;
+                const scrollPercent = scrollTop / docHeight;
+                
+                gsap.to(scrollProgress, {
+                    duration: 0.2,
+                    scaleX: scrollPercent,
+                    ease: "power3.out"
+                });
+            });
+        }
+
+        function setupTableOfContents() {
+            const tocLinks = document.querySelectorAll('.toc-item');
+            const sections = document.querySelectorAll('section[id]');
+
+            tocLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('href').substring(1);
+                    const targetSection = document.getElementById(targetId);
+                    if (targetSection) {
+                        const offsetTop = targetSection.offsetTop - 120;
+                        
+                        if (typeof gsap !== 'undefined' && gsap.plugins.ScrollToPlugin) {
+                            gsap.to(window, {
+                                duration: 1,
+                                scrollTo: { y: offsetTop },
+                                ease: "power2.inOut"
+                            });
+                        } else {
+                            window.scrollTo({
+                                top: offsetTop,
+                                behavior: 'smooth'
+                            });
+                        }
+                        
+                        tocLinks.forEach(l => l.classList.remove('active'));
+                        link.classList.add('active');
+                    }
+                });
+            });
+
+            const observerOptions = {
+                rootMargin: '-120px 0px -50% 0px',
+                threshold: [0, 0.25, 0.5, 0.75, 1]
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                let activeEntry = null;
+                let maxIntersectionRatio = 0;
+                
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && entry.intersectionRatio > maxIntersectionRatio) {
+                        maxIntersectionRatio = entry.intersectionRatio;
+                        activeEntry = entry;
+                    }
+                });
+                
+                if (activeEntry) {
+                    const activeId = activeEntry.target.id;
+                    tocLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${activeId}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            }, observerOptions);
+
+            sections.forEach(section => observer.observe(section));
+        }
+
+        function updateLessonProgress(percentage) {
+            lessonProgress = percentage;
+            document.getElementById('progress-text').textContent = `${percentage}%`;
+            
+            gsap.to("#progress-bar", {
+                duration: 1.5,
+                width: `${percentage}%`,
+                ease: "power2.out"
+            });
+
+            const lessonProgressEl = document.getElementById('lesson-progress');
+            if (lessonProgressEl) {
+                gsap.to("#lesson-progress", {
+                    duration: 1.5,
+                    width: `${Math.min(percentage / 2, 100)}%`,
+                    ease: "power2.out"
+                });
+            }
+        }
+
+        function toggleCheckbox(element) {
+            const checkbox = element.querySelector('.checklist-checkbox');
+            const checkmark = checkbox.querySelector('svg');
+            
+            if (checkbox.classList.contains('checked')) {
+                // Uncheck
+                checkbox.classList.remove('checked');
+                checkmark.style.display = 'none';
+                checklistCompleted--;
+            } else {
+                // Check
+                checkbox.classList.add('checked');
+                checkmark.style.display = 'block';
+                checklistCompleted++;
+                
+                // Animate checkbox
+                gsap.fromTo(checkbox, 
+                    { scale: 1 },
+                    { 
+                        scale: 1.2, 
+                        duration: 0.2, 
+                        ease: "power2.out",
+                        yoyo: true,
+                        repeat: 1
+                    }
+                );
+            }
+            
+            updateChecklistProgress();
+        }
+
+        function updateChecklistProgress() {
+            const totalItems = 12;
+            const percentage = (checklistCompleted / totalItems) * 100;
+            
+            document.getElementById('completed-count').textContent = checklistCompleted;
+            
+            gsap.to("#checklist-progress", {
+                duration: 0.5,
+                width: `${percentage}%`,
+                ease: "power2.out"
+            });
+
+            // Update lesson progress based on checklist completion
+            if (checklistCompleted === totalItems) {
+                updateLessonProgress(100);
+            }
+        }
+
+        function startQuiz() {
+            currentQuizQuestion = 0;
+            userAnswers = [];
+            
+            document.getElementById('quiz-section').style.display = 'block';
+            
+            gsap.fromTo("#quiz-section", 
+                { y: 100, opacity: 0, scale: 0.95 },
+                { 
+                    duration: 1, 
+                    y: 0, 
+                    opacity: 1, 
+                    scale: 1, 
+                    ease: "back.out(1.7)",
+                    onComplete: () => {
+                        document.getElementById('quiz-section').scrollIntoView({ 
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                }
+            );
+            
+            loadQuizQuestion();
+        }
+
+        function loadQuizQuestion() {
+            const question = quizQuestions[currentQuizQuestion];
+            const totalQuestions = quizQuestions.length;
+            
+            document.getElementById('current-question').textContent = currentQuizQuestion + 1;
+            document.getElementById('total-questions').textContent = totalQuestions;
+            document.getElementById('question-text').textContent = question.question;
+            
+            const quizProgressPercent = ((currentQuizQuestion + 1) / totalQuestions) * 100;
+            gsap.to("#quiz-progress", {
+                duration: 0.8,
+                width: `${quizProgressPercent}%`,
+                ease: "power2.out"
+            });
+            
+            const answersContainer = document.getElementById('answers-container');
+            answersContainer.innerHTML = '';
+
+            question.options.forEach((option, index) => {
+                const answerDiv = document.createElement('div');
+                answerDiv.className = 'answer-option p-6 border-2 border-gray-200 rounded-2xl cursor-pointer hover:border-purple hover:bg-gradient-to-r hover:from-purple/5 hover:to-blue/5 transition-all duration-300 transform hover:scale-102 hover:shadow-lg';
+                answerDiv.innerHTML = `
+                    <div class="flex items-center">
+                        <div class="w-8 h-8 border-2 border-gray-300 rounded-full mr-4 flex items-center justify-center font-bold text-gray-500 transition-all duration-300">
+                            ${String.fromCharCode(65 + index)}
+                        </div>
+                        <span class="text-lg font-medium text-gray-700">${option}</span>
+                    </div>
+                `;
+                answerDiv.onclick = () => selectAnswer(index, answerDiv);
+                answersContainer.appendChild(answerDiv);
+            });
+            
+            document.getElementById('prev-btn').disabled = currentQuizQuestion === 0;
+            document.getElementById('next-btn').disabled = true;
+            document.getElementById('next-btn').innerHTML = 
+                currentQuizQuestion === totalQuestions - 1 ? 
+                'Complete Assessment<svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>' : 
+                'Next<svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>';
+            
+            if (userAnswers[currentQuizQuestion] !== undefined) {
+                const selectedIndex = userAnswers[currentQuizQuestion];
+                const answerOptions = document.querySelectorAll('.answer-option');
+                if (answerOptions[selectedIndex]) {
+                    selectAnswer(selectedIndex, answerOptions[selectedIndex]);
+                }
+            }
+            
+            gsap.fromTo(".answer-option", 
+                { y: 30, opacity: 0 },
+                { 
+                    y: 0, 
+                    opacity: 1, 
+                    duration: 0.6, 
+                    stagger: 0.1, 
+                    ease: "back.out(1.7)" 
+                }
+            );
+        }
+
+        function selectAnswer(answerIndex, answerElement) {
+            document.querySelectorAll('.answer-option').forEach(opt => {
+                opt.classList.remove('border-purple-500', 'bg-purple-50', 'ring-2', 'ring-purple-200');
+                opt.classList.add('border-gray-200');
+            });
+            
+            // Mark selected answer
+            answerElement.classList.remove('border-gray-200');
+            answerElement.classList.add('border-purple-500', 'bg-purple-50', 'ring-2', 'ring-purple-200');
+            
+            userAnswers[currentQuizQuestion] = answerIndex;
+            document.getElementById('next-btn').disabled = false;
+            
+            gsap.to(answerElement, {
+                duration: 0.3,
+                scale: 1.02,
+                ease: "power2.out",
+                yoyo: true,
+                repeat: 1
+            });
+        }
+
+        function nextQuestion() {
+            if (currentQuizQuestion < quizQuestions.length - 1) {
+                gsap.to("#quiz-container", {
+                    duration: 0.3,
+                    opacity: 0,
+                    x: -50,
+                    ease: "power2.in",
+                    onComplete: () => {
+                        currentQuizQuestion++;
+                        loadQuizQuestion();
+                        gsap.fromTo("#quiz-container", 
+                            { opacity: 0, x: 50 },
+                            { duration: 0.4, opacity: 1, x: 0, ease: "power2.out" }
+                        );
+                    }
+                });
+            } else {
+                finishQuiz();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuizQuestion > 0) {
+                gsap.to("#quiz-container", {
+                    duration: 0.3,
+                    opacity: 0,
+                    x: 50,
+                    ease: "power2.in",
+                    onComplete: () => {
+                        currentQuizQuestion--;
+                        loadQuizQuestion();
+                        gsap.fromTo("#quiz-container", 
+                            { opacity: 0, x: -50 },
+                            { duration: 0.4, opacity: 1, x: 0, ease: "power2.out" }
+                        );
+                    }
+                });
+            }
+        }
+
+        function finishQuiz() {
+            let correctAnswers = 0;
+            quizQuestions.forEach((question, index) => {
+                if (userAnswers[index] === question.correct) {
+                    correctAnswers++;
+                }
+            });
+            
+            const score = (correctAnswers / quizQuestions.length) * 100;
+            const passed = score >= 80;
+            
+            showQuizResults(score, correctAnswers, passed);
+            
+            if (passed) {
+                updateLessonProgress(100);
+            }
+        }
+
+        function showQuizResults(score, correctAnswers, passed) {
+            // Remove old modal if exists
+            const oldModal = document.getElementById("quiz-results-modal");
+            if (oldModal) oldModal.remove();
+
+            // Create modal overlay
+            const modal = document.createElement("div");
+            modal.id = "quiz-results-modal";
+            modal.style.position = "fixed";
+            modal.style.top = "0";
+            modal.style.left = "0";
+            modal.style.width = "100%";
+            modal.style.height = "100%";
+            modal.style.backgroundColor = "rgba(0,0,0,0.6)";
+            modal.style.display = "flex";
+            modal.style.alignItems = "center";
+            modal.style.justifyContent = "center";
+            modal.style.zIndex = "9999";
+            modal.style.overflowY = "auto";
+            modal.style.padding = "1rem";
+
+            // Modal content wrapper
+            const modalContent = document.createElement("div");
+            modalContent.style.maxWidth = "700px";
+            modalContent.style.width = "100%";
+            modalContent.style.position = "relative";
+            modalContent.id = "quiz-results-content";
+
+            // Close button
+            const closeBtn = document.createElement("button");
+            closeBtn.innerHTML = "&times;";
+            closeBtn.style.position = "absolute";
+            closeBtn.style.top = "1rem";
+            closeBtn.style.right = "1rem";
+            closeBtn.style.fontSize = "2rem";
+            closeBtn.style.color = "#666";
+            closeBtn.style.background = "transparent";
+            closeBtn.style.border = "none";
+            closeBtn.style.cursor = "pointer";
+            closeBtn.onclick = () => {
+                gsap.to(modal, {
+                    duration: 0.5,
+                    opacity: 0,
+                    scale: 0.9,
+                    ease: "power2.in",
+                    onComplete: () => modal.remove()
+                });
+            };
+
+            // Insert passed/failed content into modal
+            if (passed) {
+                modalContent.innerHTML = `
+                    <div style="background: linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%); border: 2px solid #a7f3d0; border-radius: 24px; padding: 2.5rem;">
+                        <div style="width: 96px; height: 96px; background: linear-gradient(135deg, #10b981 0%, #059669 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem auto; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);">
+                            <svg style="width: 48px; height: 48px; color: white;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                        </div>
+                        <h3 style="font-size: 2.25rem; font-weight: bold; color: #065f46; margin-bottom: 1.5rem; text-align: center;">🎉 Pre-Sales Mastery Achieved!</h3>
+                        <div style="font-size: 1.875rem; font-weight: bold; background: linear-gradient(135deg, #6C4193 0%, #0096C7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 1rem; text-align: center;">
+                            ${score.toFixed(1)}% Score
+                        </div>
+                        <p style="font-size: 1.25rem; color: #047857; margin-bottom: 2rem; text-align: center;">
+                            You correctly answered ${correctAnswers} out of ${quizQuestions.length} questions
+                        </p>
+                        <div style="background: rgba(255, 255, 255, 0.7); padding: 1.5rem; border-radius: 16px; margin-bottom: 2rem; border: 1px solid #a7f3d0; text-align: center;">
+                            <p style="font-size: 1.125rem; color: #059669;">
+                                Outstanding! You've Passed!
+                            </p>
+                        </div>
+                        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                            <button id="reviewAssessmentBtn" class="px-8 py-4 bg-white text-emerald-700 border-2 border-emerald-300 rounded-2xl font-semibold hover:bg-emerald-50 transition-colors inline-flex items-center group">
+                                Review Assessment
+                            </button>
+                            <a href="lesson-5.html" class="inline-flex items-center px-8 py-4 bg-white border-2 border-emerald-300 text-black rounded-2xl font-semibold hover:shadow-2xl transform hover:scale-105 transition-all duration-300 group">
+                                Continue Training Journey
+                            </a>
+                        </div>
+                    </div>
+                `;
+            } else {
+                modalContent.innerHTML = `
+                    <div style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border: 2px solid #f59e0b; border-radius: 24px; padding: 2.5rem;">
+                        <div style="width: 96px; height: 96px; background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem auto; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);">
+                            <svg style="width: 48px; height: 48px; color: white;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                            </svg>
+                        </div>
+                        <h3 style="font-size: 2.25rem; font-weight: bold; color: #92400e; margin-bottom: 1.5rem; text-align: center;">Keep Building Your Skills! 📚</h3>
+                        <div style="font-size: 1.875rem; font-weight: bold; color: #d97706; margin-bottom: 1rem; text-align: center;">
+                            ${score.toFixed(1)}% Score
+                        </div>
+                        <p style="font-size: 1.25rem; color: #b45309; margin-bottom: 2rem; text-align: center;">
+                            You answered ${correctAnswers} out of ${quizQuestions.length} questions correctly
+                        </p>
+                        <div style="background: rgba(255, 255, 255, 0.7); padding: 1.5rem; border-radius: 16px; margin-bottom: 2rem; border: 1px solid #f59e0b; text-align: center;">
+                            <p style="font-size: 1.125rem; color: #d97706;">
+                                You need 80% or higher to pass.
+                            </p>
+                        </div>
+                        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                            <button id="retakeBtn" class="px-8 py-4 bg-gradient-to-r from-purple to-blue text-white rounded-2xl font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-300">
+                                Retake Assessment
+                            </button>
+                            <button id="reviewLessonBtn" class="px-8 py-4 bg-white text-orange-700 border-2 border-orange-300 rounded-2xl font-semibold hover:bg-orange-50 transition-colors">
+                                Review Lesson Content
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            modalContent.appendChild(closeBtn);
+            modal.appendChild(modalContent);
+            document.body.appendChild(modal);
+
+            // Animate modal
+            gsap.fromTo(modalContent, 
+                { y: 50, opacity: 0, scale: 0.9 },
+                { duration: 0.8, y: 0, opacity: 1, scale: 1, ease: "back.out(1.7)" }
+            );
+
+            // Smooth close + action for buttons
+            const reviewAssessmentBtn = document.getElementById("reviewAssessmentBtn");
+            if (reviewAssessmentBtn) {
+                reviewAssessmentBtn.addEventListener("click", () => {
+                    gsap.to(modal, {
+                        duration: 0.5,
+                        opacity: 0,
+                        scale: 0.9,
+                        ease: "power2.in",
+                        onComplete: () => {
+                            modal.remove();
+                            retakeQuiz();
+                        }
+                    });
+                });
+            }
+
+            const retakeBtn = document.getElementById("retakeBtn");
+            if (retakeBtn) {
+                retakeBtn.addEventListener("click", () => {
+                    gsap.to(modal, {
+                        duration: 0.5,
+                        opacity: 0,
+                        scale: 0.9,
+                        ease: "power2.in",
+                        onComplete: () => {
+                            modal.remove();
+                            retakeQuiz();
+                        }
+                    });
+                });
+            }
+
+            const reviewLessonBtn = document.getElementById("reviewLessonBtn");
+            if (reviewLessonBtn) {
+                reviewLessonBtn.addEventListener("click", () => {
+                    gsap.to(modal, {
+                        duration: 0.5,
+                        opacity: 0,
+                        scale: 0.9,
+                        ease: "power2.in",
+                        onComplete: () => {
+                            modal.remove();
+                            reviewLesson();
+                        }
+                    });
+                });
+            }
+            
+            document.getElementById('quiz-results').style.display = 'block';
+            
+            gsap.fromTo("#quiz-results", 
+                { y: 50, opacity: 0, scale: 0.9 },
+                { 
+                    duration: 1, 
+                    y: 0, 
+                    opacity: 1, 
+                    scale: 1, 
+                    ease: "back.out(1.7)" 
+                }
+            );
+        }
+
+        function createFloatingElement(emoji, x, y) {
+            const element = document.createElement('div');
+            element.textContent = emoji;
+            element.style.position = 'fixed';
+            element.style.left = x + 'px';
+            element.style.top = y + 'px';
+            element.style.fontSize = '2rem';
+            element.style.pointerEvents = 'none';
+            element.style.zIndex = '9999';
+            document.body.appendChild(element);
+
+            gsap.to(element, {
+                y: -200,
+                rotation: 360,
+                opacity: 0,
+                duration: 2,
+                ease: "power2.out",
+                onComplete: () => element.remove()
+            });
+        }
+
+        function retakeQuiz() {
+            currentQuizQuestion = 0;
+            userAnswers = [];
+            document.getElementById('quiz-results').style.display = 'none';
+            
+            gsap.to("#quiz-container", {
+                duration: 0.4,
+                opacity: 1,
+                scale: 1,
+                ease: "power2.out"
+            });
+            
+            loadQuizQuestion();
+        }
+
+        function reviewLesson() {
+            gsap.to(window, {
+                duration: 1.5,
+                scrollTo: { y: "#overview", offsetY: 100 },
+                ease: "power2.inOut"
+            });
+        }
+        finishQuiz(scorePercentage, 4);
+    </script>
+</body>
+<script src="../script/quiz-logic.js"></script>
+<script src="../script/page-preview-logic.js"></script>
+</html>

@@ -1,0 +1,2524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 6 - Advanced Operations | Pre-Sales Excellence Training</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+    <script src="../style/tailwind.config.js"></script>
+    <link rel="stylesheet" href="../style/style.css">
+    <link rel="icon" type="image/x-icon" href="../image/favicon.ico">
+    <style>
+        body {
+            font-family: 'CustomFont', 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: 
+                linear-gradient(90deg, rgba(20, 40, 80, 0.06) 1px, transparent 1px),
+                linear-gradient(rgba(20, 40, 80, 0.06) 1px, transparent 1px);
+            background-size: 40px 40px;
+            background-color: #fafafa;
+            line-height: 1.6;
+        }
+        
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #6C4193 0%, #0096C7 100%);
+            transform-origin: left;
+            z-index: 1000;
+        }
+
+        .section-card {
+            background: white;
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border: 1px solid rgba(229, 231, 235, 0.8);
+        }
+
+        .hover-lift {
+            transition: all 0.3s ease;
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.1);
+            border-color: #6C4193;
+        }
+
+        .step-card {
+            background: linear-gradient(135deg, #fff 0%, #f8fafc 100%);
+            border: 2px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .step-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #6C4193 0%, #0096C7 100%);
+        }
+
+        .step-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px -8px rgba(0, 0, 0, 0.15);
+            border-color: #6C4193;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 16px;
+            margin: 1.5rem 0;
+        }
+
+        .checklist-item {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: between;
+        }
+
+        .checklist-item:hover {
+            border-color: #6C4193;
+            box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.1);
+        }
+
+        .checklist-checkbox {
+            width: 24px;
+            height: 24px;
+            border: 2px solid #d1d5db;
+            border-radius: 6px;
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .checklist-checkbox:hover {
+            border-color: #6C4193;
+            background-color: #f3f4f6;
+        }
+
+        .checklist-checkbox.checked {
+            background-color: #10B981;
+            border-color: #10B981;
+            color: white;
+        }
+
+        .toc {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(229, 231, 235, 0.6);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            position: sticky;
+            top: 120px;
+            z-index: 40;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            max-height: calc(100vh - 150px);
+            overflow-y: auto;
+        }
+
+        .toc-item {
+            display: block;
+            padding: 0.75rem 1.25rem;
+            color: #4a5568;
+            text-decoration: none;
+            border-radius: 12px;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .toc::-webkit-scrollbar-track {
+            background: rgba(243, 244, 246, 0.5);
+            border-radius: 3px;
+        }
+        
+        .toc::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #6C4193 0%, #0096C7 100%);
+            border-radius: 3px;
+        }
+        
+        .toc::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #5a3579 0%, #007ba3 100%);
+        }
+
+        .toc-item:hover {
+            background: linear-gradient(145deg, #f7fafc, #e2e8f0);
+            color: #6C4193;
+            transform: translateX(5px);
+        }
+
+        .toc-item.active {
+            background: linear-gradient(135deg, #6C4193 0%, #0096C7 100%);
+            color: white;
+            box-shadow: 0 4px 14px 0 rgba(108, 65, 147, 0.3);
+        }
+
+        .framework-step {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-left: 4px solid #0096C7;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .framework-step:hover {
+            transform: translateX(8px);
+            box-shadow: 0 8px 25px -8px rgba(0, 150, 199, 0.3);
+        }
+
+        .strategy-level {
+            background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%);
+            border: 2px solid #6C4193;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .strategy-level:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 25px -8px rgba(108, 65, 147, 0.4);
+        }
+
+        .marketing-section {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border: 2px solid #0096C7;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .progress-badge {
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .channel-card {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 2px solid #f59e0b;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .channel-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 25px -8px rgba(245, 158, 11, 0.4);
+        }
+
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .kpi-item {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .kpi-item:hover {
+            background: white;
+            border-color: #6C4193;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scroll-progress"></div>
+
+    <!-- Navigation Header -->
+    <nav class="bg-white/95 backdrop-filter backdrop-blur-lg shadow-lg sticky top-0 z-50 border-b border-gray-200/60" id="nav-header">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="../index.html" class="flex items-center space-x-3 text-navy hover:text-purple transition-colors group">
+                    <svg class="w-6 h-6 group-hover:transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                    </svg>
+                    <span class="font-bold text-lg">Back to Home</span>
+                </a>
+                
+                <div class="flex items-center space-x-6">
+                    <span class="text-navy font-semibold">Lesson 5 of 8</span>
+                    <div class="w-40 h-3 bg-gray-200 rounded-full overflow-hidden">
+                        <div class="h-full bg-gradient-to-r from-purple via-blue to-emerald rounded-full transition-all duration-500" style="width: 62.5%" id="lesson-progress"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="min-h-screen py-12">
+        <div class="max-w-6xl mx-auto px-8">
+            
+            <!-- Main Title -->
+            <div class="text-center mb-12" id="main-title">
+                <h1 class="text-6xl font-bold mb-6">
+                    <span class="text-navy">Advanced</span><br>
+                    <span class="text-navy">Operations</span><br>
+                    <span class="text-navy">Mastery</span>
+                </h1>
+                <p class="text-xl text-gray-600 opacity-90">Digital Marketing Strategies & Project Management Excellence</p>
+                <p class="text-lg text-gray-500 mt-2">Sales Enablement Training | Version 0.1 | Last Updated: July 22, 2025</p>
+                <div class="w-24 h-1 bg-gradient-to-r from-purple to-blue mx-auto mt-6 rounded-full"></div>
+            </div>
+
+            <!-- Progress Indicator -->
+            <div class="bg-white bg-opacity-95 rounded-2xl p-6 mb-12 shadow-lg max-w-md mx-auto border border-gray-100" id="progress-indicator">
+                <div class="text-navy font-semibold mb-3 text-center">
+                    Lesson Progress: <span id="progress-text" class="text-purple">0%</span>
+                </div>
+                <div class="w-full h-3 bg-gray-200 rounded-full overflow-hidden">
+                    <div class="h-full bg-gradient-to-r from-purple to-blue rounded-full transition-all duration-700 ease-out" style="width: 0%" id="progress-bar"></div>
+                </div>
+            </div>
+
+            <div class="flex gap-8">
+                <!-- Table of Contents -->
+                <div class="w-1/3" id="toc-container">
+                    <div class="toc">
+                        <h3 class="font-bold text-navy mb-6 text-xl">Navigation Menu</h3>
+                        <div class="toc-content">
+                            <nav class="space-y-1">
+                                <a href="#overview" class="toc-item flex items-center">
+                                    <svg class="w-4 h-4 mr-3 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                    Strategic Overview
+                                </a>
+                                <a href="#objectives" class="toc-item flex items-center">
+                                    <svg class="w-4 h-4 mr-3 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                    Digital Marketing Objectives
+                                </a>
+                                <a href="#website-seo" class="toc-item flex items-center">
+                                    <svg class="w-4 h-4 mr-3 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0-9v9"/></svg>
+                                    Website & SEO Strategy
+                                </a>
+                                <a href="#paid-advertising" class="toc-item flex items-center">
+                                    <svg class="w-4 h-4 mr-3 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"/></svg>
+                                    Paid Advertising Strategy
+                                </a>
+                                <a href="#content-marketing" class="toc-item flex items-center">
+                                    <svg class="w-4 h-4 mr-3 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                    Content & Email Marketing
+                                </a>
+                                <a href="#channels" class="toc-item flex items-center">
+                                    <svg class="w-4 h-4 mr-3 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                                    Marketing Channels
+                                </a>
+                                <a href="#implementation" class="toc-item flex items-center">
+                                    <svg class="w-4 h-4 mr-3 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                    Implementation Plan
+                                </a>
+                                <a href="#kpis" class="toc-item flex items-center">
+                                    <svg class="w-4 h-4 mr-3 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                                    KPIs & Measurement
+                                </a>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Content -->
+                <div class="w-2/3 space-y-16" id="content-section">
+                    
+                    <!-- Strategic Overview -->
+                    <section class="section-card hover-lift" id="overview">
+                        <div class="text-center mb-8">
+                            <div class="w-16 h-16 bg-gradient-to-br from-purple to-blue rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 616 0z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                </svg>
+                            </div>
+                            <h2 class="text-3xl font-bold text-navy mb-4">Strategic Operations Overview</h2>
+                        </div>
+                        
+                        <div class="prose max-w-none">
+                            <div class="highlight-box">
+                                <h3 class="text-white text-xl font-bold mb-4">Advanced Digital Marketing Operations</h3>
+                                <p class="text-gray-100">
+                                    Master comprehensive digital marketing strategies for B2B SaaS platforms, focusing on positioning CloseoutSoft as the go-to construction lifecycle management platform in the UAE and GCC region through strategic brand building, lead generation, and user adoption.
+                                </p>
+                            </div>
+
+                            <div class="grid md:grid-cols-2 gap-6 mt-8">
+                                <div class="feature-card">
+                                    <h4>🎯 Strategic Positioning</h4>
+                                    <p>Position CloseoutSoft as an end-to-end lifecycle management platform for construction, real estate, and facility management sectors.</p>
+                                </div>
+                                <div class="feature-card">
+                                    <h4>📈 Lead Generation Excellence</h4>
+                                    <p>Generate qualified leads through multi-channel digital strategies targeting construction industry stakeholders.</p>
+                                </div>
+                                <div class="feature-card">
+                                    <h4>🔄 Digital Transformation</h4>
+                                    <p>Drive digital transformation in traditional construction processes through comprehensive platform capabilities.</p>
+                                </div>
+                                <div class="feature-card">
+                                    <h4>📊 Performance Optimization</h4>
+                                    <p>Implement data-driven strategies with measurable KPIs for continuous improvement and ROI maximization.</p>
+                                </div>
+                            </div>
+
+                            <div class="mt-8 p-6 bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl border border-blue-200">
+                                <h3 class="text-blue-800 font-bold mb-4">Platform Capabilities</h3>
+                                <div class="grid md:grid-cols-2 gap-4">
+                                    <ul class="space-y-2 text-blue-700">
+                                        <li>✅ Full lifecycle project management from pre-construction to handover</li>
+                                        <li>✅ Facility management and maintenance optimization</li>
+                                        <li>✅ Quality assurance and compliance management</li>
+                                        <li>✅ Digital transformation for construction workflows</li>
+                                    </ul>
+                                    <ul class="space-y-2 text-blue-700">
+                                        <li>✅ Contractor, consultant, developer, and FM team solutions</li>
+                                        <li>✅ Collaboration enhancement and delay reduction</li>
+                                        <li>✅ UAE and GCC market specialization</li>
+                                        <li>✅ Enterprise-grade B2B SaaS architecture</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Digital Marketing Objectives -->
+                    <section class="section-card hover-lift" id="objectives">
+                        <div class="text-center mb-8">
+                            <div class="w-16 h-16 bg-gradient-to-br from-success to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                            <h2 class="text-3xl font-bold text-navy mb-4">Digital Marketing Objectives</h2>
+                        </div>
+                        
+                        <div class="prose max-w-none">
+                            <div class="marketing-section">
+                                <h3 class="text-blue-800 font-bold mb-6">Strategic Marketing Goals</h3>
+                                <p class="text-blue-700 mb-6">
+                                    Comprehensive objectives designed to build market presence, generate qualified leads, and drive sustainable growth in the competitive B2B SaaS construction technology market.
+                                </p>
+                            </div>
+
+                            <!-- Marketing Objectives -->
+                            <div class="mb-8">
+                                <h3 class="text-navy font-bold mb-6 text-2xl">Core Marketing Objectives</h3>
+                                
+                                <div class="step-card mb-6">
+                                    <h4 class="text-purple-800 font-bold mb-3">🏗️ Brand Visibility & Market Presence</h4>
+                                    <div class="space-y-3">
+                                        <div class="framework-step">
+                                            <h5 class="font-semibold text-blue-800 mb-2">Target Market Penetration</h5>
+                                            <ul class="text-blue-700 text-sm space-y-1">
+                                                <li>• Build strong brand visibility within GCC construction and real estate sectors</li>
+                                                <li>• Establish thought leadership in construction technology and digital transformation</li>
+                                                <li>• Create awareness among key decision-makers and influencers</li>
+                                                <li>• Position as the leading construction lifecycle management platform</li>
+                                            </ul>
+                                        </div>
+                                        <div class="framework-step">
+                                            <h5 class="font-semibold text-blue-800 mb-2">Competitive Differentiation</h5>
+                                            <ul class="text-blue-700 text-sm space-y-1">
+                                                <li>• Highlight unique end-to-end lifecycle capabilities</li>
+                                                <li>• Emphasize local market expertise and GCC compliance</li>
+                                                <li>• Showcase integration capabilities and platform scalability</li>
+                                                <li>• Demonstrate ROI and efficiency improvements</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="step-card mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">📈 Lead Generation & Conversion</h4>
+                                    <div class="space-y-3">
+                                        <div class="framework-step">
+                                            <h5 class="font-semibold text-blue-800 mb-2">Qualified Traffic Generation</h5>
+                                            <ul class="text-blue-700 text-sm space-y-1">
+                                                <li>• Drive qualified traffic to website through multi-channel strategies</li>
+                                                <li>• Target high-intent keywords and industry-specific search terms</li>
+                                                <li>• Optimize conversion paths for demo bookings and software trials</li>
+                                                <li>• Implement lead scoring and qualification frameworks</li>
+                                            </ul>
+                                        </div>
+                                        <div class="framework-step">
+                                            <h5 class="font-semibold text-blue-800 mb-2">Conversion Optimization</h5>
+                                            <ul class="text-blue-700 text-sm space-y-1">
+                                                <li>• Increase demo booking rates and trial conversions</li>
+                                                <li>• Optimize landing pages for specific user personas</li>
+                                                <li>• Implement retargeting campaigns for lead nurturing</li>
+                                                <li>• Develop compelling calls-to-action and value propositions</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="step-card mb-6">
+                                    <h4 class="text-green-800 font-bold mb-3">🎓 User Adoption & Retention</h4>
+                                    <div class="space-y-3">
+                                        <div class="framework-step">
+                                            <h5 class="font-semibold text-blue-800 mb-2">Educational Content Strategy</h5>
+                                            <ul class="text-blue-700 text-sm space-y-1">
+                                                <li>• Support onboarding and user retention through educational content</li>
+                                                <li>• Create comprehensive resource libraries and tutorials</li>
+                                                <li>• Develop webinar series and training programs</li>
+                                                <li>• Build community engagement and user success stories</li>
+                                            </ul>
+                                        </div>
+                                        <div class="framework-step">
+                                            <h5 class="font-semibold text-blue-800 mb-2">Customer Success Integration</h5>
+                                            <ul class="text-blue-700 text-sm space-y-1">
+                                                <li>• Align marketing efforts with customer success initiatives</li>
+                                                <li>• Develop case studies and testimonials for social proof</li>
+                                                <li>• Create user advocacy programs and referral mechanisms</li>
+                                                <li>• Monitor user satisfaction and feedback integration</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Success Metrics Overview -->
+                            <div class="mb-8">
+                                <h3 class="text-navy font-bold mb-6 text-2xl">Success Metrics Framework</h3>
+                                <div class="grid md:grid-cols-3 gap-6">
+                                    <div class="feature-card text-center">
+                                        <div class="text-3xl font-bold text-purple-600 mb-2">100+</div>
+                                        <div class="text-purple-800 font-medium">Qualified Leads/Month</div>
+                                        <div class="text-purple-600 text-sm mt-1">Target for sustained growth</div>
+                                    </div>
+                                    <div class="feature-card text-center">
+                                        <div class="text-3xl font-bold text-blue-600 mb-2">3%+</div>
+                                        <div class="text-blue-800 font-medium">Visitor to Demo Conversion</div>
+                                        <div class="text-blue-600 text-sm mt-1">Optimized conversion rate target</div>
+                                    </div>
+                                    <div class="feature-card text-center">
+                                        <div class="text-3xl font-bold text-green-600 mb-2">15%</div>
+                                        <div class="text-green-800 font-medium">Monthly Traffic Growth</div>
+                                        <div class="text-green-600 text-sm mt-1">Sustainable organic growth target</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h4 class="text-white font-bold">Strategic Alignment Benefits</h4>
+                                <ul class="text-gray-100 mt-4 space-y-2">
+                                    <li>• Clear, measurable objectives aligned with business growth targets</li>
+                                    <li>• Multi-channel approach maximizing reach and engagement</li>
+                                    <li>• Data-driven strategies enabling continuous optimization</li>
+                                    <li>• Integrated customer journey from awareness to advocacy</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Website & SEO Strategy -->
+                    <section class="section-card hover-lift" id="website-seo">
+                        <div class="text-center mb-8">
+                            <div class="w-16 h-16 bg-gradient-to-br from-blue to-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0-9v9"/>
+                                </svg>
+                            </div>
+                            <h2 class="text-3xl font-bold text-navy mb-4">Website & SEO Strategy</h2>
+                        </div>
+                        
+                        <div class="prose max-w-none">
+                            <div class="marketing-section">
+                                <h3 class="text-blue-800 font-bold mb-6">Comprehensive Digital Foundation</h3>
+                                <p class="text-blue-700 mb-6">
+                                    Strategic website optimization and SEO implementation to create a powerful digital foundation that attracts, engages, and converts target audiences through superior user experience and search visibility.
+                                </p>
+                            </div>
+
+                            <!-- Website Optimization Strategy -->
+                            <div class="mb-8">
+                                <h3 class="text-navy font-bold mb-6 text-2xl">Website Optimization Framework</h3>
+                                
+                                <div class="step-card mb-6">
+                                    <h4 class="text-purple-800 font-bold mb-3">🏗️ Content Architecture Redesign</h4>
+                                    <div class="space-y-3">
+                                        <div class="framework-step">
+                                            <h5 class="font-semibold text-blue-800 mb-2">Lifecycle-Focused Structure</h5>
+                                            <ul class="text-blue-700 text-sm space-y-1">
+                                                <li>• Redesign content architecture to reflect full project lifecycle</li>
+                                                <li>• Pre-construction planning and design phase solutions</li>
+                                                <li>• Construction execution and monitoring capabilities</li>
+                                                <li>• Handover processes and facility management integration</li>
+                                            </ul>
+                                        </div>
+                                        <div class="framework-step">
+                                            <h5 class="font-semibold text-blue-800 mb-2">Role-Specific Solution Pages</h5>
+                                            <div class="grid md:grid-cols-2 gap-3">
+                                                <div class="bg-white p-3 rounded-lg">
+                                                    <div class="font-medium text-purple-800">Developers</div>
+                                                    <div class="text-purple-600 text-xs">Project oversight, compliance, ROI optimization</div>
+                                                </div>
+                                                <div class="bg-white p-3 rounded-lg">
+                                                    <div class="font-medium text-purple-800">Contractors</div>
+                                                    <div class="text-purple-600 text-xs">Execution efficiency, quality management, collaboration</div>
+                                                </div>
+                                                <div class="bg-white p-3 rounded-lg">
+                                                    <div class="font-medium text-purple-800">Consultants</div>
+                                                    <div class="text-purple-600 text-xs">Design coordination, compliance verification, reporting</div>
+                                                </div>
+                                                <div class="bg-white p-3 rounded-lg">
+                                                    <div class="font-medium text-purple-800">FM Teams</div>
+                                                    <div class="text-purple-600 text-xs">Maintenance optimization, asset management, operations</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="step-card mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">🎯 Conversion Rate Optimization</h4>
+                                    <div class="space-y-3">
+                                        <div class="framework-step">
+                                            <h5 class="font-semibold text-blue-800 mb-2">Enhanced Call-to-Action Strategy</h5>
+                                            <ul class="text-blue-700 text-sm space-y-1">
+                                                <li>• Implement sticky "Book a Demo" button across all pages</li>
+                                                <li>• Strategic placement of conversion elements</li>
+                                                <li>• A/B test CTA copy and positioning for optimization</li>
+                                                <li>• Mobile-responsive design for all conversion paths</li>
+                                            </ul>
+                                        </div>
+                                        <div class="framework-step">
+                                            <h5 class="font-semibold text-blue-800 mb-2">User Experience Enhancement</h5>
+                                            <ul class="text-blue-700 text-sm space-y-1">
+                                                <li>• Optimize page load speeds and mobile responsiveness</li>
+                                                <li>• Implement clear navigation and information architecture</li>
+                                                <li>• Create compelling landing pages for different user segments</li>
+                                                <li>• Integrate social proof elements and testimonials</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- SEO Strategy -->
+                            <div class="mb-8">
+                                <h3 class="text-navy font-bold mb-6 text-2xl">Advanced SEO Implementation</h3>
+                                <div class="feature-grid">
+                                    <div class="step-card">
+                                        <h4 class="text-purple-800 font-bold mb-3">🔍 Keyword Strategy</h4>
+                                        <div class="space-y-2">
+                                            <div class="bg-purple-50 p-3 rounded-lg">
+                                                <div class="font-medium text-purple-800 mb-1">Transactional Keywords</div>
+                                                <div class="text-purple-600 text-sm">
+                                                    "project closeout software UAE"<br>
+                                                    "QA/QC management tool Dubai"<br>
+                                                    "construction management platform GCC"
+                                                </div>
+                                            </div>
+                                            <div class="bg-blue-50 p-3 rounded-lg">
+                                                <div class="font-medium text-blue-800 mb-1">Informational Keywords</div>
+                                                <div class="text-blue-600 text-sm">
+                                                    "construction project lifecycle management"<br>
+                                                    "facility management best practices"<br>
+                                                    "digital transformation construction"
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="step-card">
+                                        <h4 class="text-blue-800 font-bold mb-3">📝 Content Development</h4>
+                                        <ul class="text-blue-700 space-y-2 text-sm">
+                                            <li>• Blog content targeting informational search queries</li>
+                                            <li>• Industry-specific case studies and use cases</li>
+                                            <li>• Technical documentation and implementation guides</li>
+                                            <li>• Thought leadership articles on construction technology</li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="step-card">
+                                        <h4 class="text-green-800 font-bold mb-3">⚡ Technical SEO</h4>
+                                        <ul class="text-green-700 space-y-2 text-sm">
+                                            <li>• Optimize metadata, page speed, and mobile UX</li>
+                                            <li>• Implement structured data markup for rich snippets</li>
+                                            <li>• Create XML sitemaps and optimize crawl budget</li>
+                                            <li>• Ensure proper internal linking and site architecture</li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="step-card">
+                                        <h4 class="text-orange-800 font-bold mb-3">📈 Performance Tracking</h4>
+                                        <ul class="text-orange-700 space-y-2 text-sm">
+                                            <li>• Google Analytics 4 and Search Console integration</li>
+                                            <li>• Rank tracking for target keywords and competitors</li>
+                                            <li>• User behavior analysis and conversion tracking</li>
+                                            <li>• Regular SEO audits and optimization recommendations</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h4 class="text-white font-bold">Website & SEO Success Factors</h4>
+                                <ul class="text-gray-100 mt-4 space-y-2">
+                                    <li>• User-centric design focused on construction industry workflows</li>
+                                    <li>• Strategic keyword targeting for high-intent search queries</li>
+                                    <li>• Continuous optimization based on data and user feedback</li>
+                                    <li>• Integration with broader digital marketing ecosystem</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Paid Advertising Strategy -->
+                    <section class="section-card hover-lift" id="paid-advertising">
+                        <div class="text-center mb-8">
+                            <div class="w-16 h-16 bg-gradient-to-br from-warning to-orange-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"/>
+                                </svg>
+                            </div>
+                            <h2 class="text-3xl font-bold text-navy mb-4">Paid Advertising Strategy</h2>
+                        </div>
+                        
+                        <div class="prose max-w-none">
+                            <div class="marketing-section">
+                                <h3 class="text-blue-800 font-bold mb-6">Strategic Paid Media Approach</h3>
+                                <p class="text-blue-700 mb-6">
+                                    Comprehensive paid advertising framework combining Google Search campaigns for intent-driven targeting and LinkedIn campaigns for precise B2B audience reach, enhanced by retargeting strategies for lead nurturing and conversion optimization.
+                                </p>
+                            </div>
+
+                            <!-- Google Search Campaigns -->
+                            <div class="mb-8">
+                                <h3 class="text-navy font-bold mb-6 text-2xl">Google Search Campaign Strategy</h3>
+                                
+                                <div class="step-card mb-6">
+                                    <h4 class="text-purple-800 font-bold mb-3">🔍 Intent-Driven Keyword Targeting</h4>
+                                    <div class="space-y-3">
+                                        <div class="framework-step">
+                                            <h5 class="font-semibold text-blue-800 mb-2">High-Intent Commercial Keywords</h5>
+                                            <div class="grid md:grid-cols-2 gap-4">
+                                                <div>
+                                                    <div class="font-medium text-purple-700 mb-2">Solution-Focused Terms:</div>
+                                                    <ul class="text-purple-600 text-sm space-y-1">
+                                                        <li>• "construction management software UAE"</li>
+                                                        <li>• "project closeout platform Dubai"</li>
+                                                        <li>• "facility management system GCC"</li>
+                                                        <li>• "QA/QC software construction"</li>
+                                                    </ul>
+                                                </div>
+                                                <div>
+                                                    <div class="font-medium text-purple-700 mb-2">Problem-Solving Keywords:</div>
+                                                    <ul class="text-purple-600 text-sm space-y-1">
+                                                        <li>• "construction project delays solution"</li>
+                                                        <li>• "handover process automation"</li>
+                                                        <li>• "compliance management construction"</li>
+                                                        <li>• "defect tracking software"</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="framework-step">
+                                            <h5 class="font-semibold text-blue-800 mb-2">Campaign Structure & Optimization</h5>
+                                            <ul class="text-blue-700 text-sm space-y-1">
+                                                <li>• Organize campaigns by solution category and geographic targeting</li>
+                                                <li>• Implement negative keyword lists to improve quality scores</li>
+                                                <li>• Use ad extensions for enhanced visibility and click-through rates</li>
+                                                <li>• Continuous bid optimization based on conversion performance</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- LinkedIn Advertising Strategy -->
+                            <div class="mb-8">
+                                <h3 class="text-navy font-bold mb-6 text-2xl">LinkedIn B2B Campaign Framework</h3>
+                                
+                                <div class="step-card mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">👔 Precision B2B Targeting</h4>
+                                    <div class="space-y-3">
+                                        <div class="framework-step">
+                                            <h5 class="font-semibold text-blue-800 mb-2">Target Job Titles & Functions</h5>
+                                            <div class="grid md:grid-cols-3 gap-3">
+                                                <div class="bg-white p-3 rounded-lg">
+                                                    <div class="font-bold text-blue-800">Project Management</div>
+                                                    <div class="text-blue-600 text-xs">
+                                                        • Project Managers<br>
+                                                        • Program Directors<br>
+                                                        • Construction Managers<br>
+                                                        • Site Supervisors
+                                                    </div>
+                                                </div>
+                                                <div class="bg-white p-3 rounded-lg">
+                                                    <div class="font-bold text-blue-800">QA/QC & Compliance</div>
+                                                    <div class="text-blue-600 text-xs">
+                                                        • Quality Managers<br>
+                                                        • QA/QC Engineers<br>
+                                                        • Compliance Officers<br>
+                                                        • Safety Coordinators
+                                                    </div>
+                                                </div>
+                                                <div class="bg-white p-3 rounded-lg">
+                                                    <div class="font-bold text-blue-800">Facilities & Operations</div>
+                                                    <div class="text-blue-600 text-xs">
+                                                        • Facility Managers<br>
+                                                        • Operations Directors<br>
+                                                        • Asset Managers<br>
+                                                        • Maintenance Supervisors
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="framework-step">
+                                            <h5 class="font-semibold text-blue-800 mb-2">Industry & Company Targeting</h5>
+                                            <ul class="text-blue-700 text-sm space-y-1">
+                                                <li>• Construction and engineering companies in UAE and GCC</li>
+                                                <li>• Real estate development and property management firms</li>
+                                                <li>• Government agencies and public sector organizations</li>
+                                                <li>• Digital transformation and consulting companies</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Retargeting & Lead Nurturing -->
+                            <div class="mb-8">
+                                <h3 class="text-navy font-bold mb-6 text-2xl">Retargeting & Lead Nurturing Strategy</h3>
+                                <div class="feature-grid">
+                                    <div class="step-card">
+                                        <h4 class="text-purple-800 font-bold mb-3">🎯 Google Display Retargeting</h4>
+                                        <ul class="text-purple-700 space-y-2 text-sm">
+                                            <li>• Website visitors who viewed solution pages</li>
+                                            <li>• Demo request abandoners and form incomplete users</li>
+                                            <li>• Video watchers and content engagement audiences</li>
+                                            <li>• Custom intent audiences based on search behavior</li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="step-card">
+                                        <h4 class="text-blue-800 font-bold mb-3">💼 LinkedIn Retargeting</h4>
+                                        <ul class="text-blue-700 space-y-2 text-sm">
+                                            <li>• Website visitors matched to LinkedIn profiles</li>
+                                            <li>• Video viewers and content downloaders</li>
+                                            <li>• Event attendees and webinar registrants</li>
+                                            <li>• Email subscribers and CRM contact lists</li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="step-card">
+                                        <h4 class="text-green-800 font-bold mb-3">📈 Campaign Performance</h4>
+                                        <ul class="text-green-700 space-y-2 text-sm">
+                                            <li>• Real-time campaign monitoring and optimization</li>
+                                            <li>• A/B testing of ad creative and messaging</li>
+                                            <li>• Conversion tracking and attribution analysis</li>
+                                            <li>• ROI measurement and budget allocation</li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="step-card">
+                                        <h4 class="text-orange-800 font-bold mb-3">🔄 Lead Nurturing Sequences</h4>
+                                        <ul class="text-orange-700 space-y-2 text-sm">
+                                            <li>• Progressive profiling and lead scoring integration</li>
+                                            <li>• Personalized ad creative based on user behavior</li>
+                                            <li>• Multi-touch attribution across channels</li>
+                                            <li>• Automated campaign optimization rules</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h4 class="text-white font-bold">Paid Advertising Success Metrics</h4>
+                                <ul class="text-gray-100 mt-4 space-y-2">
+                                    <li>• Cost per qualified lead (CPL) optimization and benchmarking</li>
+                                    <li>• Click-through rates and quality scores for search campaigns</li>
+                                    <li>• Conversion rates and return on ad spend (ROAS) tracking</li>
+                                    <li>• Multi-channel attribution and customer lifetime value analysis</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Content & Email Marketing -->
+                    <section class="section-card hover-lift" id="content-marketing">
+                        <div class="text-center mb-8">
+                            <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                </svg>
+                            </div>
+                            <h2 class="text-3xl font-bold text-navy mb-4">Content & Email Marketing</h2>
+                        </div>
+                        
+                        <div class="prose max-w-none">
+                            <div class="marketing-section">
+                                <h3 class="text-blue-800 font-bold mb-6">Integrated Content Marketing Ecosystem</h3>
+                                <p class="text-blue-700 mb-6">
+                                    Comprehensive content and email marketing strategies designed to educate prospects, nurture leads, and drive conversions through valuable, industry-specific content that addresses construction lifecycle management challenges and solutions.
+                                </p>
+                            </div>
+
+                            <!-- Content Marketing Strategy -->
+                            <div class="mb-8">
+                                <h3 class="text-navy font-bold mb-6 text-2xl">Strategic Content Development</h3>
+                                
+                                <div class="step-card mb-6">
+                                    <h4 class="text-purple-800 font-bold mb-3">📚 Educational Content Portfolio</h4>
+                                    <div class="space-y-3">
+                                        <div class="framework-step">
+                                            <h5 class="font-semibold text-blue-800 mb-2">Blog Content Strategy</h5>
+                                            <div class="grid md:grid-cols-2 gap-4">
+                                                <div>
+                                                    <div class="font-medium text-purple-700 mb-2">Technical Topics:</div>
+                                                    <ul class="text-purple-600 text-sm space-y-1">
+                                                        <li>• Project handover best practices and checklists</li>
+                                                        <li>• QA/QC management methodologies</li>
+                                                        <li>• Digital transformation in construction</li>
+                                                        <li>• Compliance and regulatory updates</li>
+                                                    </ul>
+                                                </div>
+                                                <div>
+                                                    <div class="font-medium text-purple-700 mb-2">Strategic Content:</div>
+                                                    <ul class="text-purple-600 text-sm space-y-1">
+                                                        <li>• Construction technology trends and insights</li>
+                                                        <li>• Facility management optimization strategies</li>
+                                                        <li>• ROI calculations and business case development</li>
+                                                        <li>• Industry benchmarks and research reports</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="framework-step">
+                                            <h5 class="font-semibold text-blue-800 mb-2">Case Studies & Success Stories</h5>
+                                            <ul class="text-blue-700 text-sm space-y-1">
+                                                <li>• Client implementation stories with measurable outcomes</li>
+                                                <li>• Industry-specific use cases and application examples</li>
+                                                <li>• Before/after scenarios demonstrating platform impact</li>
+                                                <li>• Video testimonials and customer interviews</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="step-card mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">🎬 Video & Visual Content</h4>
+                                    <div class="space-y-3">
+                                        <div class="framework-step">
+                                            <h5 class="font-semibold text-blue-800 mb-2">Explainer Video Series</h5>
+                                            <ul class="text-blue-700 text-sm space-y-1">
+                                                <li>• Platform demonstration videos for different user roles</li>
+                                                <li>• Feature highlight reels and capability showcases</li>
+                                                <li>• Industry-specific workflow demonstrations</li>
+                                                <li>• Implementation and onboarding guidance videos</li>
+                                            </ul>
+                                        </div>
+                                        <div class="framework-step">
+                                            <h5 class="font-semibold text-blue-800 mb-2">Social Media Content Strategy</h5>
+                                            <ul class="text-blue-700 text-sm space-y-1">
+                                                <li>• LinkedIn posting 2-3x per week with client-focused content</li>
+                                                <li>• YouTube channel development with educational content</li>
+                                                <li>• Interactive polls and industry discussion starters</li>
+                                                <li>• User-generated content and community engagement</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Lead Magnets & Gated Content -->
+                            <div class="mb-8">
+                                <h3 class="text-navy font-bold mb-6 text-2xl">Lead Generation Content Assets</h3>
+                                <div class="feature-grid">
+                                    <div class="step-card">
+                                        <h4 class="text-purple-800 font-bold mb-3">📋 Practical Tools</h4>
+                                        <ul class="text-purple-700 space-y-2 text-sm">
+                                            <li>• Project closeout checklists and templates</li>
+                                            <li>• QA/QC audit frameworks and scorecards</li>
+                                            <li>• ROI calculators for construction technology</li>
+                                            <li>• Compliance tracking spreadsheets and tools</li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="step-card">
+                                        <h4 class="text-blue-800 font-bold mb-3">📖 Educational Resources</h4>
+                                        <ul class="text-blue-700 space-y-2 text-sm">
+                                            <li>• Construction lifecycle management guides</li>
+                                            <li>• Digital transformation playbooks</li>
+                                            <li>• Industry benchmark reports and whitepapers</li>
+                                            <li>• Best practices documentation and templates</li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="step-card">
+                                        <h4 class="text-green-800 font-bold mb-3">🎯 Gated Content Campaigns</h4>
+                                        <ul class="text-green-700 space-y-2 text-sm">
+                                            <li>• Email collection through valuable resource downloads</li>
+                                            <li>• Progressive profiling for lead qualification</li>
+                                            <li>• Segmentation based on content preferences</li>
+                                            <li>• Automated nurture sequence triggers</li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="step-card">
+                                        <h4 class="text-orange-800 font-bold mb-3">🎓 Educational Programs</h4>
+                                        <ul class="text-orange-700 space-y-2 text-sm">
+                                            <li>• Webinar series on construction technology</li>
+                                            <li>• Online training modules and certification</li>
+                                            <li>• Industry expert panel discussions</li>
+                                            <li>• User conference and networking events</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Email Marketing Strategy -->
+                            <div class="mb-8">
+                                <h3 class="text-navy font-bold mb-6 text-2xl">Email Marketing Automation</h3>
+                                
+                                <div class="step-card mb-6">
+                                    <h4 class="text-green-800 font-bold mb-3">📧 Automated Nurture Sequences</h4>
+                                    <div class="space-y-3">
+                                        <div class="framework-step">
+                                            <h5 class="font-semibold text-blue-800 mb-2">Lead Nurture Campaign Types</h5>
+                                            <div class="grid md:grid-cols-2 gap-4">
+                                                <div>
+                                                    <div class="font-medium text-green-700 mb-2">Educational Series:</div>
+                                                    <ul class="text-green-600 text-sm space-y-1">
+                                                        <li>• Construction lifecycle guides and tutorials</li>
+                                                        <li>• Product feature education sequences</li>
+                                                        <li>• Industry best practices and tips</li>
+                                                        <li>• ROI stories and success metrics</li>
+                                                    </ul>
+                                                </div>
+                                                <div>
+                                                    <div class="font-medium text-green-700 mb-2">Behavioral Triggers:</div>
+                                                    <ul class="text-green-600 text-sm space-y-1">
+                                                        <li>• Demo request follow-up sequences</li>
+                                                        <li>• Content download engagement campaigns</li>
+                                                        <li>• Website behavior-based messaging</li>
+                                                        <li>• Trial user onboarding and activation</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="framework-step">
+                                            <h5 class="font-semibold text-blue-800 mb-2">Newsletter & Regular Communications</h5>
+                                            <ul class="text-blue-700 text-sm space-y-1">
+                                                <li>• Monthly newsletter featuring new features and updates</li>
+                                                <li>• Client success stories and case study highlights</li>
+                                                <li>• Industry news and trend analysis</li>
+                                                <li>• Product roadmap updates and user feedback integration</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h4 class="text-white font-bold">Content Marketing Performance Targets</h4>
+                                <ul class="text-gray-100 mt-4 space-y-2">
+                                    <li>• Email open rates >35% and click rates >10% for targeted campaigns</li>
+                                    <li>• Content engagement rates and lead generation conversion tracking</li>
+                                    <li>• Social media reach, engagement, and community growth metrics</li>
+                                    <li>• Video view completion rates and educational content effectiveness</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Marketing Channels -->
+                    <section class="section-card hover-lift" id="channels">
+                        <div class="text-center mb-8">
+                            <div class="w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                                </svg>
+                            </div>
+                            <h2 class="text-3xl font-bold text-navy mb-4">Marketing Channels Framework</h2>
+                        </div>
+                        
+                        <div class="prose max-w-none">
+                            <div class="marketing-section">
+                                <h3 class="text-blue-800 font-bold mb-6">Integrated Multi-Channel Strategy</h3>
+                                <p class="text-blue-700 mb-6">
+                                    Comprehensive overview of digital marketing channels, their specific purposes, and recommended tools and platforms for executing an integrated approach that maximizes reach, engagement, and conversion throughout the customer journey.
+                                </p>
+                            </div>
+
+                            <!-- Channel Strategy Overview -->
+                            <div class="mb-8">
+                                <h3 class="text-navy font-bold mb-6 text-2xl">Channel Strategy Matrix</h3>
+                                
+                                <div class="channel-card mb-6">
+                                    <h4 class="text-yellow-800 font-bold mb-3 flex items-center">
+                                        <span class="w-12 h-12 bg-yellow-600 text-white rounded-full flex items-center justify-center mr-4">🌐</span>
+                                        Website & Digital Foundation
+                                    </h4>
+                                    <div class="grid md:grid-cols-3 gap-4">
+                                        <div>
+                                            <h5 class="font-semibold text-yellow-700 mb-2">Primary Purpose</h5>
+                                            <p class="text-yellow-600 text-sm">Lead generation and brand trust building through optimized user experience and conversion pathways</p>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-yellow-700 mb-2">Tools & Platforms</h5>
+                                            <ul class="text-yellow-600 text-sm space-y-1">
+                                                <li>• WordPress content management</li>
+                                                <li>• Google Analytics 4 tracking</li>
+                                                <li>• Conversion optimization tools</li>
+                                            </ul>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-yellow-700 mb-2">Key Metrics</h5>
+                                            <ul class="text-yellow-600 text-sm space-y-1">
+                                                <li>• Conversion rate optimization</li>
+                                                <li>• User engagement metrics</li>
+                                                <li>• Mobile responsiveness scores</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="channel-card mb-6">
+                                    <h4 class="text-yellow-800 font-bold mb-3 flex items-center">
+                                        <span class="w-12 h-12 bg-yellow-600 text-white rounded-full flex items-center justify-center mr-4">🔍</span>
+                                        Google Ads & Search Marketing
+                                    </h4>
+                                    <div class="grid md:grid-cols-3 gap-4">
+                                        <div>
+                                            <h5 class="font-semibold text-yellow-700 mb-2">Primary Purpose</h5>
+                                            <p class="text-yellow-600 text-sm">Direct traffic acquisition from high-intent searchers actively looking for construction management solutions</p>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-yellow-700 mb-2">Tools & Platforms</h5>
+                                            <ul class="text-yellow-600 text-sm space-y-1">
+                                                <li>• Google Ads Manager</li>
+                                                <li>• Keyword research tools</li>
+                                                <li>• Landing page optimization</li>
+                                            </ul>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-yellow-700 mb-2">Key Metrics</h5>
+                                            <ul class="text-yellow-600 text-sm space-y-1">
+                                                <li>• Cost per qualified lead</li>
+                                                <li>• Quality Score optimization</li>
+                                                <li>• Return on ad spend (ROAS)</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="channel-card mb-6">
+                                    <h4 class="text-yellow-800 font-bold mb-3 flex items-center">
+                                        <span class="w-12 h-12 bg-yellow-600 text-white rounded-full flex items-center justify-center mr-4">💼</span>
+                                        LinkedIn & B2B Social
+                                    </h4>
+                                    <div class="grid md:grid-cols-3 gap-4">
+                                        <div>
+                                            <h5 class="font-semibold text-yellow-700 mb-2">Primary Purpose</h5>
+                                            <p class="text-yellow-600 text-sm">B2B targeting by role and industry for precise audience reach and professional relationship building</p>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-yellow-700 mb-2">Tools & Platforms</h5>
+                                            <ul class="text-yellow-600 text-sm space-y-1">
+                                                <li>• LinkedIn Campaign Manager</li>
+                                                <li>• LinkedIn Sales Navigator</li>
+                                                <li>• Social media scheduling tools</li>
+                                            </ul>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-yellow-700 mb-2">Key Metrics</h5>
+                                            <ul class="text-yellow-600 text-sm space-y-1">
+                                                <li>• B2B lead quality scores</li>
+                                                <li>• Professional engagement rates</li>
+                                                <li>• Industry influence metrics</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Additional Channel Framework -->
+                            <div class="mb-8">
+                                <h3 class="text-navy font-bold mb-6 text-2xl">Supporting Channel Strategy</h3>
+                                <div class="feature-grid">
+                                    <div class="step-card">
+                                        <h4 class="text-purple-800 font-bold mb-3">📧 Email Marketing Hub</h4>
+                                        <div class="space-y-2">
+                                            <div class="text-purple-700 font-medium">Purpose: Lead nurturing and feature education</div>
+                                            <div class="text-purple-600 text-sm mb-2">Platform: HubSpot automation</div>
+                                            <ul class="text-purple-600 text-sm space-y-1">
+                                                <li>• Automated nurture sequences</li>
+                                                <li>• Segmentation and personalization</li>
+                                                <li>• Newsletter and announcements</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="step-card">
+                                        <h4 class="text-blue-800 font-bold mb-3">🎨 Content Creation</h4>
+                                        <div class="space-y-2">
+                                            <div class="text-blue-700 font-medium">Purpose: Education, trust building, and SEO</div>
+                                            <div class="text-blue-600 text-sm mb-2">Platform: Canva and content tools</div>
+                                            <ul class="text-blue-600 text-sm space-y-1">
+                                                <li>• Blog content development</li>
+                                                <li>• Visual asset creation</li>
+                                                <li>• Case study production</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="step-card">
+                                        <h4 class="text-green-800 font-bold mb-3">🎥 Video & YouTube</h4>
+                                        <div class="space-y-2">
+                                            <div class="text-green-700 font-medium">Purpose: Visual learning and brand awareness</div>
+                                            <div class="text-green-600 text-sm mb-2">Platform: YouTube and social media</div>
+                                            <ul class="text-green-600 text-sm space-y-1">
+                                                <li>• Product demonstration videos</li>
+                                                <li>• Educational content series</li>
+                                                <li>• Customer testimonials</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="step-card">
+                                        <h4 class="text-orange-800 font-bold mb-3">🎯 Retargeting Campaigns</h4>
+                                        <div class="space-y-2">
+                                            <div class="text-orange-700 font-medium">Purpose: Demo recovery and conversion</div>
+                                            <div class="text-orange-600 text-sm mb-2">Platform: Google Display & LinkedIn</div>
+                                            <ul class="text-orange-600 text-sm space-y-1">
+                                                <li>• Website visitor retargeting</li>
+                                                <li>• Lead nurturing campaigns</li>
+                                                <li>• Abandoned demo recovery</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Partnership & Influencer Strategy -->
+                            <div class="mb-8">
+                                <h3 class="text-navy font-bold mb-6 text-2xl">Partnership & Influencer Marketing</h3>
+                                <div class="marketing-section">
+                                    <h4 class="text-blue-800 font-bold mb-4">Strategic Collaboration Framework</h4>
+                                    <div class="grid md:grid-cols-2 gap-6">
+                                        <div class="bg-white p-4 rounded-lg">
+                                            <h5 class="font-bold text-blue-800 mb-2">Co-Marketing Partnerships</h5>
+                                            <ul class="text-blue-700 text-sm space-y-1">
+                                                <li>• Facilities management providers collaboration</li>
+                                                <li>• Digital construction consultant partnerships</li>
+                                                <li>• Integration partner joint marketing</li>
+                                                <li>• Industry association sponsorships</li>
+                                            </ul>
+                                        </div>
+                                        <div class="bg-white p-4 rounded-lg">
+                                            <h5 class="font-bold text-blue-800 mb-2">Thought Leadership</h5>
+                                            <ul class="text-blue-700 text-sm space-y-1">
+                                                <li>• Guest articles in UAE construction publications</li>
+                                                <li>• Industry conference speaking opportunities</li>
+                                                <li>• Expert interviews and podcast appearances</li>
+                                                <li>• Construction technology research collaboration</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h4 class="text-white font-bold">Channel Integration Success Factors</h4>
+                                <ul class="text-gray-100 mt-4 space-y-2">
+                                    <li>• Consistent messaging and branding across all touchpoints</li>
+                                    <li>• Data integration for unified customer journey tracking</li>
+                                    <li>• Cross-channel attribution and performance optimization</li>
+                                    <li>• Agile channel mix adjustment based on performance data</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Implementation Plan -->
+                    <section class="section-card hover-lift" id="implementation">
+                        <div class="text-center mb-8">
+                            <div class="w-16 h-16 bg-gradient-to-br from-blue to-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                            <h2 class="text-3xl font-bold text-navy mb-4">6-Month Implementation Plan</h2>
+                        </div>
+                        
+                        <div class="prose max-w-none">
+                            <div class="marketing-section">
+                                <h3 class="text-blue-800 font-bold mb-6">Strategic Execution Roadmap</h3>
+                                <p class="text-blue-700 mb-6">
+                                    Comprehensive 6-month implementation plan designed to systematically launch, optimize, and scale digital marketing operations with measurable milestones and continuous improvement cycles.
+                                </p>
+                            </div>
+
+                            <!-- Month-by-Month Implementation -->
+                            <div class="mb-8">
+                                <h3 class="text-navy font-bold mb-6 text-2xl">Monthly Execution Timeline</h3>
+                                
+                                <div class="strategy-level mb-6">
+                                    <h4 class="text-purple-800 font-bold mb-3 flex items-center">
+                                        <span class="w-12 h-12 bg-purple text-white rounded-full flex items-center justify-center mr-4 text-lg font-bold">1</span>
+                                        Month 1: Foundation Setup
+                                    </h4>
+                                    <div class="grid md:grid-cols-2 gap-6">
+                                        <div>
+                                            <h5 class="font-semibold text-purple-700 mb-3">Website & Technical Foundation</h5>
+                                            <ul class="text-purple-600 space-y-2 text-sm">
+                                                <li>✅ Complete website optimization and architecture redesign</li>
+                                                <li>✅ Implement role-specific landing pages for key personas</li>
+                                                <li>✅ Setup analytics, tracking, and conversion measurement</li>
+                                                <li>✅ Configure CRM integration and lead management workflows</li>
+                                            </ul>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-purple-700 mb-3">Content & SEO Preparation</h5>
+                                            <ul class="text-purple-600 space-y-2 text-sm">
+                                                <li>✅ Conduct comprehensive SEO audit and keyword research</li>
+                                                <li>✅ Setup blog infrastructure and content calendar</li>
+                                                <li>✅ Develop initial content assets and lead magnets</li>
+                                                <li>✅ Create brand guidelines and messaging framework</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="strategy-level mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3 flex items-center">
+                                        <span class="w-12 h-12 bg-blue text-white rounded-full flex items-center justify-center mr-4 text-lg font-bold">2</span>
+                                        Month 2: Campaign Launch
+                                    </h4>
+                                    <div class="grid md:grid-cols-2 gap-6">
+                                        <div>
+                                            <h5 class="font-semibold text-blue-700 mb-3">Paid Advertising Activation</h5>
+                                            <ul class="text-blue-600 space-y-2 text-sm">
+                                                <li>✅ Launch LinkedIn B2B campaigns targeting key personas</li>
+                                                <li>✅ Implement Google Search campaigns for high-intent keywords</li>
+                                                <li>✅ Setup retargeting pixels and audience development</li>
+                                                <li>✅ Begin A/B testing of ad creative and messaging</li>
+                                            </ul>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-blue-700 mb-3">Content Production</h5>
+                                            <ul class="text-blue-600 space-y-2 text-sm">
+                                                <li>✅ Publish first series of educational blog posts</li>
+                                                <li>✅ Create initial video content and explainers</li>
+                                                <li>✅ Develop case study templates and frameworks</li>
+                                                <li>✅ Launch social media content calendar</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="strategy-level mb-6">
+                                    <h4 class="text-green-800 font-bold mb-3 flex items-center">
+                                        <span class="w-12 h-12 bg-green-600 text-white rounded-full flex items-center justify-center mr-4 text-lg font-bold">3</span>
+                                        Month 3: Automation & Nurturing
+                                    </h4>
+                                    <div class="grid md:grid-cols-2 gap-6">
+                                        <div>
+                                            <h5 class="font-semibold text-green-700 mb-3">Email Marketing Automation</h5>
+                                            <ul class="text-green-600 space-y-2 text-sm">
+                                                <li>✅ Implement automated email nurture sequences</li>
+                                                <li>✅ Setup lead scoring and qualification workflows</li>
+                                                <li>✅ Configure behavioral trigger campaigns</li>
+                                                <li>✅ Launch monthly newsletter and regular communications</li>
+                                            </ul>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-green-700 mb-3">Video & Visual Content</h5>
+                                            <ul class="text-green-600 space-y-2 text-sm">
+                                                <li>✅ Launch video explainer series on homepage</li>
+                                                <li>✅ Create LinkedIn video content for organic reach</li>
+                                                <li>✅ Develop product demo videos for different use cases</li>
+                                                <li>✅ Implement video analytics and engagement tracking</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="strategy-level mb-6">
+                                    <h4 class="text-orange-800 font-bold mb-3 flex items-center">
+                                        <span class="w-12 h-12 bg-orange-600 text-white rounded-full flex items-center justify-center mr-4 text-lg font-bold">4</span>
+                                        Month 4: Social Proof & Validation
+                                    </h4>
+                                    <div class="grid md:grid-cols-2 gap-6">
+                                        <div>
+                                            <h5 class="font-semibold text-orange-700 mb-3">Case Study Development</h5>
+                                            <ul class="text-orange-600 space-y-2 text-sm">
+                                                <li>✅ Complete first comprehensive client case study</li>
+                                                <li>✅ Develop industry-specific success stories</li>
+                                                <li>✅ Create ROI and performance benchmark reports</li>
+                                                <li>✅ Implement social proof elements across website</li>
+                                            </ul>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-orange-700 mb-3">Campaign Optimization</h5>
+                                            <ul class="text-orange-600 space-y-2 text-sm">
+                                                <li>✅ Analyze campaign performance and optimize bids</li>
+                                                <li>✅ Refine target audiences based on conversion data</li>
+                                                <li>✅ Implement advanced retargeting strategies</li>
+                                                <li>✅ Enhance landing page conversion rates</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="strategy-level mb-6">
+                                    <h4 class="text-red-800 font-bold mb-3 flex items-center">
+                                        <span class="w-12 h-12 bg-red-600 text-white rounded-full flex items-center justify-center mr-4 text-lg font-bold">5</span>
+                                        Month 5: Scaling & Enhancement
+                                    </h4>
+                                    <div class="grid md:grid-cols-2 gap-6">
+                                        <div>
+                                            <h5 class="font-semibold text-red-700 mb-3">Content Scaling</h5>
+                                            <ul class="text-red-600 space-y-2 text-sm">
+                                                <li>✅ Add customer testimonial videos and quotes</li>
+                                                <li>✅ Develop advanced educational content series</li>
+                                                <li>✅ Create interactive tools and calculators</li>
+                                                <li>✅ Launch webinar series and educational programs</li>
+                                            </ul>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-red-700 mb-3">Performance Optimization</h5>
+                                            <ul class="text-red-600 space-y-2 text-sm">
+                                                <li>✅ Optimize paid advertising performance and ROI</li>
+                                                <li>✅ Enhance email deliverability and engagement</li>
+                                                <li>✅ Implement advanced analytics and attribution</li>
+                                                <li>✅ Develop competitive intelligence capabilities</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="strategy-level mb-6">
+                                    <h4 class="text-indigo-800 font-bold mb-3 flex items-center">
+                                        <span class="w-12 h-12 bg-indigo-600 text-white rounded-full flex items-center justify-center mr-4 text-lg font-bold">6</span>
+                                        Month 6: Measurement & Strategy Refinement
+                                    </h4>
+                                    <div class="grid md:grid-cols-2 gap-6">
+                                        <div>
+                                            <h5 class="font-semibold text-indigo-700 mb-3">Comprehensive Analysis</h5>
+                                            <ul class="text-indigo-600 space-y-2 text-sm">
+                                                <li>✅ Measure comprehensive KPIs and ROI performance</li>
+                                                <li>✅ Analyze customer journey and conversion funnels</li>
+                                                <li>✅ Conduct competitive analysis and benchmarking</li>
+                                                <li>✅ Document lessons learned and best practices</li>
+                                            </ul>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-indigo-700 mb-3">Strategic Planning</h5>
+                                            <ul class="text-indigo-600 space-y-2 text-sm">
+                                                <li>✅ Refine keyword strategy and SEO optimization</li>
+                                                <li>✅ Plan next phase expansion and growth strategies</li>
+                                                <li>✅ Develop advanced automation and personalization</li>
+                                                <li>✅ Set targets and roadmap for months 7-12</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h4 class="text-white font-bold">Implementation Success Metrics</h4>
+                                <ul class="text-gray-100 mt-4 space-y-2">
+                                    <li>• On-time delivery of all planned activities and milestones</li>
+                                    <li>• Achievement of target KPIs for lead generation and conversion</li>
+                                    <li>• Successful integration of all marketing channels and tools</li>
+                                    <li>• Establishment of sustainable, scalable marketing operations</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- KPIs & Measurement -->
+                    <section class="section-card hover-lift" id="kpis">
+                        <div class="text-center mb-8">
+                            <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                                </svg>
+                            </div>
+                            <h2 class="text-3xl font-bold text-navy mb-4">KPIs & Performance Measurement</h2>
+                        </div>
+                        
+                        <div class="prose max-w-none">
+                            <div class="marketing-section">
+                                <h3 class="text-blue-800 font-bold mb-6">Comprehensive Performance Framework</h3>
+                                <p class="text-blue-700 mb-6">
+                                    Data-driven measurement framework designed to track, analyze, and optimize all aspects of digital marketing performance with clear targets, benchmarks, and continuous improvement processes.
+                                </p>
+                            </div>
+
+                            <!-- Core KPI Framework -->
+                            <div class="mb-8">
+                                <h3 class="text-navy font-bold mb-6 text-2xl">Primary KPI Dashboard</h3>
+                                
+                                <div class="step-card mb-6">
+                                    <h4 class="text-purple-800 font-bold mb-3">🎯 Website Engagement Metrics</h4>
+                                    <div class="space-y-3">
+                                        <div class="framework-step">
+                                            <h5 class="font-semibold text-blue-800 mb-2">User Experience Indicators</h5>
+                                            <div class="kpi-grid">
+                                                <div class="kpi-item">
+                                                    <div class="font-bold text-purple-800">Bounce Rate</div>
+                                                    <div class="text-2xl font-bold text-purple-600 my-1">< 40%</div>
+                                                    <div class="text-purple-600 text-sm">Target threshold for quality traffic engagement</div>
+                                                </div>
+                                                <div class="kpi-item">
+                                                    <div class="font-bold text-blue-800">Average Session Duration</div>
+                                                    <div class="text-2xl font-bold text-blue-600 my-1">3+ min</div>
+                                                    <div class="text-blue-600 text-sm">Quality engagement and content consumption</div>
+                                                </div>
+                                                <div class="kpi-item">
+                                                    <div class="font-bold text-green-800">Pages Per Session</div>
+                                                    <div class="text-2xl font-bold text-green-600 my-1">2.5+</div>
+                                                    <div class="text-green-600 text-sm">User journey depth and exploration</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="step-card mb-6">
+                                    <h4 class="text-blue-800 font-bold mb-3">📈 Lead Generation Performance</h4>
+                                    <div class="space-y-3">
+                                        <div class="framework-step">
+                                            <h5 class="font-semibold text-blue-800 mb-2">Conversion & Quality Metrics</h5>
+                                            <div class="kpi-grid">
+                                                <div class="kpi-item">
+                                                    <div class="font-bold text-blue-800">Demo Requests</div>
+                                                    <div class="text-2xl font-bold text-blue-600 my-1">100+/mo</div>
+                                                    <div class="text-blue-600 text-sm">Qualified leads per month target</div>
+                                                </div>
+                                                <div class="kpi-item">
+                                                    <div class="font-bold text-green-800">Content Downloads</div>
+                                                    <div class="text-2xl font-bold text-green-600 my-1">150+/mo</div>
+                                                    <div class="text-green-600 text-sm">Educational content engagement</div>
+                                                </div>
+                                                <div class="kpi-item">
+                                                    <div class="font-bold text-purple-800">Lead Quality Score</div>
+                                                    <div class="text-2xl font-bold text-purple-600 my-1">75%+</div>
+                                                    <div class="text-purple-600 text-sm">Qualified lead percentage target</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="step-card mb-6">
+                                    <h4 class="text-green-800 font-bold mb-3">🌱 Organic Growth Indicators</h4>
+                                    <div class="space-y-3">
+                                        <div class="framework-step">
+                                            <h5 class="font-semibold text-blue-800 mb-2">SEO & Content Performance</h5>
+                                            <div class="kpi-grid">
+                                                <div class="kpi-item">
+                                                    <div class="font-bold text-green-800">SEO Ranking Improvements</div>
+                                                    <div class="text-2xl font-bold text-green-600 my-1">Top 10</div>
+                                                    <div class="text-green-600 text-sm">Target keywords in search results</div>
+                                                </div>
+                                                <div class="kpi-item">
+                                                    <div class="font-bold text-blue-800">Organic Traffic Growth</div>
+                                                    <div class="text-2xl font-bold text-blue-600 my-1">15%/mo</div>
+                                                    <div class="text-blue-600 text-sm">Monthly organic traffic increase</div>
+                                                </div>
+                                                <div class="kpi-item">
+                                                    <div class="font-bold text-purple-800">Content Engagement</div>
+                                                    <div class="text-2xl font-bold text-purple-600 my-1">5+ min</div>
+                                                    <div class="text-purple-600 text-sm">Average time on educational content</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Email & Campaign Performance -->
+                            <div class="mb-8">
+                                <h3 class="text-navy font-bold mb-6 text-2xl">Channel-Specific Performance Metrics</h3>
+                                <div class="feature-grid">
+                                    <div class="step-card">
+                                        <h4 class="text-purple-800 font-bold mb-3">📧 Email Marketing</h4>
+                                        <div class="space-y-3">
+                                            <div class="bg-purple-50 p-3 rounded-lg">
+                                                <div class="font-bold text-purple-800">Open Rate Target</div>
+                                                <div class="text-xl font-bold text-purple-600">35%+</div>
+                                                <div class="text-purple-600 text-sm">Industry-leading engagement rates</div>
+                                            </div>
+                                            <div class="bg-purple-50 p-3 rounded-lg">
+                                                <div class="font-bold text-purple-800">Click Rate Target</div>
+                                                <div class="text-xl font-bold text-purple-600">10%+</div>
+                                                <div class="text-purple-600 text-sm">Quality content and CTA performance</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="step-card">
+                                        <h4 class="text-blue-800 font-bold mb-3">💰 Paid Advertising ROI</h4>
+                                        <div class="space-y-3">
+                                            <div class="bg-blue-50 p-3 rounded-lg">
+                                                <div class="font-bold text-blue-800">Cost Per Lead</div>
+                                                <div class="text-xl font-bold text-blue-600">$50-$150</div>
+                                                <div class="text-blue-600 text-sm">B2B SaaS industry benchmarks</div>
+                                            </div>
+                                            <div class="bg-blue-50 p-3 rounded-lg">
+                                                <div class="font-bold text-blue-800">Return on Ad Spend</div>
+                                                <div class="text-xl font-bold text-blue-600">4:1+</div>
+                                                <div class="text-blue-600 text-sm">Sustainable growth ratio target</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="step-card">
+                                        <h4 class="text-green-800 font-bold mb-3">🔄 Conversion Funnel</h4>
+                                        <div class="space-y-3">
+                                            <div class="bg-green-50 p-3 rounded-lg">
+                                                <div class="font-bold text-green-800">Visitor to Demo Rate</div>
+                                                <div class="text-xl font-bold text-green-600">3%+</div>
+                                                <div class="text-green-600 text-sm">Website conversion optimization</div>
+                                            </div>
+                                            <div class="bg-green-50 p-3 rounded-lg">
+                                                <div class="font-bold text-green-800">Demo to Trial Rate</div>
+                                                <div class="text-xl font-bold text-green-600">25%+</div>
+                                                <div class="text-green-600 text-sm">Demo effectiveness measurement</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="step-card">
+                                        <h4 class="text-orange-800 font-bold mb-3">📱 Social Media Growth</h4>
+                                        <div class="space-y-3">
+                                            <div class="bg-orange-50 p-3 rounded-lg">
+                                                <div class="font-bold text-orange-800">LinkedIn Followers</div>
+                                                <div class="text-xl font-bold text-orange-600">20%/mo</div>
+                                                <div class="text-orange-600 text-sm">Professional network growth</div>
+                                            </div>
+                                            <div class="bg-orange-50 p-3 rounded-lg">
+                                                <div class="font-bold text-orange-800">Engagement Rate</div>
+                                                <div class="text-xl font-bold text-orange-600">5%+</div>
+                                                <div class="text-orange-600 text-sm">Content relevance and value</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Measurement Framework -->
+                            <div class="mb-8">
+                                <h3 class="text-navy font-bold mb-6 text-2xl">Reporting & Analysis Framework</h3>
+                                <div class="marketing-section">
+                                    <h4 class="text-blue-800 font-bold mb-4">Performance Monitoring Cadence</h4>
+                                    <div class="grid md:grid-cols-3 gap-6">
+                                        <div class="bg-white p-4 rounded-lg">
+                                            <h5 class="font-bold text-blue-800 mb-2">Daily Monitoring</h5>
+                                            <ul class="text-blue-700 text-sm space-y-1">
+                                                <li>• Campaign performance and budget tracking</li>
+                                                <li>• Website traffic and conversion monitoring</li>
+                                                <li>• Social media engagement and responses</li>
+                                                <li>• Lead generation and quality assessment</li>
+                                            </ul>
+                                        </div>
+                                        <div class="bg-white p-4 rounded-lg">
+                                            <h5 class="font-bold text-blue-800 mb-2">Weekly Analysis</h5>
+                                            <ul class="text-blue-700 text-sm space-y-1">
+                                                <li>• Channel performance comparison and optimization</li>
+                                                <li>• Content engagement and email campaign analysis</li>
+                                                <li>• SEO ranking changes and keyword performance</li>
+                                                <li>• Competitive analysis and market intelligence</li>
+                                            </ul>
+                                        </div>
+                                        <div class="bg-white p-4 rounded-lg">
+                                            <h5 class="font-bold text-blue-800 mb-2">Monthly Reporting</h5>
+                                            <ul class="text-blue-700 text-sm space-y-1">
+                                                <li>• Comprehensive KPI dashboard and ROI analysis</li>
+                                                <li>• Customer journey and attribution modeling</li>
+                                                <li>• Strategic recommendations and optimization plans</li>
+                                                <li>• Budget allocation and resource planning</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h4 class="text-white font-bold">Additional Recommendations for Enhanced Performance</h4>
+                                <ul class="text-gray-100 mt-4 space-y-2">
+                                    <li>• Develop enterprise demo environment for complex prospect evaluations</li>
+                                    <li>• Publish digital ROI calculator to quantify platform value proposition</li>
+                                    <li>• Translate key pages and videos to Arabic for local market penetration</li>
+                                    <li>• List CloseoutSoft on relevant SaaS directories and B2B marketplaces</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <!-- Complete Lesson Button -->
+            <div class="text-center mt-16" id="complete-section">
+                <div class="section-card hover-lift">
+                    <h3 class="text-2xl font-bold text-navy mb-6">Ready to Master Advanced Operations?</h3>
+                    <p class="text-gray-600 mb-8">Test your understanding of digital marketing strategies, implementation planning, and performance measurement frameworks.</p>
+                    
+                    <button onclick="startQuiz()" class="bg-gradient-to-r from-purple to-blue text-white px-8 py-4 rounded-2xl font-bold text-lg hover:shadow-lg transform hover:scale-105 transition-all duration-300 flex items-center justify-center mx-auto">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                        Start Quiz
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quiz Section (Hidden initially) -->
+            <div class="mt-16 section-card" id="quiz-section" style="display: none;">
+                <div class="text-center mb-8">
+                    <div class="w-16 h-16 bg-gradient-to-br from-navy to-purple rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                    </div>
+                    <h2 class="text-3xl font-bold text-navy mb-4">Advanced Operations Assessment</h2>
+                    <p class="text-gray-600">Test your understanding of digital marketing strategies, implementation planning, and performance measurement frameworks.</p>
+                </div>
+
+                <div class="mb-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-navy font-semibold">Question <span id="current-question">1</span> of <span id="total-questions">10</span></span>
+                        <div class="w-32 h-2 bg-gray-200 rounded-full overflow-hidden">
+                            <div class="h-full bg-purple rounded-full transition-all duration-300" id="quiz-progress" style="width: 10%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="quiz-container">
+                    <h3 id="question-text" class="text-xl font-bold text-navy mb-6"></h3>
+                    <div id="answers-container" class="space-y-3">
+                        <!-- Quiz options will be inserted here -->
+                    </div>
+                </div>
+
+                <div class="flex justify-between mt-8">
+                    <button id="prev-btn" onclick="previousQuestion()" class="px-6 py-3 bg-gray-200 text-gray-600 rounded-xl font-semibold hover:bg-gray-300 transition-colors flex items-center" disabled>
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                        </svg>
+                        Previous
+                    </button>
+                    <button id="next-btn" onclick="nextQuestion()" class="px-6 py-3 bg-gradient-to-r from-purple to-blue text-white rounded-xl font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-300 flex items-center" disabled>
+                        Next
+                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Quiz Results -->
+                <div id="quiz-results" class="mt-8 text-center" style="display: none;">
+                    <div id="results-content">
+                        <!-- Results will be inserted here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Advanced operations focused quiz questions
+        const quizQuestions = [
+            {
+                question: "What is CloseoutSoft's primary market focus?",
+                options: [
+                    "Residential homeowners",
+                    "Contractors, consultants, developers, and facility managers", 
+                    "E-commerce retailers",
+                    "Marketing agencies"
+                ],
+                correct: 1
+            },
+            {
+                question: "Which of the following is not listed as one of CloseoutSoft’s digital marketing objectives?",
+                options: [
+                    "Support onboarding and user retention through educational content",
+                    "Increase demo bookings and software trials",
+                    "Build brand visibility",
+                    "Expand into the European construction market within six months"
+                ],
+                correct: 3
+            },
+            {
+                question: "Which platform is specifically mentioned for B2B targeting by role and industry?",
+                options: [
+                    "YouTube",
+                    "Google Ads",
+                    "LinkedIn Ads",
+                    "Facebook Ads"
+                ],
+                correct: 2
+            },
+            {
+                question: " In the first month of the implementation plan, which activity is not included?",
+                options: [
+                    "Website optimization",
+                    "SEO audit",
+                    "Launch Google Ads campaign",
+                    "Blog setup"
+                ],
+                correct: 2
+            },
+            {
+                question: "Which KPI measures the effectiveness of converting website visitors into demo requests?",
+                options: [
+                    "Bounce Rate",
+                    "Click Rate", 
+                    "Visitor to Demo Conversion Rate",
+                    "Organic Traffic Growth"
+                ],
+                correct: 2
+            },
+            {
+                question: "What is the recommended LinkedIn posting frequency?",
+                options: [
+                    "Daily posting",
+                    "2-3 times per week",
+                    "Weekly posting",
+                    "Bi-weekly posting"
+                ],
+                correct: 1
+            },
+            {
+                question: "Which platforms are recommended for retargeting campaigns?",
+                options: [
+                    "Google Display only",
+                    "LinkedIn only",
+                    "Facebook and Instagram",
+                    "Google Display and LinkedIn"
+                ],
+                correct: 3
+            },
+            {
+                question: "What is the target monthly organic traffic growth rate?",
+                options: [
+                    "10%",
+                    "15%",
+                    "20%",
+                    "25%"
+                ],
+                correct: 1
+            },
+            {
+                question: "Which month focuses on 'Automation & Nurturing' in the implementation plan?",
+                options: [
+                    "Month 2",
+                    "Month 3",
+                    "Month 4", 
+                    "Month 5"
+                ],
+                correct: 1
+            },
+            {
+                question: "What additional recommendation is made for local market penetration?",
+                options: [
+                    "Increase advertising budget",
+                    "Translate key pages to Arabic",
+                    "Focus only on English content",
+                    "Target only UAE market"
+                ],
+                correct: 1
+            }
+        ];
+
+        let currentQuizQuestion = 0;
+        let userAnswers = [];
+        let lessonProgress = 0;
+        let checklistCompleted = 0;
+
+        // Initialize page with enhanced animations
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeAnimations();
+            setupScrollProgress();
+            setupTableOfContents();
+            updateLessonProgress(0);
+            updateChecklistProgress();
+        });
+
+        function initializeAnimations() {
+            // Set initial states for enhanced animations
+            gsap.set("#nav-header", { y: -100, opacity: 0 });
+            gsap.set("#main-title", { y: -60, opacity: 0, scale: 0.9 });
+            gsap.set("#progress-indicator", { y: 40, opacity: 0, scale: 0.8 });
+            gsap.set("#toc-container", { x: -80, opacity: 0 });
+            gsap.set("#content-section > section", { y: 100, opacity: 0 });
+            gsap.set("#complete-section", { y: 60, opacity: 0, scale: 0.9 });
+
+            // Enhanced animation timeline
+            const tl = gsap.timeline();
+
+            tl.to("#nav-header", {
+                duration: 1,
+                y: 0,
+                opacity: 1,
+                ease: "back.out(1.7)"
+            })
+            .to("#main-title", {
+                duration: 1.2,
+                y: 0,
+                opacity: 1,
+                scale: 1,
+                ease: "back.out(1.4)"
+            }, "-=0.6")
+            .to("#progress-indicator", {
+                duration: 0.8,
+                y: 0,
+                opacity: 1,
+                scale: 1,
+                ease: "back.out(1.7)"
+            }, "-=0.4")
+            .to("#toc-container", {
+                duration: 1,
+                x: 0,
+                opacity: 1,
+                ease: "power3.out"
+            }, "-=0.8")
+            .to("#content-section > section", {
+                duration: 1,
+                y: 0,
+                opacity: 1,
+                stagger: 0.15,
+                ease: "power3.out",
+                onComplete: () => {
+                    updateLessonProgress(75);
+                }
+            }, "-=1")
+            .to("#complete-section", {
+                duration: 0.8,
+                y: 0,
+                opacity: 1,
+                scale: 1,
+                ease: "back.out(1.7)"
+            }, "-=0.3");
+        }
+
+        function setupScrollProgress() {
+            window.addEventListener('scroll', () => {
+                const scrollProgress = document.getElementById('scroll-progress');
+                const scrollTop = window.pageYOffset;
+                const docHeight = document.body.offsetHeight - window.innerHeight;
+                const scrollPercent = scrollTop / docHeight;
+                
+                gsap.to(scrollProgress, {
+                    duration: 0.2,
+                    scaleX: scrollPercent,
+                    ease: "power3.out"
+                });
+            });
+        }
+
+        function setupTableOfContents() {
+            const tocLinks = document.querySelectorAll('.toc-item');
+            const sections = document.querySelectorAll('section[id]');
+
+            tocLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('href').substring(1);
+                    const targetSection = document.getElementById(targetId);
+                    if (targetSection) {
+                        const offsetTop = targetSection.offsetTop - 120;
+                        
+                        if (typeof gsap !== 'undefined' && gsap.plugins.ScrollToPlugin) {
+                            gsap.to(window, {
+                                duration: 1,
+                                scrollTo: { y: offsetTop },
+                                ease: "power2.inOut"
+                            });
+                        } else {
+                            window.scrollTo({
+                                top: offsetTop,
+                                behavior: 'smooth'
+                            });
+                        }
+                        
+                        tocLinks.forEach(l => l.classList.remove('active'));
+                        link.classList.add('active');
+                    }
+                });
+            });
+
+            const observerOptions = {
+                rootMargin: '-120px 0px -50% 0px',
+                threshold: [0, 0.25, 0.5, 0.75, 1]
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                let activeEntry = null;
+                let maxIntersectionRatio = 0;
+                
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && entry.intersectionRatio > maxIntersectionRatio) {
+                        maxIntersectionRatio = entry.intersectionRatio;
+                        activeEntry = entry;
+                    }
+                });
+                
+                if (activeEntry) {
+                    const activeId = activeEntry.target.id;
+                    tocLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${activeId}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            }, observerOptions);
+
+            sections.forEach(section => observer.observe(section));
+        }
+
+        function updateLessonProgress(percentage) {
+            lessonProgress = percentage;
+            document.getElementById('progress-text').textContent = `${percentage}%`;
+            
+            gsap.to("#progress-bar", {
+                duration: 1.5,
+                width: `${percentage}%`,
+                ease: "power2.out"
+            });
+
+            const lessonProgressEl = document.getElementById('lesson-progress');
+            if (lessonProgressEl) {
+                gsap.to("#lesson-progress", {
+                    duration: 1.5,
+                    width: `${Math.min(percentage / 2 + 62.5, 100)}%`,
+                    ease: "power2.out"
+                });
+            }
+        }
+
+        function toggleCheckbox(element) {
+            const checkbox = element.querySelector('.checklist-checkbox');
+            const checkmark = checkbox.querySelector('svg');
+            
+            if (checkbox.classList.contains('checked')) {
+                // Uncheck
+                checkbox.classList.remove('checked');
+                checkmark.style.display = 'none';
+                checklistCompleted--;
+            } else {
+                // Check
+                checkbox.classList.add('checked');
+                checkmark.style.display = 'block';
+                checklistCompleted++;
+                
+                // Animate checkbox
+                gsap.fromTo(checkbox, 
+                    { scale: 1 },
+                    { 
+                        scale: 1.2, 
+                        duration: 0.2, 
+                        ease: "power2.out",
+                        yoyo: true,
+                        repeat: 1
+                    }
+                );
+            }
+            
+            updateChecklistProgress();
+        }
+
+        function updateChecklistProgress() {
+            const totalItems = 16;
+            const percentage = (checklistCompleted / totalItems) * 100;
+            
+            document.getElementById('completed-count').textContent = checklistCompleted;
+            
+            gsap.to("#checklist-progress", {
+                duration: 0.5,
+                width: `${percentage}%`,
+                ease: "power2.out"
+            });
+
+            // Update lesson progress based on checklist completion
+            if (checklistCompleted === totalItems) {
+                updateLessonProgress(100);
+            }
+        }
+
+        function startQuiz() {
+            currentQuizQuestion = 0;
+            userAnswers = [];
+            
+            document.getElementById('quiz-section').style.display = 'block';
+            
+            gsap.fromTo("#quiz-section", 
+                { y: 100, opacity: 0, scale: 0.95 },
+                { 
+                    duration: 1, 
+                    y: 0, 
+                    opacity: 1, 
+                    scale: 1, 
+                    ease: "back.out(1.7)",
+                    onComplete: () => {
+                        document.getElementById('quiz-section').scrollIntoView({ 
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                }
+            );
+            
+            loadQuizQuestion();
+        }
+
+        function loadQuizQuestion() {
+            const question = quizQuestions[currentQuizQuestion];
+            const totalQuestions = quizQuestions.length;
+            
+            document.getElementById('current-question').textContent = currentQuizQuestion + 1;
+            document.getElementById('total-questions').textContent = totalQuestions;
+            document.getElementById('question-text').textContent = question.question;
+            
+            const quizProgressPercent = ((currentQuizQuestion + 1) / totalQuestions) * 100;
+            gsap.to("#quiz-progress", {
+                duration: 0.8,
+                width: `${quizProgressPercent}%`,
+                ease: "power2.out"
+            });
+            
+            const answersContainer = document.getElementById('answers-container');
+            answersContainer.innerHTML = '';
+
+            question.options.forEach((option, index) => {
+                const answerDiv = document.createElement('div');
+                answerDiv.className = 'answer-option p-6 border-2 border-gray-200 rounded-2xl cursor-pointer hover:border-purple hover:bg-gradient-to-r hover:from-purple/5 hover:to-blue/5 transition-all duration-300 transform hover:scale-102 hover:shadow-lg';
+                answerDiv.innerHTML = `
+                    <div class="flex items-center">
+                        <div class="w-8 h-8 border-2 border-gray-300 rounded-full mr-4 flex items-center justify-center font-bold text-gray-500 transition-all duration-300">
+                            ${String.fromCharCode(65 + index)}
+                        </div>
+                        <span class="text-lg font-medium text-gray-700">${option}</span>
+                    </div>
+                `;
+                answerDiv.onclick = () => selectAnswer(index, answerDiv);
+                answersContainer.appendChild(answerDiv);
+            });
+            
+            document.getElementById('prev-btn').disabled = currentQuizQuestion === 0;
+            document.getElementById('next-btn').disabled = true;
+            document.getElementById('next-btn').innerHTML = 
+                currentQuizQuestion === totalQuestions - 1 ? 
+                'Complete Assessment<svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>' : 
+                'Next<svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>';
+            
+            if (userAnswers[currentQuizQuestion] !== undefined) {
+                const selectedIndex = userAnswers[currentQuizQuestion];
+                const answerOptions = document.querySelectorAll('.answer-option');
+                if (answerOptions[selectedIndex]) {
+                    selectAnswer(selectedIndex, answerOptions[selectedIndex]);
+                }
+            }
+            
+            gsap.fromTo(".answer-option", 
+                { y: 30, opacity: 0 },
+                { 
+                    y: 0, 
+                    opacity: 1, 
+                    duration: 0.6, 
+                    stagger: 0.1, 
+                    ease: "back.out(1.7)" 
+                }
+            );
+        }
+
+        function selectAnswer(answerIndex, answerElement) {
+            document.querySelectorAll('.answer-option').forEach(opt => {
+                opt.classList.remove('border-purple-500', 'bg-purple-50', 'ring-2', 'ring-purple-200');
+                opt.classList.add('border-gray-200');
+            });
+            
+            // Mark selected answer
+            answerElement.classList.remove('border-gray-200');
+            answerElement.classList.add('border-purple-500', 'bg-purple-50', 'ring-2', 'ring-purple-200');
+            
+            userAnswers[currentQuizQuestion] = answerIndex;
+            document.getElementById('next-btn').disabled = false;
+            
+            gsap.to(answerElement, {
+                duration: 0.3,
+                scale: 1.02,
+                ease: "power2.out",
+                yoyo: true,
+                repeat: 1
+            });
+        }
+
+        function nextQuestion() {
+            if (currentQuizQuestion < quizQuestions.length - 1) {
+                gsap.to("#quiz-container", {
+                    duration: 0.3,
+                    opacity: 0,
+                    x: -50,
+                    ease: "power2.in",
+                    onComplete: () => {
+                        currentQuizQuestion++;
+                        loadQuizQuestion();
+                        gsap.fromTo("#quiz-container", 
+                            { opacity: 0, x: 50 },
+                            { duration: 0.4, opacity: 1, x: 0, ease: "power2.out" }
+                        );
+                    }
+                });
+            } else {
+                finishQuiz();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuizQuestion > 0) {
+                gsap.to("#quiz-container", {
+                    duration: 0.3,
+                    opacity: 0,
+                    x: 50,
+                    ease: "power2.in",
+                    onComplete: () => {
+                        currentQuizQuestion--;
+                        loadQuizQuestion();
+                        gsap.fromTo("#quiz-container", 
+                            { opacity: 0, x: -50 },
+                            { duration: 0.4, opacity: 1, x: 0, ease: "power2.out" }
+                        );
+                    }
+                });
+            }
+        }
+
+        function finishQuiz() {
+            let correctAnswers = 0;
+            quizQuestions.forEach((question, index) => {
+                if (userAnswers[index] === question.correct) {
+                    correctAnswers++;
+                }
+            });
+            
+            const score = (correctAnswers / quizQuestions.length) * 100;
+            const passed = score >= 80;
+            
+            showQuizResults(score, correctAnswers, passed);
+            
+            if (passed) {
+                updateLessonProgress(100);
+            }
+        }
+
+        function showQuizResults(score, correctAnswers, passed) {
+            // Remove old modal if exists
+            const oldModal = document.getElementById("quiz-results-modal");
+            if (oldModal) oldModal.remove();
+
+            // Create modal overlay
+            const modal = document.createElement("div");
+            modal.id = "quiz-results-modal";
+            modal.style.position = "fixed";
+            modal.style.top = "0";
+            modal.style.left = "0";
+            modal.style.width = "100%";
+            modal.style.height = "100%";
+            modal.style.backgroundColor = "rgba(0,0,0,0.6)";
+            modal.style.display = "flex";
+            modal.style.alignItems = "center";
+            modal.style.justifyContent = "center";
+            modal.style.zIndex = "9999";
+            modal.style.overflowY = "auto";
+            modal.style.padding = "1rem";
+
+            // Modal content wrapper
+            const modalContent = document.createElement("div");
+            modalContent.style.maxWidth = "700px";
+            modalContent.style.width = "100%";
+            modalContent.style.position = "relative";
+            modalContent.id = "quiz-results-content";
+
+            // Close button
+            const closeBtn = document.createElement("button");
+            closeBtn.innerHTML = "&times;";
+            closeBtn.style.position = "absolute";
+            closeBtn.style.top = "1rem";
+            closeBtn.style.right = "1rem";
+            closeBtn.style.fontSize = "2rem";
+            closeBtn.style.color = "#666";
+            closeBtn.style.background = "transparent";
+            closeBtn.style.border = "none";
+            closeBtn.style.cursor = "pointer";
+            closeBtn.onclick = () => {
+                gsap.to(modal, {
+                    duration: 0.5,
+                    opacity: 0,
+                    scale: 0.9,
+                    ease: "power2.in",
+                    onComplete: () => modal.remove()
+                });
+            };
+
+            // Insert passed/failed content into modal
+            if (passed) {
+                modalContent.innerHTML = `
+                    <div style="background: linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%); border: 2px solid #a7f3d0; border-radius: 24px; padding: 2.5rem;">
+                        <div style="width: 96px; height: 96px; background: linear-gradient(135deg, #10b981 0%, #059669 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem auto; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);">
+                            <svg style="width: 48px; height: 48px; color: white;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                        </div>
+                        <h3 style="font-size: 2.25rem; font-weight: bold; color: #065f46; margin-bottom: 1.5rem; text-align: center;">🎉 Pre-Sales Mastery Achieved!</h3>
+                        <div style="font-size: 1.875rem; font-weight: bold; background: linear-gradient(135deg, #6C4193 0%, #0096C7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 1rem; text-align: center;">
+                            ${score.toFixed(1)}% Score
+                        </div>
+                        <p style="font-size: 1.25rem; color: #047857; margin-bottom: 2rem; text-align: center;">
+                            You correctly answered ${correctAnswers} out of ${quizQuestions.length} questions
+                        </p>
+                        <div style="background: rgba(255, 255, 255, 0.7); padding: 1.5rem; border-radius: 16px; margin-bottom: 2rem; border: 1px solid #a7f3d0; text-align: center;">
+                            <p style="font-size: 1.125rem; color: #059669;">
+                                Outstanding! You've Passed!
+                            </p>
+                        </div>
+                        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                            <button id="reviewAssessmentBtn" class="px-8 py-4 bg-white text-emerald-700 border-2 border-emerald-300 rounded-2xl font-semibold hover:bg-emerald-50 transition-colors inline-flex items-center group">
+                                Review Assessment
+                            </button>
+                            <a href="lesson-7.html" class="inline-flex items-center px-8 py-4 bg-white border-2 border-emerald-300 text-black rounded-2xl font-semibold hover:shadow-2xl transform hover:scale-105 transition-all duration-300 group">
+                                Continue Training Journey
+                            </a>
+                        </div>
+                    </div>
+                `;
+            } else {
+                modalContent.innerHTML = `
+                    <div style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border: 2px solid #f59e0b; border-radius: 24px; padding: 2.5rem;">
+                        <div style="width: 96px; height: 96px; background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem auto; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);">
+                            <svg style="width: 48px; height: 48px; color: white;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                            </svg>
+                        </div>
+                        <h3 style="font-size: 2.25rem; font-weight: bold; color: #92400e; margin-bottom: 1.5rem; text-align: center;">Keep Building Your Skills! 📚</h3>
+                        <div style="font-size: 1.875rem; font-weight: bold; color: #d97706; margin-bottom: 1rem; text-align: center;">
+                            ${score.toFixed(1)}% Score
+                        </div>
+                        <p style="font-size: 1.25rem; color: #b45309; margin-bottom: 2rem; text-align: center;">
+                            You answered ${correctAnswers} out of ${quizQuestions.length} questions correctly
+                        </p>
+                        <div style="background: rgba(255, 255, 255, 0.7); padding: 1.5rem; border-radius: 16px; margin-bottom: 2rem; border: 1px solid #f59e0b; text-align: center;">
+                            <p style="font-size: 1.125rem; color: #d97706;">
+                                You need 80% or higher to pass.
+                            </p>
+                        </div>
+                        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                            <button id="retakeBtn" class="px-8 py-4 bg-gradient-to-r from-purple to-blue text-white rounded-2xl font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-300">
+                                Retake Assessment
+                            </button>
+                            <button id="reviewLessonBtn" class="px-8 py-4 bg-white text-orange-700 border-2 border-orange-300 rounded-2xl font-semibold hover:bg-orange-50 transition-colors">
+                                Review Lesson Content
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            modalContent.appendChild(closeBtn);
+            modal.appendChild(modalContent);
+            document.body.appendChild(modal);
+
+            // Animate modal
+            gsap.fromTo(modalContent, 
+                { y: 50, opacity: 0, scale: 0.9 },
+                { duration: 0.8, y: 0, opacity: 1, scale: 1, ease: "back.out(1.7)" }
+            );
+
+            // Smooth close + action for buttons
+            const reviewAssessmentBtn = document.getElementById("reviewAssessmentBtn");
+            if (reviewAssessmentBtn) {
+                reviewAssessmentBtn.addEventListener("click", () => {
+                    gsap.to(modal, {
+                        duration: 0.5,
+                        opacity: 0,
+                        scale: 0.9,
+                        ease: "power2.in",
+                        onComplete: () => {
+                            modal.remove();
+                            retakeQuiz();
+                        }
+                    });
+                });
+            }
+
+            const retakeBtn = document.getElementById("retakeBtn");
+            if (retakeBtn) {
+                retakeBtn.addEventListener("click", () => {
+                    gsap.to(modal, {
+                        duration: 0.5,
+                        opacity: 0,
+                        scale: 0.9,
+                        ease: "power2.in",
+                        onComplete: () => {
+                            modal.remove();
+                            retakeQuiz();
+                        }
+                    });
+                });
+            }
+
+            const reviewLessonBtn = document.getElementById("reviewLessonBtn");
+            if (reviewLessonBtn) {
+                reviewLessonBtn.addEventListener("click", () => {
+                    gsap.to(modal, {
+                        duration: 0.5,
+                        opacity: 0,
+                        scale: 0.9,
+                        ease: "power2.in",
+                        onComplete: () => {
+                            modal.remove();
+                            reviewLesson();
+                        }
+                    });
+                });
+            }
+            
+            document.getElementById('quiz-results').style.display = 'block';
+            
+            gsap.fromTo("#quiz-results", 
+                { y: 50, opacity: 0, scale: 0.9 },
+                { 
+                    duration: 1, 
+                    y: 0, 
+                    opacity: 1, 
+                    scale: 1, 
+                    ease: "back.out(1.7)" 
+                }
+            );
+            
+            document.getElementById('quiz-results').style.display = 'block';
+            
+            gsap.fromTo("#quiz-results", 
+                { y: 50, opacity: 0, scale: 0.9 },
+                { 
+                    duration: 1, 
+                    y: 0, 
+                    opacity: 1, 
+                    scale: 1, 
+                    ease: "back.out(1.7)" 
+                }
+            );
+        }
+
+        function createFloatingElement(emoji, x, y) {
+            const element = document.createElement('div');
+            element.textContent = emoji;
+            element.style.position = 'fixed';
+            element.style.left = x + 'px';
+            element.style.top = y + 'px';
+            element.style.fontSize = '2rem';
+            element.style.pointerEvents = 'none';
+            element.style.zIndex = '9999';
+            document.body.appendChild(element);
+
+            gsap.to(element, {
+                y: -200,
+                rotation: 360,
+                opacity: 0,
+                duration: 2,
+                ease: "power2.out",
+                onComplete: () => element.remove()
+            });
+        }
+
+        function retakeQuiz() {
+            currentQuizQuestion = 0;
+            userAnswers = [];
+            document.getElementById('quiz-results').style.display = 'none';
+            
+            gsap.to("#quiz-container", {
+                duration: 0.4,
+                opacity: 1,
+                scale: 1,
+                ease: "power2.out"
+            });
+            
+            loadQuizQuestion();
+        }
+
+        function reviewLesson() {
+            gsap.to(window, {
+                duration: 1.5,
+                scrollTo: { y: "#overview", offsetY: 100 },
+                ease: "power2.inOut"
+            });
+        }
+        finishQuiz(scorePercentage, 6);
+    </script>
+</body>
+<script src="../script/quiz-logic.js"></script>
+<script src="../script/page-preview-logic.js"></script>
+</html>

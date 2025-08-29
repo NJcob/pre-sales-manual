@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pre-Sales Manual E-Learning</title>
+    <link rel="icon" type="image/x-icon" href="image/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'navy': '#142850',
+                        'blue': '#0096C7',
+                        'purple': '#6C4193'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @font-face {
+            font-family: 'CustomFont';
+            src: url('font/Avenir\ Next\ LT\ Pro\ Regular.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'CustomFont', 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: 
+                linear-gradient(90deg, rgba(20, 40, 80, 0.06) 1px, transparent 1px),
+                linear-gradient(rgba(20, 40, 80, 0.06) 1px, transparent 1px);
+            background-size: 40px 40px;
+            background-color: #fafafa;
+        }
+
+        .section-title {
+            background: linear-gradient(135deg, #6C4193 0%, #0096C7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .title-underline {
+            background: linear-gradient(90deg, #6C4193 0%, #0096C7 100%);
+            height: 3px;
+            width: 60px;
+            margin: 0 auto;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center overflow-x-hidden">
+    <div class="text-center max-w-7xl px-8 py-12">
+        
+        <!-- Top Logo -->
+        <div class="flex flex-col items-center justify-center text-center">
+            <!-- Top Logo -->
+            <div class="w-36 mx-auto mb-6 flex items-center justify-center" id="top-logo" style="margin-left: calc(50% + 8px); transform: translateX(-50%);">
+                <img src="image/Rebus Holdings Logo.png" alt="Top Logo" class="w-full h-auto object-contain rounded-3xl">
+            </div>
+            
+            <!-- Main Heading -->
+            <h1 class="text-6xl font-bold text-navy mb-8" id="main-heading">Pre-Sales Manual</h1>
+            
+            <!-- Bottom Logo -->
+            <div class="w-80 mx-auto mb-8 flex items-center justify-center" id="bottom-logo">
+                <img src="image/technology-solution-removebg-preview.png" alt="Bottom Logo" class="w-full h-auto object-contain">
+            </div>
+            
+            <!-- Progress Indicator -->
+            <div class="bg-white bg-opacity-95 rounded-2xl p-6 mb-16 shadow-lg max-w-md mx-auto border border-gray-100" id="progress-indicator">
+                <div class="text-navy font-semibold mb-3">
+                    Overall Progress: <span id="progress-text" class="text-purple">0/7 Lessons</span>
+                </div>
+                <div class="w-full h-3 bg-gray-200 rounded-full overflow-hidden">
+                    <div class="h-full bg-gradient-to-r from-purple to-blue rounded-full transition-all duration-700 ease-out" style="width: 0%" id="progress-bar"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Circles Container -->
+        <div class="max-w-7xl mx-auto" id="circles-container">
+            
+            <!-- Section 1 Title -->
+            <div class="text-center mb-8" id="section-1-title">
+                <h2 class="text-3xl font-bold section-title mb-2">Foundation & Core Knowledge</h2>
+                <div class="title-underline mb-4"></div>
+                <p class="text-gray-600 text-lg">Build essential pre-sales competencies and product expertise</p>
+            </div>
+
+            <!-- First Row - 4 Circles -->
+            <div class="flex justify-center items-center gap-6 mb-12 flex-wrap" id="row-1">
+                <!-- Lesson 1 - Unlocked by default -->
+                <a href="lessons/lesson-1.html" data-lesson="1" class="lesson-circle unlocked w-32 h-32 bg-purple rounded-full flex flex-col items-center justify-center text-white font-bold cursor-pointer transition-all duration-300 shadow-xl hover:shadow-2xl relative overflow-hidden transform hover:-translate-y-3 hover:scale-105 active:translate-y-0 active:scale-95 hover:animate-pulse" data-lesson="1">
+                    <div class="text-xs text-center leading-tight px-2">Introduction</div>
+                </a>
+                
+                <!-- Arrow -->
+                <div class="arrow-container">
+                    <svg class="w-6 h-6 text-purple animate-pulse" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                    </svg>
+                </div>
+                
+                <!-- Lesson 2 - Locked -->
+                <a href="#" data-lesson="2" class="lesson-circle locked w-32 h-32 bg-gray-400 rounded-full flex flex-col items-center justify-center text-white font-bold cursor-not-allowed transition-all duration-300 shadow-xl relative overflow-hidden opacity-60" onclick="showLockedMessage(2)">
+                    <svg class="w-6 h-6 mb-1" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path>
+                    </svg>
+                    <div class="text-xs text-center leading-tight px-2">Product Overview</div>
+                </a>
+                
+                <!-- Arrow -->
+                <div class="arrow-container">
+                    <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                    </svg>
+                </div>
+                
+                <!-- Lesson 3 - Locked -->
+                <a href="#" data-lesson="3" class="lesson-circle locked w-32 h-32 bg-gray-400 rounded-full flex flex-col items-center justify-center text-white font-bold cursor-not-allowed transition-all duration-300 shadow-xl relative overflow-hidden opacity-60" onclick="showLockedMessage(3)">
+                    <svg class="w-6 h-6 mb-1" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path>
+                    </svg>
+                    <div class="text-xs text-center leading-tight px-2">Sales Enablement</div>
+                </a>
+                
+                <!-- Arrow -->
+                <div class="arrow-container">
+                    <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                    </svg>
+                </div>
+                
+                <!-- Lesson 4 - Locked -->
+                <a href="#" data-lesson="4" class="lesson-circle locked w-32 h-32 bg-gray-400 rounded-full flex flex-col items-center justify-center text-white font-bold cursor-not-allowed transition-all duration-300 shadow-xl relative overflow-hidden opacity-60" onclick="showLockedMessage(4)">
+                    <svg class="w-6 h-6 mb-1" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 616 0z" clip-rule="evenodd"></path>
+                    </svg>
+                    <div class="text-xs text-center leading-tight px-1">Assessment & Field Readiness</div>
+                </a>
+            </div>
+            
+            <!-- Down Arrow -->
+            <div class="flex justify-center mb-12" id="down-arrow">
+                <svg class="w-10 h-10 text-purple animate-bounce" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                </svg>
+            </div>
+
+            <!-- Section 2 Title -->
+            <div class="text-center mb-8" id="section-2-title">
+                <h2 class="text-3xl font-bold section-title mb-2">Advanced Operations</h2>
+                <div class="title-underline mb-4"></div>
+                <p class="text-gray-600 text-lg">Master digital marketing strategies and project management</p>
+            </div>
+            
+            <!-- Second Row - 3 Circles -->
+            <div class="flex justify-center items-center gap-8 mb-8 flex-wrap" id="row-2">
+                
+                <!-- Lesson 5 - Locked -->
+                <a href="#" data-lesson="5" class="lesson-circle locked w-32 h-32 bg-gray-400 rounded-full flex flex-col items-center justify-center text-white font-bold cursor-not-allowed transition-all duration-300 shadow-xl relative overflow-hidden opacity-60" onclick="showLockedMessage(5)">
+                    <svg class="w-6 h-6 mb-1" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 616 0z" clip-rule="evenodd"></path>
+                    </svg>
+                    <div class="text-xs text-center leading-tight px-2"></div>
+                </a>
+
+                <!-- Arrow -->
+                <div class="arrow-container">
+                    <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                    </svg>
+                </div>
+
+                <!-- Lesson 6 - Locked -->
+                <a href="#" data-lesson="6" class="lesson-circle locked w-32 h-32 bg-gray-400 rounded-full flex flex-col items-center justify-center text-white font-bold cursor-not-allowed transition-all duration-300 shadow-xl relative overflow-hidden opacity-60" onclick="showLockedMessage(6)">
+                    <svg class="w-6 h-6 mb-1" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 616 0z" clip-rule="evenodd"></path>
+                    </svg>
+                    <div class="text-xs text-center leading-tight px-2">Digital Marketing</div>
+                </a>
+                
+                <!-- Arrow -->
+                <div class="arrow-container">
+                    <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                    </svg>
+                </div>
+                
+                <!-- Lesson 7 - Locked -->
+                <a href="#" data-lesson="7" class="lesson-circle locked w-32 h-32 bg-gray-400 rounded-full flex flex-col items-center justify-center text-white font-bold cursor-not-allowed transition-all duration-300 shadow-xl relative overflow-hidden opacity-60" onclick="showLockedMessage(7)">
+                    <svg class="w-6 h-6 mb-1" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 616 0z" clip-rule="evenodd"></path>
+                    </svg>
+                    <div class="text-xs text-center leading-tight px-1">Proposal & Handoff</div>
+                </a>
+                
+                <!-- Arrow -->
+                <div class="arrow-container">
+                    <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                    </svg>
+                </div>
+                
+                <!-- Lesson 8 - Locked -->
+                <a href="#" data-lesson="8" class="lesson-circle locked w-32 h-32 bg-gray-400 rounded-full flex flex-col items-center justify-center text-white font-bold cursor-not-allowed transition-all duration-300 shadow-xl relative overflow-hidden opacity-60" onclick="showLockedMessage(8)">
+                    <svg class="w-6 h-6 mb-1" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 616 0z" clip-rule="evenodd"></path>
+                    </svg>
+                    <div class="text-xs text-center leading-tight px-2">Project Pipelines</div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize unlocked lessons (starts with lesson 1)
+        let unlockedLessons = JSON.parse(localStorage.getItem('unlockedLessons') || '[1]');
+        let completedLessons = JSON.parse(localStorage.getItem('completedLessons') || '[]');
+
+        // Initialize GSAP animations when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeAnimations();
+            loadProgress();
+            updateLessonStates();
+        });
+
+        function initializeAnimations() {
+            // Set initial states
+            gsap.set("#top-logo", { y: -100, opacity: 0, scale: 0.5 });
+            gsap.set("#main-heading", { y: 50, opacity: 0 });
+            gsap.set("#bottom-logo", { y: 50, opacity: 0, scale: 0.5 });
+            gsap.set("#progress-indicator", { y: 30, opacity: 0 });
+            gsap.set("#section-1-title", { y: 50, opacity: 0 });
+            gsap.set("#section-2-title", { y: 50, opacity: 0 });
+            gsap.set(".lesson-circle", { y: 100, opacity: 0, scale: 0 });
+            gsap.set(".arrow-container", { opacity: 0, scale: 0 });
+            gsap.set("#down-arrow", { y: 30, opacity: 0, scale: 0 });
+
+            // Create animation timeline
+            const tl = gsap.timeline();
+
+            // Animate elements in sequence
+            tl.to("#top-logo", { duration: 1, y: 0, opacity: 1, scale: 1, ease: "back.out(1.7)" })
+            .to("#main-heading", { duration: 0.8, y: 0, opacity: 1, ease: "power3.out" }, "-=0.3")
+            .to("#bottom-logo", { duration: 0.8, y: 0, opacity: 1, scale: 1, ease: "back.out(1.7)" }, "-=0.4")
+            .to("#progress-indicator", { duration: 0.6, y: 0, opacity: 1, ease: "power3.out" }, "-=0.3")
+            .to("#section-1-title", { duration: 0.7, y: 0, opacity: 1, ease: "power3.out" }, "-=0.2")
+            .to(".lesson-circle", { duration: 0.6, y: 0, opacity: 1, scale: 1, stagger: 0.1, ease: "back.out(1.7)" }, "-=0.2")
+            .to(".arrow-container", { duration: 0.4, opacity: 1, scale: 1, stagger: 0.05, ease: "power3.out" }, "-=0.4")
+            .to("#down-arrow", { duration: 0.6, y: 0, opacity: 1, scale: 1, ease: "back.out(1.7)" }, "-=0.2")
+            .to("#section-2-title", { duration: 0.7, y: 0, opacity: 1, ease: "power3.out" }, "-=0.3");
+        }
+
+        function showLockedMessage(lessonNumber) {
+            const previousLesson = lessonNumber - 1;
+
+            // Remove any existing panel first
+            const oldPanel = document.getElementById("locked-panel");
+            if (oldPanel) oldPanel.remove();
+
+            // Create overlay
+            const overlay = document.createElement("div");
+            overlay.id = "locked-panel";
+            overlay.style.position = "fixed";
+            overlay.style.top = "0";
+            overlay.style.left = "0";
+            overlay.style.width = "100%";
+            overlay.style.height = "100%";
+            overlay.style.background = "rgba(0,0,0,0.5)";
+            overlay.style.backdropFilter = "blur(4px)";
+            overlay.style.display = "flex";
+            overlay.style.justifyContent = "center";
+            overlay.style.alignItems = "center";
+            overlay.style.zIndex = "9999";
+            overlay.style.opacity = "0"; // start transparent for animation
+
+            // Create panel box
+            const panel = document.createElement("div");
+            panel.style.background = "linear-gradient(145deg, #ffffff, #f0f0f0)";
+            panel.style.padding = "25px 30px";
+            panel.style.borderRadius = "16px";
+            panel.style.maxWidth = "450px";
+            panel.style.width = "90%";
+            panel.style.textAlign = "center";
+            panel.style.boxShadow = "0 15px 35px rgba(0,0,0,0.25)";
+            panel.style.fontFamily = "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
+            panel.style.transform = "scale(0.8)"; // start small for animation
+            panel.style.opacity = "0";
+
+            // Message
+            panel.innerHTML = `
+                <h2 style="margin-bottom:15px; font-size:1.6em; color:#122566;">🔒 Lesson Locked</h2>
+                <p style="margin-bottom:18px; line-height:1.6; color:#333; font-size:1em;">
+                    📚 Please complete the quiz for <b>Lesson ${previousLesson}</b> first to unlock this content.
+                </p>
+                <p style="margin-bottom:25px; line-height:1.5; color:#555; font-size:0.95em;">
+                    💡 Complete all previous lessons in order to progress through the course.
+                </p>
+            `;
+
+            // Close button
+            const button = document.createElement("button");
+            button.textContent = "Got it!";
+            button.style.padding = "12px 28px";
+            button.style.border = "none";
+            button.style.background = "linear-gradient(90deg, #0096C7, #2EC4B6)";
+            button.style.color = "#fff";
+            button.style.borderRadius = "12px";
+            button.style.cursor = "pointer";
+            button.style.fontSize = "16px";
+            button.style.fontWeight = "600";
+            button.style.transition = "all 0.3s ease";
+            button.onmouseover = () => button.style.transform = "scale(1.05)";
+            button.onmouseleave = () => button.style.transform = "scale(1)";
+            button.onclick = () => {
+                // Animate out
+                gsap.to(panel, {
+                    scale: 0.8,
+                    opacity: 0,
+                    duration: 0.3,
+                    ease: "power2.in",
+                });
+                gsap.to(overlay, {
+                    opacity: 0,
+                    duration: 0.3,
+                    ease: "power2.in",
+                    onComplete: () => overlay.remove()
+                });
+            };
+
+            panel.appendChild(button);
+            overlay.appendChild(panel);
+            document.body.appendChild(overlay);
+
+            // Animate in
+            gsap.to(overlay, { opacity: 1, duration: 0.4, ease: "power2.out" });
+            gsap.to(panel, { scale: 1, opacity: 1, duration: 0.5, ease: "back.out(1.2)" });
+        }
+
+        function unlockLesson(lessonNumber) {
+            if (!unlockedLessons.includes(lessonNumber)) {
+                unlockedLessons.push(lessonNumber);
+                localStorage.setItem('unlockedLessons', JSON.stringify(unlockedLessons));
+                updateLessonStates();
+                
+                // Celebration animation for unlocked lesson
+                const circle = document.querySelector(`[data-lesson="${lessonNumber}"]`);
+                gsap.to(circle, {
+                    duration: 0.8,
+                    scale: 1.3,
+                    rotation: 720,
+                    ease: "back.out(1.7)",
+                    onComplete: () => {
+                        gsap.to(circle, { duration: 0.3, scale: 1, rotation: 0, ease: "power2.out" });
+                    }
+                });
+            }
+        }
+
+        function completeLesson(lessonNumber) {
+            // Mark as completed
+            if (!completedLessons.includes(lessonNumber)) {
+                completedLessons.push(lessonNumber);
+                localStorage.setItem('completedLessons', JSON.stringify(completedLessons));
+                
+                // Unlock next lesson
+                const nextLesson = lessonNumber + 1;
+                if (nextLesson <= 7) unlockLesson(nextLesson);
+                
+                loadProgress();
+                updateLessonStates();
+            }
+        }
+
+        function updateLessonStates() {
+            const lessonNames = [
+                'Introduction', 
+                'Product Overview', 
+                'Sales Enablement', 
+                'Assessment & Field Readiness',
+                'Customer Journey', 
+                'Digital Marketing', 
+                'Proposal & Handoff', 
+                'Project Pipelines'
+            ];
+
+            for (let i = 1; i <= 8; i++) {
+                const circle = document.querySelector(`[data-lesson="${i}"]`);
+                const isUnlocked = unlockedLessons.includes(i);
+                const isCompleted = completedLessons.includes(i);
+                
+                if (isCompleted) {
+                    // Completed lesson
+                    circle.className = 'lesson-circle completed w-32 h-32 bg-green-500 rounded-full flex flex-col items-center justify-center text-white font-bold cursor-pointer transition-all duration-300 shadow-xl hover:shadow-2xl relative overflow-hidden transform hover:-translate-y-3 hover:scale-105';
+                    const displayName = lessonNames[i-1];
+                    const fontSize = displayName.length > 15 ? 'text-xs' : 'text-sm';
+                    circle.innerHTML = `
+                        <svg class="w-6 h-6 mb-1" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        <div class="${fontSize} text-center leading-tight px-2">${displayName}</div>
+                    `;
+                    circle.onclick = () => window.location.href = `lessons/lesson-${i}.html`;
+                } else if (isUnlocked) {
+                    // Unlocked lesson
+                    circle.className = 'lesson-circle unlocked w-32 h-32 bg-purple rounded-full flex flex-col items-center justify-center text-white font-bold cursor-pointer transition-all duration-300 shadow-xl hover:shadow-2xl relative overflow-hidden transform hover:-translate-y-3 hover:scale-105 active:translate-y-0 active:scale-95 hover:animate-pulse';
+                    const displayName = lessonNames[i-1];
+                    const fontSize = displayName.length > 15 ? 'text-xs' : 'text-sm';
+                    circle.innerHTML = `<div class="${fontSize} text-center leading-tight px-2">${displayName}</div>`;
+                    circle.onclick = () => window.location.href = `lessons/lesson-${i}.html`;
+                } else {
+                    // Locked lesson
+                    circle.className = 'lesson-circle locked w-32 h-32 bg-gray-400 rounded-full flex flex-col items-center justify-center text-white font-bold cursor-not-allowed transition-all duration-300 shadow-xl relative overflow-hidden opacity-60';
+                    const displayName = lessonNames[i-1];
+                    const fontSize = displayName.length > 15 ? 'text-xs' : 'text-xs';
+                    const iconSize = displayName.length > 15 ? 'w-6 h-6' : 'w-6 h-6';
+                    circle.innerHTML = `
+                        <svg class="${iconSize} mb-1" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 616 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        <div class="${fontSize} text-center leading-tight ${displayName.length > 15 ? 'px-1' : 'px-2'}">${displayName}</div>
+                    `;
+                    circle.onclick = () => showLockedMessage(i);
+                }
+            }
+
+            // Update arrow colors
+            const arrows = document.querySelectorAll('.arrow-container svg');
+            arrows.forEach((arrow, index) => {
+                if (unlockedLessons.includes(index + 2)) {
+                    arrow.classList.remove('text-gray-400');
+                    arrow.classList.add('text-purple', 'animate-pulse');
+                } else {
+                    arrow.classList.remove('text-purple', 'animate-pulse');
+                    arrow.classList.add('text-gray-400');
+                }
+            });
+        }
+
+        function loadProgress() {
+            const totalLessons = 8;
+            const progressPercentage = (completedLessons.length / totalLessons) * 100;
+            
+            document.getElementById('progress-text').textContent = `${completedLessons.length}/${totalLessons} Lessons`;
+            
+            setTimeout(() => {
+                gsap.to("#progress-bar", {
+                    duration: 1.5,
+                    width: `${progressPercentage}%`,
+                    ease: "power2.out"
+                });
+            }, 2500);
+        }
+
+        // Demo functions for testing (remove in production)
+        function demoCompleteLesson(lessonId) {
+            completeLesson(lessonId);
+        }
+
+        function resetProgress() {
+            localStorage.removeItem('completedLessons');
+            localStorage.removeItem('unlockedLessons');
+            completedLessons = [];
+            unlockedLessons = [1];
+            location.reload();
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.key.toLowerCase() === 'r' && e.ctrlKey) {
+                e.preventDefault();
+                if (confirm('Reset all progress? This cannot be undone.')) {
+                    resetProgress();
+                }
+            }
+        });
+    </script>
+</body>
+<script src="script/quiz-logic.js"></script>
+</html>
