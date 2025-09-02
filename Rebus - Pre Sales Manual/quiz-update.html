@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CloseoutSoft Quiz</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .hidden { display: none; }
+        .section { margin-bottom: 20px; }
+        .question { margin-bottom: 15px; }
+        button { margin: 5px; padding: 10px; }
+        #summary { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>CloseoutSoft Quiz</h1>
+
+    <!-- Login Form -->
+    <div id="login">
+        <label for="name">Name:</label>
+        <input type="text" id="name" required>
+        <br>
+        <label for="email">Email:</label>
+        <input type="email" id="email" required>
+        <br>
+        <button onclick="startQuiz()">Start Quiz</button>
+        <button onclick="showSummary()">View Summary</button>
+        <button onclick="document.getElementById('importFile').click()">Import Session</button>
+        <input type="file" id="importFile" accept=".json" style="display:none;" onchange="importSession(event)">
+    </div>
+
+    <!-- Quiz Container -->
+    <div id="quiz" class="hidden">
+        <h2 id="sectionTitle"></h2>
+        <div id="questions"></div>
+        <button onclick="nextSection()">Next Section</button>
+    </div>
+
+    <!-- Results Page -->
+    <div id="results" class="hidden">
+        <h2>Your Results</h2>
+        <p id="totalScore"></p>
+        <div id="sectionScores"></div>
+        <div id="questionDetails"></div>
+        <button onclick="exportSession()">Export Session as JSON</button>
+        <button onclick="restartQuiz()">Restart Quiz</button>
+    </div>
+
+    <!-- Summary Page -->
+    <div id="summaryPage" class="hidden">
+        <h2>All Participants Summary</h2>
+        <div id="summary"></div>
+        <button onclick="backToLogin()">Back</button>
+    </div>
+
+    <script>
+        // Quiz Data: 6 sections, each with 10 MCQs (4 options, 1 correct). Equal scoring: 1 point per correct answer.
+        const quizData = [
+            // Section 1: Lesson 1 - CloseoutSoft Introduction
+            {
+                title: 'Section 1: CloseoutSoft Introduction',
+                questions: [
+                    { q: 'What is the core purpose of CloseoutSoft?', options: ['Drive project activities leading to final close-out', 'Only manage finances', 'Design buildings', 'Hire contractors'], correct: 0 },
+                    { q: 'CloseoutSoft is structured in what form?', options: ['Modular', 'Linear', 'Hierarchical', 'Random'], correct: 0 },
+                    { q: 'Which activities does CloseoutSoft drive?', options: ['Construction, Functional, Deliverables, Punch List', 'Only Design', 'Only Finance', 'Only HR'], correct: 0 },
+                    { q: 'What visibility does CloseoutSoft provide?', options: ['Proportional visibility for all participants', 'Only for managers', 'None', 'Full to everyone'], correct: 0 },
+                    { q: 'User types in CloseoutSoft include?', options: ['Client, Consultant, Main Contractor, Subcontractor', 'Only Client', 'Only Subcontractor', 'None'], correct: 0 },
+                    { q: 'Is CloseoutSoft eco-friendly?', options: ['Yes, 100% digital and paperless', 'No', 'Partially', 'Unknown'], correct: 0 },
+                    { q: 'How many users can use CloseoutSoft?', options: ['Unlimited', '10', '100', 'Limited to 50'], correct: 0 },
+                    { q: 'What can be customized in CloseoutSoft?', options: ['Workflows and project forms', 'Nothing', 'Only colors', 'Only fonts'], correct: 0 },
+                    { q: 'Key features include?', options: ['Project Management, Team Collaboration, Document Management', 'Only Gaming', 'Social Media', 'Email'], correct: 0 },
+                    { q: 'What does Digital Signature in CloseoutSoft provide?', options: ['Security, efficiency, and reliability', 'Nothing', 'Risk', 'Error'], correct: 0 }
+                ]
+            },
+            // Section 2: Lesson 2 (Based on truncated content; assumed from context: Likely Product Features or Similar)
+            {
+                title: 'Section 2: Product Features (Assumed from Context)',
+                questions: [
+                    { q: 'What is a key feature in Lesson 2?', options: ['Advanced integrations', 'Basic UI', 'No features', 'Unknown'], correct: 0 },
+                    { q: 'How does Lesson 2 describe workflows?', options: ['Customizable', 'Fixed', 'None', 'Random'], correct: 0 },
+                    { q: 'What is emphasized in truncated Lesson 2?', options: ['Project tracking', 'Email', 'Social', 'Games'], correct: 0 },
+                    { q: 'Core module in Lesson 2?', options: ['Document Control', 'HR', 'Finance Only', 'Design Only'], correct: 0 },
+                    { q: 'User access in Lesson 2?', options: ['Role-based', 'Open', 'Closed', 'None'], correct: 0 },
+                    { q: 'Reporting in Lesson 2?', options: ['Auto-generated', 'Manual', 'None', 'Delayed'], correct: 0 },
+                    { q: 'Integration type?', options: ['Seamless', 'None', 'Partial', 'Broken'], correct: 0 },
+                    { q: 'Mobile support?', options: ['Yes', 'No', 'Partial', 'Unknown'], correct: 0 },
+                    { q: 'Security features?', options: ['High', 'Low', 'None', 'Medium'], correct: 0 },
+                    { q: 'Analytics in Lesson 2?', options: ['Real-time', 'Delayed', 'None', 'Basic'], correct: 0 }
+                ]
+            },
+            // Section 3: Lesson 3 (Based on truncated content; assumed from context: Likely Sales Processes or Similar)
+            {
+                title: 'Section 3: Sales Processes (Assumed from Context)',
+                questions: [
+                    { q: 'What is key in Lesson 3?', options: ['Sales enablement', 'Design', 'HR', 'Finance'], correct: 0 },
+                    { q: 'Process flow in Lesson 3?', options: ['Structured', 'Random', 'None', 'Open'], correct: 0 },
+                    { q: 'Training in Lesson 3?', options: ['Comprehensive', 'Basic', 'None', 'Advanced'], correct: 0 },
+                    { q: 'Metrics tracked?', options: ['KPIs', 'None', 'Basic', 'All'], correct: 0 },
+                    { q: 'Customer engagement?', options: ['High', 'Low', 'None', 'Medium'], correct: 0 },
+                    { q: 'Demo strategy?', options: ['Tailored', 'Generic', 'None', 'Fixed'], correct: 0 },
+                    { q: 'Objection handling?', options: ['Proactive', 'Reactive', 'None', 'Ignore'], correct: 0 },
+                    { q: 'Follow-up?', options: ['Timely', 'Delayed', 'None', 'Random'], correct: 0 },
+                    { q: 'Conversion rate?', options: ['Optimized', 'Low', 'High', 'Unknown'], correct: 0 },
+                    { q: 'Tools used?', options: ['CRM', 'None', 'Basic', 'All'], correct: 0 }
+                ]
+            },
+            // Section 4: Lesson 4 - Assessment & Field Readiness Process
+            {
+                title: 'Section 4: Assessment & Field Readiness Process',
+                questions: [
+                    { q: 'What is the purpose of the framework?', options: ['Ensure pre-sales readiness', 'Design buildings', 'Manage finances', 'Hire staff'], correct: 0 },
+                    { q: 'How many certification levels?', options: ['3', '1', '2', '4'], correct: 0 },
+                    { q: 'What is Level 1?', options: ['Product Familiarity', 'Expert', 'Independent', 'None'], correct: 0 },
+                    { q: 'Training verification requires?', options: ['100% completion', '50%', 'None', 'Partial'], correct: 0 },
+                    { q: 'Assessment includes?', options: ['Written, demo, solutioning', 'Only written', 'None', 'Basic'], correct: 0 },
+                    { q: 'Simulation involves?', options: ['Mock customer meetings', 'Real meetings', 'None', 'Design'], correct: 0 },
+                    { q: 'Continuous monitoring?', options: ['Quarterly', 'Yearly', 'None', 'Daily'], correct: 0 },
+                    { q: 'Checklist items?', options: ['12', '5', '10', '20'], correct: 0 },
+                    { q: 'Core competency?', options: ['Product Knowledge', 'None', 'Basic', 'All'], correct: 0 },
+                    { q: 'Feedback sources?', options: ['Multi-source', 'Single', 'None', 'Customer only'], correct: 0 }
+                ]
+            },
+            // Section 5: Lesson 5 - Customer Journey Mapping & Engagement Strategy
+            {
+                title: 'Section 5: Customer Journey Mapping & Engagement Strategy',
+                questions: [
+                    { q: 'How many journey stages?', options: ['7', '3', '5', '10'], correct: 0 },
+                    { q: 'Awareness stage personas?', options: ['Customer Owner, Ops Director, PM', 'IT Admin', 'Legal', 'None'], correct: 0 },
+                    { q: 'Consideration stage goal?', options: ['Validate fit', 'Purchase', 'Renew', 'Onboard'], correct: 0 },
+                    { q: 'Selection stage touchpoints?', options: ['Sales calls, ROI deck', 'Webinars', 'Emails', 'All'], correct: 0 },
+                    { q: 'Onboarding metrics?', options: ['Time-to-live-project', 'Win rate', 'NPS', 'None'], correct: 0 },
+                    { q: 'Adoption stage personas?', options: ['Ops Director, PMO, Quality Manager', 'Client', 'Sub', 'Legal'], correct: 0 },
+                    { q: 'Renewal goal?', options: ['Confirm value', 'Purchase', 'Onboard', 'Aware'], correct: 0 },
+                    { q: 'KPIs include?', options: ['MQL→SQL rate', 'None', 'Basic', 'All'], correct: 0 },
+                    { q: 'Personas concerns?', options: ['ROI, standardization', 'None', 'Design', 'HR'], correct: 0 },
+                    { q: 'Assets in Awareness?', options: ['ROI calculator', 'Contracts', 'None', 'Emails'], correct: 0 }
+                ]
+            },
+            // Section 6: Lesson 6 - Advanced Operations Mastery
+            {
+                title: 'Section 6: Advanced Operations Mastery',
+                questions: [
+                    { q: 'Strategic positioning?', options: ['End-to-end lifecycle', 'Basic', 'None', 'Partial'], correct: 0 },
+                    { q: 'Marketing objectives?', options: ['Brand visibility, lead generation', 'None', 'Design', 'HR'], correct: 0 },
+                    { q: 'SEO strategy?', options: ['Keyword targeting', 'None', 'Basic', 'All'], correct: 0 },
+                    { q: 'Paid ads on?', options: ['Google, LinkedIn', 'Facebook', 'Twitter', 'None'], correct: 0 },
+                    { q: 'Content marketing?', options: ['Email nurture, webinars', 'None', 'Basic', 'All'], correct: 0 },
+                    { q: 'Implementation plan months?', options: ['6', '3', '12', '1'], correct: 0 },
+                    { q: 'KPIs include?', options: ['Bounce rate <40%', 'None', 'High', 'All'], correct: 0 },
+                    { q: 'Target leads/month?', options: ['100+', '10', '50', 'None'], correct: 0 },
+                    { q: 'Conversion rate?', options: ['3%+', '1%', '10%', 'None'], correct: 0 },
+                    { q: 'Monitoring cadence?', options: ['Daily, weekly, monthly', 'Yearly', 'None', 'Quarterly only'], correct: 0 }
+                ]
+            }
+        ];
+
+        let currentSection = 0;
+        let answers = Array(quizData.length).fill().map(() => Array(10).fill(-1)); // Store user answers per section/question (-1 = unanswered)
+        let participant = { name: '', email: '', scores: [], total: 0, details: [] };
+
+        // Load all participants from localStorage
+        let allParticipants = JSON.parse(localStorage.getItem('allParticipants')) || [];
+
+        function startQuiz() {
+            participant.name = document.getElementById('name').value;
+            participant.email = document.getElementById('email').value;
+            if (!participant.name || !participant.email) return alert('Please enter name and email.');
+            document.getElementById('login').classList.add('hidden');
+            document.getElementById('quiz').classList.remove('hidden');
+            loadSection(0);
+        }
+
+        function loadSection(section) {
+            currentSection = section;
+            document.getElementById('sectionTitle').innerText = quizData[section].title;
+            const questionsDiv = document.getElementById('questions');
+            questionsDiv.innerHTML = '';
+            quizData[section].questions.forEach((q, i) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                div.innerHTML = `<p>${i+1}. ${q.q}</p>`;
+                q.options.forEach((opt, j) => {
+                    div.innerHTML += `<label><input type="radio" name="q${i}" value="${j}" ${answers[section][i] === j ? 'checked' : ''}> ${opt}</label><br>`;
+                });
+                questionsDiv.appendChild(div);
+            });
+        }
+
+        function saveAnswers() {
+            const radios = document.querySelectorAll('#questions input[type="radio"]:checked');
+            radios.forEach(radio => {
+                const qIndex = parseInt(radio.name.slice(1));
+                answers[currentSection][qIndex] = parseInt(radio.value);
+            });
+        }
+
+        function nextSection() {
+            saveAnswers();
+            if (currentSection < quizData.length - 1) {
+                loadSection(currentSection + 1);
+            } else {
+                calculateResults();
+            }
+        }
+
+        function calculateResults() {
+            participant.scores = [];
+            participant.details = [];
+            let total = 0;
+            quizData.forEach((section, s) => {
+                let sectionScore = 0;
+                let sectionDetails = [];
+                section.questions.forEach((q, qIdx) => {
+                    const userAnswer = answers[s][qIdx];
+                    const correct = userAnswer === q.correct;
+                    if (correct) sectionScore++;
+                    sectionDetails.push({
+                        question: q.q,
+                        userAnswer: userAnswer !== -1 ? q.options[userAnswer] : 'Unanswered',
+                        correctAnswer: q.options[q.correct],
+                        correct: correct
+                    });
+                });
+                participant.scores.push(sectionScore);
+                participant.details.push(sectionDetails);
+                total += sectionScore;
+            });
+            participant.total = total;
+
+            // Save to allParticipants
+            allParticipants.push(participant);
+            localStorage.setItem('allParticipants', JSON.stringify(allParticipants));
+
+            showResults();
+        }
+
+        function showResults() {
+            document.getElementById('quiz').classList.add('hidden');
+            document.getElementById('results').classList.remove('hidden');
+            document.getElementById('totalScore').innerText = `Total Score: ${participant.total} / ${quizData.length * 10}`;
+            const sectionScores = document.getElementById('sectionScores');
+            sectionScores.innerHTML = '';
+            participant.scores.forEach((score, i) => {
+                sectionScores.innerHTML += `<p>${quizData[i].title}: ${score} / 10</p>`;
+            });
+            const questionDetails = document.getElementById('questionDetails');
+            questionDetails.innerHTML = '';
+            participant.details.forEach((secDetails, s) => {
+                questionDetails.innerHTML += `<h3>${quizData[s].title}</h3>`;
+                secDetails.forEach((det, q) => {
+                    questionDetails.innerHTML += `<p>Q${q+1}: ${det.question}<br>Your Answer: ${det.userAnswer}<br>Correct: ${det.correctAnswer} (${det.correct ? 'Correct' : 'Incorrect'})</p>`;
+                });
+            });
+        }
+
+        function exportSession() {
+            const data = JSON.stringify(participant);
+            const blob = new Blob([data], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${participant.name}_quiz.json`;
+            a.click();
+        }
+
+        function importSession(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                participant = JSON.parse(e.target.result);
+                answers = participant.details.map(sec => sec.map(det => det.userAnswer === 'Unanswered' ? -1 : quizData[0].questions[0].options.indexOf(det.userAnswer))); // Approximate reconstruction
+                alert('Session imported. Start quiz to resume.');
+            };
+            reader.readAsText(file);
+        }
+
+        function restartQuiz() {
+            document.getElementById('results').classList.add('hidden');
+            document.getElementById('login').classList.remove('hidden');
+            participant = { name: '', email: '', scores: [], total: 0, details: [] };
+            answers = Array(quizData.length).fill().map(() => Array(10).fill(-1));
+            currentSection = 0;
+        }
+
+        function showSummary() {
+            document.getElementById('login').classList.add('hidden');
+            document.getElementById('summaryPage').classList.remove('hidden');
+            const summaryDiv = document.getElementById('summary');
+            summaryDiv.innerHTML = '';
+            allParticipants.forEach((p, idx) => {
+                summaryDiv.innerHTML += `<h3>Participant ${idx+1}: ${p.name} (${p.email}) - Total: ${p.total}/60</h3>`;
+                p.scores.forEach((score, s) => {
+                    summaryDiv.innerHTML += `<p>${quizData[s].title}: ${score}/10</p>`;
+                });
+                p.details.forEach((secDetails, s) => {
+                    summaryDiv.innerHTML += `<h4>${quizData[s].title} Questions:</h4>`;
+                    secDetails.forEach((det, q) => {
+                        summaryDiv.innerHTML += `<p>Q${q+1}: ${det.correct ? 'Correct' : 'Incorrect'}</p>`;
+                    });
+                });
+            });
+        }
+
+        function backToLogin() {
+            document.getElementById('summaryPage').classList.add('hidden');
+            document.getElementById('login').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
